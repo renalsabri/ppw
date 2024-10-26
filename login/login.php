@@ -1,3 +1,44 @@
+<?php
+session_start();
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "data";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection Error: " . $conn->connect_error);
+}
+
+$email = isset($_POST['email']) ? $_POST['email'] : '';
+$password = isset($_POST['password']) ? $_POST['password'] : '';
+
+if (!empty($email) && !empty($password)) {
+    $stmt = $conn->prepare("SELECT password FROM user WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $hashed_password = $row['password'];
+
+        if (password_verify($password, $hashed_password)) {
+            echo "<script>alert('Login successful!');</script>";
+            header("Location: ../beranda/beranda.html");
+            exit();
+        } else {
+            echo "<script>alert('Incorrect password. Please try again.');</script>";
+        }
+    } else {
+        echo "<script>alert('Email not found. Please register first.');</script>";
+    }
+    $stmt->close();
+}
+
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
