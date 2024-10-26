@@ -1,46 +1,50 @@
 <?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "data";
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "data";
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    if ($conn->connect_error) {
-        die("Connection Error: " . $conn->connect_error);
-    }
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection Error: " . $conn->connect_error);
+}
 
-    $nama = isset($_POST['nama']) ? $_POST['nama'] : '';
-    $email = isset($_POST['email']) ? $_POST['email'] : '';
-    $password = isset($_POST['password']) ? $_POST['password'] : '';
+$nama = isset($_POST['nama']) ? $_POST['nama'] : '';
+$email = isset($_POST['email']) ? $_POST['email'] : '';
+$password = isset($_POST['password']) ? $_POST['password'] : '';
 
-    if (!empty($nama) && !empty($email) && !empty($password)) {
-        $email_check_query = "SELECT email FROM user WHERE email = '$email'";
-        $result = $conn->query($email_check_query);
+if (!empty($nama) && !empty($email) && !empty($password)) {
+    $stmt = $conn->prepare("SELECT email FROM user WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-        if ($result->num_rows > 0) {
-            echo "Email is already registered. Please use another email.";
+    if ($result->num_rows > 0) {
+        echo "<script>alert('Email is already registered. Please use another email.');</script>";
+    } else {
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $stmt = $conn->prepare("INSERT INTO user (nama, email, password) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $nama, $email, $hashed_password);
+        
+        if ($stmt->execute()) {
+            echo "<script>alert('Account successfully registered! Please login to your account'); window.location.href='../login/login.php';</script>";
         } else {
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO user (nama, email, password) VALUES ('$nama', '$email', '$hashed_password')";
-            if ($conn->query($sql) === TRUE) {
-                echo "Account succesully registered! Please login to your account";
-            } else {
-                echo "Error: " . $sql . "<br>" . $conn->error;
-            }
+            echo "Error: " . $stmt->error;
         }
     }
-
-    $conn->close();
+    $stmt->close();
+}
+$conn->close();
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/png" href="https://clubmate.fish/wp-content/uploads/2021/06/eCommerce-Icon-1.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Commerce - Register</title>
     <link rel="stylesheet" href="style2.css">
-    <link rel="icon" type="image/png" href="https://clubmate.fish/wp-content/uploads/2021/06/eCommerce-Icon-1.png">
 </head>
 <body>
    
@@ -74,9 +78,7 @@
                     <input type="password" id="password" name="password" placeholder="Enter your password" required>
                 </div>
                 <div class="input-group">
-                    <a href = "login.html">
-                    <button type="submit" name= "register" class="btn-register">Register</button>
-                </a>
+                    <button type="submit" name="register" class="btn-register">Register</button>
                 </div>
                 <div class="input-group">
                     <p class="signup-text">Already have an account? <a href="../login/login.php">Log In</a></p>
