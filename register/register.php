@@ -59,7 +59,7 @@
 
     <div class="login-container">
         <div class="login-box">
-            <h2>Sign Up</h2>
+            <h2>Register</h2>
             <form action="register.php" method="POST">
                 <div class="input-group">
                     <label for="username">Username</label>
@@ -75,7 +75,7 @@
                 </div>
                 <div class="input-group">
                     <a href = "login.html">
-                    <button type="submit" name= "register" class="btn-register">Sign Up</button>
+                    <button type="submit" name= "register" class="btn-register">Register</button>
                 </a>
                 </div>
                 <div class="input-group">
