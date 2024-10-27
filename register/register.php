@@ -38,13 +38,12 @@ $conn->close();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <link rel="icon" type="image/png" href="https://clubmate.fish/wp-content/uploads/2021/06/eCommerce-Icon-1.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Commerce - Register</title>
-    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="style_register.css">
 </head>
 <body>
    
