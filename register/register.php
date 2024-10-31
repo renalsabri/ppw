@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -12,6 +14,8 @@ if ($conn->connect_error) {
 $nama = isset($_POST['nama']) ? $_POST['nama'] : '';
 $email = isset($_POST['email']) ? $_POST['email'] : '';
 $password = isset($_POST['password']) ? $_POST['password'] : '';
+
+$_SESSION['nama'] = $nama;
 
 if (!empty($nama) && !empty($email) && !empty($password)) {
     $stmt = $conn->prepare("SELECT email FROM user WHERE email = ?");
@@ -87,7 +91,7 @@ $conn->close();
     </div>
 
     <footer>
-        <p>E-Commerce © 2024</p>
+        <p>SHOP.CO © 2024</p>
     </footer>
 </body>
 </html>

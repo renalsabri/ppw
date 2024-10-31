@@ -169,5 +169,5 @@ footer {
     margin-top: 20px;
     bottom: 0;
     left: 0;
-    position: fixed;
+    box-sizing: border-box;
 }

@@ -16,7 +16,7 @@ a {
     height: 55px;
     align-items: center;
     justify-content: space-between;
-    padding: 5px 245px;;
+    padding: 5px 245px;
     color: white;
 }
 
@@ -87,8 +87,26 @@ a {
     color: #333;
 }
 
+.insert-form {
+    margin-bottom: 20px;
+}
+
+.insert-form form label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.insert-form form input[type="text"],
+.insert-form form input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #DDD;
+    border-radius: 5px;
+}
+
 .btn-insert {
-    padding: 8px 15px;
+    padding: 8px 120px;
     background-color: #333;
     color: white;
     border: none;
@@ -97,7 +115,7 @@ a {
 }
 
 .btn-insert:hover {
-    background-color: #555;
+    background-color: black;
 }
 
 .table {
@@ -121,6 +139,11 @@ a {
     background-color: #F9F9F9;
 }
 
+.table .table-img {
+    height: 50px;
+    width: 50px;
+}
+
 .table button {
     padding: 5px 8px;
     border: none;
@@ -130,12 +153,12 @@ a {
     cursor: pointer;
 }
 
-.table button:nth-child(1) {
+.btn-update {
     background-color: #FFB6C1;
     margin-right: 5px;
 }
 
-.table button:nth-child(2) {
+.btn-delete {
     background-color: #FF6347;
 }
 

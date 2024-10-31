@@ -54,7 +54,7 @@ nav {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 .profile-button {
-    background-color: #004d98; /* Blue color */
+    background-color: #004d98; 
     color: white;
     padding: 10px 20px;
     border: none;
@@ -66,7 +66,12 @@ nav {
 }
 
 .profile-button:hover {
-    background-color: #003366; /* Darker blue on hover */
+    background-color: #003366; 
+}
+
+.name {
+    color: black;
+    
 }
 
 .profile-menu {
