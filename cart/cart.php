@@ -21,7 +21,7 @@ if (isset($_POST['clear_cart'])) {
     <nav>
         <div class="header-left">
             <a href="../beranda/beranda.php">
-                <img src="https://clubmate.fish/wp-content/uploads/2021/06/eCommerce-Icon-1.png" alt="e-commerce logo">
+                <img src="logo.jpg" alt="SHOP. CO logo">
             </a>
         </div>
         <div class="header-center">
