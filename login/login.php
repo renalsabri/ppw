@@ -7,7 +7,7 @@ $dotenv->load();
 
 $clientID = $_ENV['GOOGLE_CLIENT_ID'];
 $clientSecret = $_ENV['GOOGLE_CLIENT_SECRET'];
-$redirectUri = 'http://localhost/web%205/beranda/beranda.html';
+$redirectUri = 'http://localhost/ppw/beranda/beranda.php';
 
 $client = new Google_Client();
 $client->setClientId($clientID);
@@ -51,7 +51,7 @@ if (isset($_GET['code'])) {
         $_SESSION['email'] = $email;
         $_SESSION['name'] = $name;
 
-        header("Location: ../beranda/beranda.html");
+        header("Location: ../beranda/beranda.php");
         exit();
     } else {
         echo "<script>alert('Error fetching token: " . $token['error'] . "');</script>";
@@ -81,7 +81,7 @@ if (!empty($email) && !empty($password)) {
 
                 if (password_verify($password, $hashed_password)) {
                     $_SESSION['email'] = $email;
-                    header("Location: ../beranda/beranda.html");
+                    header("Location: ../beranda/beranda.php");
                     exit();
                 } else {
                     echo "<script>alert('Incorrect password. Please try again!');</script>";
