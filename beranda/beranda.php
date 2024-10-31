@@ -20,18 +20,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beranda | E-commerce</title>
     <link rel="stylesheet" href="style_beranda.css?v=1.0">
-    <link rel="icon" type="image/x-icon" href="https://clubmate.fish/wp-content/uploads/2021/06/eCommerce-Icon-1.png">
+    <link rel="icon" type="image/x-icon" href="icon.png">
 
 </head>
 <body>  
     <nav>
-        <div class="header-left">
+    <div class="header-left">
             <a href="">
-                <img src="https://clubmate.fish/wp-content/uploads/2021/06/eCommerce-Icon-1.png" alt="e-commerce logo">
+            <img src="logo.jpg" alt="e-commerce logo">
             </a>
         </div>
         <div class="header-center">
-            <h1>Welcome to E-Commerce</h1>
+            <h1>Welcome to SHOP. CO</h1>
             <p>Find the best products here!</p>
         </div>
         <div class="header-right profile-menu">

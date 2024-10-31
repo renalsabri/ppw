@@ -3,17 +3,14 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    background-image: url('[ampersand]width=1200[ampersand]height=740');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-color: whitesmoke;
     box-sizing: border-box;
     overflow-x: hidden;
 }
 nav {
     width: 100%;
     height: 80px;
-    background-color: white;
+    background-color: black;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -24,16 +21,16 @@ nav {
     color: #fff;
 }
 .header-left img {
-    width: 50px;
-    height: auto;
-    margin-left: 50px;
+    height: 25px; 
+    width: 145px;
+    margin-left: 20px;
 }
 .header-center {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    color: black;
+    color: whitesmoke;
 }
 .header-center h1 {
     font-size: 24px;
@@ -42,7 +39,7 @@ nav {
 .header-center p {
     font-size: 14px;
     margin: 0;
-    color: black;
+    color: whitesmoke;
 }
 .header-right {
     display: flex;
@@ -72,7 +69,7 @@ nav {
 
 .profile-text {
     font-size: 16px;
-    color: #333;
+    color: whitesmoke;
     font-weight: bold;
 }
 
@@ -178,16 +175,6 @@ nav {
     width: 100%;
     height: auto;
 }
-footer {
-    width: 100%;
-    background-color: white;
-    color: black;
-    text-align: center;
-    padding: 10px 20px;
-    margin-top: 20px;
-    bottom: 0;
-    left: 0;
-}
 .myButton {
     box-shadow: 0px 10px 14px -7px #276873;
     background: linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
@@ -212,4 +199,15 @@ footer {
 .myButton:active {
     position: relative;
     top: 1px;
+}
+
+footer {
+    width: 100%;
+    background-color: whitesmoke;
+    color: black;
+    text-align: center;
+    padding: 10px 20px;
+    margin-top: 20px;
+    bottom: 0;
+    left: 0;
 }
