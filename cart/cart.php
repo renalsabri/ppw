@@ -13,9 +13,9 @@ if (isset($_POST['clear_cart'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Cart | E-commerce</title>
+    <title>SHOP. CO | View Cart</title>
     <link rel="stylesheet" href="style_cart.css?v=1.0">
-    <link rel="icon" type="image/x-icon" href="https://clubmate.fish/wp-content/uploads/2021/06/eCommerce-Icon-1.png">
+    <link rel="icon" type="image/x-icon" href="icon.png">
 </head>
 <body>
     <nav>
@@ -55,7 +55,6 @@ if (isset($_POST['clear_cart'])) {
                 </tbody>
             </table>
             
-            <!-- Tombol Clear Cart -->
             <form method="POST" action="">
                 <button type="submit" name="clear_cart" class="btn-clear-cart">Clear Cart</button>
             </form>

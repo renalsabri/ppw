@@ -105,7 +105,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Commerce | Login</title>
+    <title>SHOP. CO | Login</title>
     <link rel="stylesheet" href="style_login.css">
     <link rel="icon" type="image/x-icon" href="icon.png">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
@@ -114,7 +114,7 @@ $conn->close();
     <header>
         <div class="header-left">
             <a href="">
-            <img src="logo.jpg" alt="e-commerce logo">
+            <img src="logo.jpg" alt="SHOP. CO logo">
             </a>
         </div>
         <div class="header-center"></div>

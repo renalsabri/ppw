@@ -53,12 +53,20 @@ nav {
     font-size: 14px;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
-.header-right {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-right: 30px;
+.profile-button {
+    background-color: #004d98; /* Blue color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.profile-button:hover {
+    background-color: #003366; /* Darker blue on hover */
 }
 
 .profile-menu {
@@ -69,16 +77,8 @@ nav {
 
 .profile-text {
     font-size: 16px;
-    color: whitesmoke;
+    color: #333;
     font-weight: bold;
-}
-
-.profile-pic {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid #004d98;
-    cursor: pointer;
 }
 
 .profile-dropdown {
@@ -110,20 +110,6 @@ nav {
     text-align: center;
 }
 
-.upload-photo-btn {
-    display: block;
-    padding: 10px;
-    text-align: center;
-    font-size: 14px;
-    color: #004d98;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.upload-photo-btn:hover {
-    background-color: #f2f2f2;
-}
-
 .profile-dropdown a, .upload-photo-btn {
     padding: 10px;
     text-decoration: none;
@@ -145,36 +131,64 @@ nav {
         width: 100px;
     }
 }
-    .header-center h1 {
-        font-size: 20px;
-    }
+.header-center h1 {
+    font-size: 20px;
+}
 
-    .header-center p {
-        font-size: 12px;
-    }
+.header-center p {
+    font-size: 12px;
+}
 
-    .header-right {
-        flex-direction: column;
-        gap: 10px;
-    }
+.header-right {
+    flex-direction: column;
+    gap: 10px;
+}
+
+.container-product {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.product-category {
+    background-color: #f9f9f9; /* Warna latar balok */
+    padding: 20px;
+    margin: 20px auto; /* Spasi di sekitar balok */
+    border-radius: 10px; /* Membuat sudut balok melengkung */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Menambah bayangan */
+    max-width: 1200px; /* Menentukan lebar maksimal balok */
+}
+
+.product-category h2 {
+    color: #333;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+}
 
 .product-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; 
-    margin: 50px;
+    gap: 20px;
+    justify-content: center;
 }
+
 .product-item {
+    background-color: white;
     border: 1px solid #ddd;
-    margin: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 10px;
-    width: 200px;
+    width: 200px; /* Lebar setiap produk */
     text-align: center;
-}
+}    
 .product-item img {
-    width: 100%;
-    height: auto;
+    width: 150px;          /* Sesuaikan ukuran lebar yang diinginkan */
+    height: 150px;         /* Sesuaikan ukuran tinggi yang diinginkan */
+    object-fit: cover;     /* Membuat gambar pas dalam ukuran yang ditentukan tanpa distorsi */
+    border-radius: 8px;    /* Opsional: Membuat sudut melengkung */
 }
+
 .myButton {
     box-shadow: 0px 10px 14px -7px #276873;
     background: linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
