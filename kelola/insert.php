@@ -1,89 +1,128 @@
 <?php
-    // Koneksi ke database
-    $servername = "localhost";
-    $username = "root"; // Ganti dengan username Anda
-    $password = ""; // Ganti dengan password Anda
-    $dbname = "your_database"; // Ganti dengan nama database Anda
+session_start();
 
-    // Membuat koneksi
-    $conn = new mysqli($servername, $username, $password, $dbname);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Ambil data dari form
+    $kategori = $_POST['kategori'] ?? '';
+    $pakaian = $_POST['pakaian'] ?? '';
+    $harga = $_POST['harga'] ?? '';
 
-    // Cek koneksi
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+    // Memastikan folder untuk menyimpan gambar ada
+    $uploadDir = 'uploads/';
+    if (!file_exists($uploadDir)) {
+        mkdir($uploadDir, 0777, true); // Buat folder jika belum ada
     }
 
-    // Cek apakah form telah disubmit
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // Ambil data dari form
-        $number = $_POST['number'];
-        $category = $_POST['category'];
-        $item_name = $_POST['item_name'];
-        $price = $_POST['price'];
-        $update = $_POST['update'];
-        $delete = $_POST['delete'];
+    // Ambil informasi file gambar
+    $gambar = $_FILES['gambar']['name'];
+    $tmpGambar = $_FILES['gambar']['tmp_name'];
+    $uploadFilePath = $uploadDir . basename($gambar);
 
-        // Simpan file gambar
-        $image_name = $_FILES['image']['name'];
-        $image_tmp = $_FILES['image']['tmp_name'];
-        $target_dir = "uploads/"; // Tentukan folder penyimpanan gambar
-        $target_file = $target_dir . basename($image_name);
-
-        // Pindahkan file gambar ke folder tujuan
-        if (move_uploaded_file($image_tmp, $target_file)) {
-            // Query untuk menyimpan data ke database
-            $sql = "INSERT INTO items (number, category, item_name, image, price, update_info, delete_info) 
-                    VALUES ('$number', '$category', '$item_name', '$target_file', '$price', '$update', '$delete')";
-            
-            if ($conn->query($sql) === TRUE) {
-                echo "Data berhasil disimpan.";
-                // Redirect kembali ke halaman utama setelah berhasil
-                header("Location: index.php");
-                exit();
-            } else {
-                echo "Error: " . $sql . "<br>" . $conn->error;
-            }
-        } else {
-            echo "Gagal mengunggah gambar.";
-        }
+    // Simpan data barang ke dalam sesi
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = [];
     }
 
-    // Tutup koneksi
-    $conn->close();
-    ?>
+    // Tambahkan item baru ke sesi
+    $_SESSION['cart'][] = [
+        'No' => count($_SESSION['cart']) + 1, // Nomor barang
+        'Category' => $kategori,
+        'Product Name' => $pakaian,
+        'image' => $uploadFilePath, // Menyimpan jalur gambar
+        'Price' => floatval(str_replace(',', '', $harga)) // Konversi harga ke float
+    ];
+
+    // Jika gambar diupload, pindahkan file ke folder yang diinginkan
+    if ($gambar) {
+        move_uploaded_file($tmpGambar, $uploadFilePath); // Pindahkan file gambar ke folder uploads
+    }
+
+    // Redirect ke halaman barang setelah menyimpan
+    header("Location: barang.php");
+    exit();
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Barang</title>
+    <title>Product Manager | SHOP.CO</title>
+    <link rel="stylesheet" href="style_kelola.css">
+    <link rel="icon" type="image/x-icon" href="image/icon.png">
 </head>
 <body>
-    <h2>Tambah Barang</h2>
-    <form action="insert.php" method="POST" enctype="multipart/form-data">
-        <table>
-            <tr>
-                <th>Number</th>
-                <td><input type="number" name="number" required></td>
-            </tr>
-            <tr>
-                <th>Category</th>
-                <td><input type="text" name="category" required></td>
-            </tr>
-            <tr>
-                <th>Item Name</th>
-                <td><input type="text" name="item_name" required></td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td><input type="number" name="price" required></td>
-            </tr>
-            <tr>
-            <tr>
-                <td colspan="2"><button type="submit">Insert</button></td>
-            </tr>
-        </table>
-    </form>
+    <div class="page">
+    <nav>
+    <div class="header-left">
+            <a href="../beranda/beranda.php">
+            <img src="logo copy.jpg" alt="SHOP. CO logo">
+            </a>
+        </div>
+        <div class="header-center">
+            <h1>Welcome to SHOP. CO</h1>
+            <p>Find the best products here!</p>
+        </div>
+        <div class="header-right profile-menu">
+            <button class="profile-button">My Profile</button>
+            <div class="profile-dropdown">
+                <div class="profile-welcome">
+                    <center>
+                        <p class="name">Hi, 
+                        <?php
+                        // Cek apakah nama sudah diset dalam sesi
+                        if (isset($_SESSION['nama'])) {
+                            echo htmlspecialchars($_SESSION['nama']); // Tampilkan nama pengguna
+                        } else {
+                            echo "Guest"; // Tampilkan pesan default jika nama belum diset
+                        }
+                        ?>
+                        </p>
+                    </center>
+                </div>
+                <a href="../cart/cart.php">My Cart</a>
+                <a href="../kelola/barang.php">Product Manager</a>
+                <a href="../register/register.php">Logout</a>
+            </div>
+        </div>
+    </nav>
+        <div class="container">
+            <aside class="sidebar">
+                <h3></h3>
+                <ul>
+                    <li><a href="barang.php">Barang</a></li>
+                </ul>
+            </aside>
+            <section class="content">
+                <div class="content-header">
+                    <h2></h2>
+                    <a href="barang.php" class="btn-insert">Insert</a>
+                </div>
+                <div class="insert-form">
+                    <h3>Insert Barang</h3>
+                    <form method="POST" enctype="multipart/form-data">
+                        <label>Kategori</label>
+                        <input type="text" name="kategori" placeholder="Masukkan kategori" required>
+                        <label>Barang</label>
+                        <input type="text" name="pakaian" placeholder="Masukkan nama pakaian" required>
+                        <label>Gambar</label>
+                        <input type="file" name="gambar" accept="image/*" required>
+                        <label>Harga</label>
+                        <input type="text" name="harga" placeholder="Masukkan harga" required>
+                        <button type="submit" class="btn-submit">Simpan</button>
+                    </form>
+                </div>
+                <footer>
+                    <ul class="list-inline list-inline-dots mb-0">
+                        <li class="list-inline-item">
+                            Copyright © 2024
+                            <a href="#" class="text-dark">SHOP.CO</a>
+                        </li>
+                    </ul>
+                </footer>
+            </section>
+        </div>
+    </div>
 </body>
 </html>

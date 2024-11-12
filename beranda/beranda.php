@@ -20,14 +20,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SHOP. CO | Beranda</title>
     <link rel="stylesheet" href="style_beranda.css?v=1.0">
-    <link rel="icon" type="image/x-icon" href="icon.png">
+    <link rel="icon" type="image/x-icon" href="image/icon.png">
 
 </head>
 <body>  
     <nav>
-    <div class="header-left">
+        <div class="header-left">
             <a href="">
-            <img src="logo.jpg" alt="SHOP. CO logo">
+            <img src="image/logo.jpg" alt="SHOP. CO logo">
             </a>
         </div>
         <div class="header-center">

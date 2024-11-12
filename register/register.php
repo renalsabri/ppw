@@ -43,7 +43,7 @@ $conn->close();
 
 <!DOCTYPE html>
 <head>
-    <link rel="icon" type="image/x-icon" href="icon.png">
+    <link rel="icon" type="image/x-icon" href="image/icon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SHOP. CO | Register</title>
@@ -54,7 +54,7 @@ $conn->close();
     <header>
         <div class="header-left">
             <a href="">
-                <img src="logo.jpg" alt="SHOP. CO logo">
+                <img src="image/logo.jpg" alt="SHOP. CO logo">
             </a>
         </div>
         <div class="header-center"></div>

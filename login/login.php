@@ -7,7 +7,7 @@ $dotenv->load();
 
 $clientID = $_ENV['GOOGLE_CLIENT_ID'];
 $clientSecret = $_ENV['GOOGLE_CLIENT_SECRET'];
-$redirectUri = 'http://localhost/web%205/beranda/beranda.html';
+$redirectUri = 'http://localhost/ppw/beranda/beranda.php';
 
 $client = new Google_Client();
 $client->setClientId($clientID);
@@ -107,14 +107,14 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Commerce | Login</title>
     <link rel="stylesheet" href="style_login.css">
-    <link rel="icon" type="image/x-icon" href="icon.png">
+    <link rel="icon" type="image/x-icon" href="image/icon.png">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <header>
         <div class="header-left">
             <a href="">
-            <img src="logo.jpg" alt="e-commerce logo">
+            <img src="image/logo.jpg" alt="e-commerce logo">
             </a>
         </div>
         <div class="header-center"></div>
