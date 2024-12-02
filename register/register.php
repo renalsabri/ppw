@@ -14,6 +14,7 @@ if ($conn->connect_error) {
 $nama = isset($_POST['nama']) ? $_POST['nama'] : '';
 $email = isset($_POST['email']) ? $_POST['email'] : '';
 $password = isset($_POST['password']) ? $_POST['password'] : '';
+$foto = '../foto/profile.png';
 
 $_SESSION['nama'] = $nama;
 
@@ -27,8 +28,8 @@ if (!empty($nama) && !empty($email) && !empty($password)) {
         echo "<script>alert('Email is already registered. Please use another email!');</script>";
     } else {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $stmt = $conn->prepare("INSERT INTO user (nama, email, password) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $nama, $email, $hashed_password);
+        $stmt = $conn->prepare("INSERT INTO user (nama, email, password, foto) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssss", $nama, $email, $hashed_password, $foto);
         
         if ($stmt->execute()) {
             echo "<script>alert('Account successfully registered. Please login to your account!'); window.location.href='../login/login.php';</script>";

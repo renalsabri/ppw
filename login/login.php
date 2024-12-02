@@ -26,6 +26,7 @@ if ($conn->connect_error) {
     die("Connection Error: " . $conn->connect_error);
 }
 
+// Proses login dengan Google
 if (isset($_GET['code'])) {
     $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
     
@@ -36,20 +37,25 @@ if (isset($_GET['code'])) {
         $google_account_info = $google_oauth->userinfo->get();
         $email = $google_account_info->email;
         $name = $google_account_info->name;
+        $foto = $google_account_info->picture;
 
+        // Periksa apakah email sudah ada di database
         $stmt = $conn->prepare("SELECT * FROM user WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $result = $stmt->get_result();
 
         if ($result->num_rows == 0) {
-            $stmt = $conn->prepare("INSERT INTO user (email, name) VALUES (?, ?)");
-            $stmt->bind_param("ss", $email, $name);
+            $foto = '../foto/profile.png';  // Set foto default jika tidak ada
+            $stmt = $conn->prepare("INSERT INTO user (email, name, foto) VALUES (?, ?, ?)");
+            $stmt->bind_param("sss", $email, $name, $foto);
             $stmt->execute();
         }
 
+        // Simpan data user di sesi
         $_SESSION['email'] = $email;
         $_SESSION['name'] = $name;
+        $_SESSION['foto'] = $foto ? $foto : '../foto/profile.png';
 
         header("Location: ../beranda/beranda.php");
         exit();
@@ -58,6 +64,7 @@ if (isset($_GET['code'])) {
     }
 }
 
+// Proses login manual
 $email = isset($_POST['email']) ? $_POST['email'] : '';
 $password = isset($_POST['password']) ? $_POST['password'] : '';
 $recaptcha_response = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : '';
@@ -70,7 +77,8 @@ if (!empty($email) && !empty($password)) {
         $response_keys = json_decode($response, true);
 
         if ($response_keys["success"]) {
-            $stmt = $conn->prepare("SELECT password FROM user WHERE email = ?");
+            // Periksa email dan password di database
+            $stmt = $conn->prepare("SELECT password, nama, foto FROM user WHERE email = ?");
             $stmt->bind_param("s", $email);
             $stmt->execute();
             $result = $stmt->get_result();
@@ -80,7 +88,11 @@ if (!empty($email) && !empty($password)) {
                 $hashed_password = $row['password'];
 
                 if (password_verify($password, $hashed_password)) {
+                    // Simpan email dan data user lainnya di sesi
                     $_SESSION['email'] = $email;
+                    $_SESSION['name'] = $row['name'];
+                    $_SESSION['foto'] = $row['foto'] ? $row['foto'] : '../foto/profile.png';
+
                     header("Location: ../beranda/beranda.php");
                     exit();
                 } else {

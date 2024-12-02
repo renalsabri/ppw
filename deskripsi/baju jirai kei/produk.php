@@ -1,9 +1,27 @@
 <?php
 session_start();
-if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = [];
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "data";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection Error: " . $conn->connect_error);
 }
 
+if (isset($_SESSION['name']) && isset($_SESSION['foto'])) {
+    $name = $_SESSION['name'];
+    $foto = $_SESSION['foto'];
+    $email = $_SESSION['email'];  // Menyimpan email yang digunakan untuk login
+} else {
+    // Jika tidak ada, set default
+    $name = "Guest";
+    $foto = 'default_profile_picture.png'; // Set foto default
+}
+
+// Menangani penambahan produk ke dalam keranjang belanja
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
     $product = [
         'name' => $_POST['product_name'],
@@ -12,18 +30,52 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
     ];
     $_SESSION['cart'][] = $product;
 }
+
+// Menangani pengiriman review oleh pengguna yang sudah login
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['email'])) {  // Gunakan email untuk validasi login
+    $user_email = $_SESSION['email'];
+    $product_id = $_POST['product_id'];
+    $review_text = $_POST['review_text'];
+
+    // Menambahkan review ke database
+    $query = "INSERT INTO reviews (user_email, product_id, review_text) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('sis', $user_email, $product_id, $review_text);  // Bind email (varchar) dengan type 's'
+
+    if ($stmt->execute()) {
+        // Redirect untuk menampilkan review terbaru setelah menambahkannya
+        header('Location: product.php?product_id=' . $product_id); 
+        exit();
+    } else {
+        echo "Error adding review.";
+    }
+}
+
+// Ambil ID produk dari query parameter
+$product_id = $_GET['product_id'] ?? 1;  // Default produk ID 1 jika tidak ada di URL
+
+// Query untuk mengambil semua review produk
+$query = "SELECT r.review_text, r.created_at, u.nama AS username, u.foto AS profile_picture 
+          FROM reviews r 
+          JOIN user u ON r.user_email = u.email 
+          WHERE r.product_id = ? 
+          ORDER BY r.created_at DESC";
+$stmt = $conn->prepare($query);
+$stmt->bind_param('i', $product_id);
+$stmt->execute();
+$reviews = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHOP. CO | Beranda</title>
+    <title>SHOP. CO | Product Details</title>
     <link rel="stylesheet" href="style_deskripsi.css?v=1.0">
     <link rel="icon" type="image/x-icon" href="..foto/icon.png">
-
 </head>
 <body>  
+    <!-- Header dan Navigasi -->
     <nav>
         <div class="header-left">
             <a href="../../beranda/beranda.php">
@@ -43,9 +95,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
                     <?php
                     // Cek apakah nama sudah diset dalam sesi
                     if (isset($_SESSION['nama'])) {
-                        echo htmlspecialchars($_SESSION['nama']); // Tampilkan nama pengguna
+                        echo htmlspecialchars($_SESSION['nama']);
                     } else {
-                        echo "Guest"; // Tampilkan pesan default jika nama belum diset
+                        echo "Guest";
                     }
                     ?>
                     </p>
@@ -58,6 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
         </div>
     </nav>
 
+    <!-- Halaman Produk -->
     <div class="product-container">
         <div class="image-section">
             <img id="main-image" src="../../foto/Baju Jirai Kei.jpeg" alt="Baju Jirai Kei">
@@ -87,16 +140,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
                 <option value="m">Medium</option>
                 <option value="l">Large</option>
             </select>
-            <button class="add-to-cart">Add to Cart</button>
+
+            <!-- Form untuk Menambahkan ke Keranjang -->
+            <form action="product.php" method="POST">
+                <input type="hidden" name="product_name" value="Baju Jirai Kei">
+                <input type="hidden" name="product_price" value="335000">
+                <input type="hidden" name="product_image" value="../../foto/Baju Jirai Kei.jpeg">
+                <button type="submit" name="add_to_cart" class="add-to-cart">Add to Cart</button>
+            </form>
+
             <p class="meta">
-                <strong>Category:</strong> Women, Polo, Casual<br>
-                <strong>Tags:</strong> Modern, Design, Cotton
+                <strong>Category:</strong> Wanita, Pakaian Atasan, Gaya Jepang, Kasual<br>
+                <strong>Tags:</strong> Jirai Kei, Baju Gaya Jepang, Tren Fashion Jepang, Baju Kasual Modern
             </p>
         </div>
     </div>
+
+    <!-- Tab Deskripsi dan Ulasan -->
     <div class="tabs">
         <button class="tab-button active" onclick="showTab('description')">Description</button>
-        <button class="tab-button" onclick="showTab('reviews')">Reviews (0)</button>
+        <button class="tab-button" onclick="showTab('reviews')">Reviews (<?php echo $reviews->num_rows; ?>)</button>
     </div>
     <div class="tab-content" id="description">
         <h1 class="product-title">Baju Jirai Kei - Gaya Unik dan Futuristik dengan Sentuhan Jepang!</h1>
@@ -123,9 +186,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
             <li>Jangan gunakan pemutih atau mesin pengering, cukup jemur di tempat yang teduh.</li>
         </ul>
     </div>
+
     <div class="tab-content" id="reviews" style="display: none;">
-        <p>No reviews yet. Be the first to leave a review!</p>
+        <?php if (isset($_SESSION['email'])): ?>
+            <form action="product.php" method="POST">
+                <textarea name="review_text" rows="4" placeholder="Write your review..." required></textarea>
+                <input type="hidden" name="product_id" value="<?= $product_id ?>">
+                <button type="submit">Submit Review</button>
+            </form>
+        <?php else: ?>
+            <p><a href="login.php">Login</a> to add a review.</p>
+        <?php endif; ?>
+
+        <div class="reviews">
+            <?php while ($review = $reviews->fetch_assoc()): ?>
+                <div class="review">
+                    <img src="<?= $review['profile_picture'] ?>" alt="Profile Picture" class="profile-pic">
+                    <div class="review-content">
+                        <strong><?= htmlspecialchars($review['username']) ?></strong>
+                        <p><?= htmlspecialchars($review['review_text']) ?></p>
+                        <small><?= $review['created_at'] ?></small>
+                    </div>
+                </div>
+            <?php endwhile; ?>
+        </div>
     </div>
+
     <footer>
         <p>© 2024 SHOP.CO. All rights reserved.</p>
     </footer>
@@ -141,21 +227,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
                 setTimeout(() => mainImage.classList.remove('fade-in'), 300);
             }, 300);
         }
+
         function showTab(tabName) {
             const descriptionTab = document.getElementById('description');
             const reviewsTab = document.getElementById('reviews');
             const descriptionButton = document.querySelector('.tab-button:nth-child(1)');
             const reviewsButton = document.querySelector('.tab-button:nth-child(2)');
             
-            // Hide both tabs initially
             descriptionTab.style.display = 'none';
             reviewsTab.style.display = 'none';
-            
-            // Remove active class from both buttons
             descriptionButton.classList.remove('active');
             reviewsButton.classList.remove('active');
             
-            // Show the selected tab and add active class to the clicked button
             if (tabName === 'description') {
                 descriptionTab.style.display = 'block';
                 descriptionButton.classList.add('active');
