@@ -11,50 +11,77 @@ if ($conn->connect_error) {
     die("Connection Error: " . $conn->connect_error);
 }
 
-if (isset($_SESSION['name']) && isset($_SESSION['foto'])) {
+if (isset($_SESSION['name']) && isset($_SESSION['foto']) && isset($_SESSION['email'])) {
     $name = $_SESSION['name'];
     $foto = $_SESSION['foto'];
-    $email = $_SESSION['email'];  // Menyimpan email yang digunakan untuk login
+    $email = $_SESSION['email'];  // Email pengguna yang login
 } else {
-    // Jika tidak ada, set default
     $name = "Guest";
-    $foto = 'default_profile_picture.png'; // Set foto default
+    $foto = 'default_profile_picture.png';  // Set foto default
 }
 
-// Menangani penambahan produk ke dalam keranjang belanja
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
-    $product = [
-        'name' => $_POST['product_name'],
-        'price' => $_POST['product_price'],
-        'image' => $_POST['product_image']
-    ];
-    $_SESSION['cart'][] = $product;
-}
-
-// Menangani pengiriman review oleh pengguna yang sudah login
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['email'])) {  // Gunakan email untuk validasi login
-    $user_email = $_SESSION['email'];
-    $product_id = $_POST['product_id'];
-    $review_text = $_POST['review_text'];
-
-    // Menambahkan review ke database
-    $query = "INSERT INTO reviews (user_email, product_id, review_text) VALUES (?, ?, ?)";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param('sis', $user_email, $product_id, $review_text);  // Bind email (varchar) dengan type 's'
-
-    if ($stmt->execute()) {
-        // Redirect untuk menampilkan review terbaru setelah menambahkannya
-        header('Location: product.php?product_id=' . $product_id); 
-        exit();
-    } else {
-        echo "Error adding review.";
-    }
-}
-
-// Ambil ID produk dari query parameter
 $product_id = $_GET['product_id'] ?? 1;  // Default produk ID 1 jika tidak ada di URL
 
-// Query untuk mengambil semua review produk
+// Menangani pengiriman review oleh pengguna yang sudah login via AJAX
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['email'])) {
+    // Check if it's an AJAX request
+    if (isset($_POST['review_text']) && isset($_POST['product_id'])) {
+        $user_email = $_SESSION['email'];  // Mengambil email pengguna
+        $product_id = $_POST['product_id'];  // ID produk
+        $review_text = $_POST['review_text'];  // Teks review
+
+        // Menambahkan review ke database
+        $query = "INSERT INTO reviews (user_email, product_id, review_text) VALUES (?, ?, ?)";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('sis', $user_email, $product_id, $review_text);  // 's' untuk email, 'i' untuk product_id, 's' untuk review_text
+
+        if ($stmt->execute()) {
+            // Mengambil data terbaru untuk review
+            $query_reviews = "SELECT r.review_text, r.created_at, u.nama AS username, u.foto AS profile_picture 
+                              FROM reviews r 
+                              JOIN user u ON r.user_email = u.email 
+                              WHERE r.product_id = ? 
+                              ORDER BY r.created_at DESC";
+            $stmt_reviews = $conn->prepare($query_reviews);
+            $stmt_reviews->bind_param('i', $product_id);
+            $stmt_reviews->execute();
+            $reviews = $stmt_reviews->get_result();
+
+            // Mengambil jumlah review terbaru
+            $query_count = "SELECT COUNT(*) AS review_count FROM reviews WHERE product_id = ?";
+            $stmt_count = $conn->prepare($query_count);
+            $stmt_count->bind_param('i', $product_id);
+            $stmt_count->execute();
+            $result_count = $stmt_count->get_result();
+            $review_count = $result_count->fetch_assoc()['review_count'];
+
+            // Menyusun response untuk AJAX
+            $reviews_html = '';
+            while ($review = $reviews->fetch_assoc()) {
+                $reviews_html .= '
+                    <div class="review">
+                        <img src="' . $review['profile_picture'] . '" alt="Profile Picture" class="profile-pic">
+                        <div class="review-content">
+                            <strong>' . htmlspecialchars($review['username']) . '</strong>
+                            <p>' . htmlspecialchars($review['review_text']) . '</p>
+                            <small>' . $review['created_at'] . '</small>
+                        </div>
+                    </div>';
+            }
+
+            // Response untuk AJAX: jumlah review dan daftar review
+            echo json_encode([
+                'review_count' => $review_count,
+                'reviews_html' => $reviews_html
+            ]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Failed to add review']);
+        }
+    }
+    exit(); // Stop further execution
+}
+
+// Query untuk mengambil semua review produk dan jumlah review
 $query = "SELECT r.review_text, r.created_at, u.nama AS username, u.foto AS profile_picture 
           FROM reviews r 
           JOIN user u ON r.user_email = u.email 
@@ -64,6 +91,14 @@ $stmt = $conn->prepare($query);
 $stmt->bind_param('i', $product_id);
 $stmt->execute();
 $reviews = $stmt->get_result();
+
+// Query untuk mendapatkan jumlah review
+$query_count = "SELECT COUNT(*) AS review_count FROM reviews WHERE product_id = ?";
+$stmt_count = $conn->prepare($query_count);
+$stmt_count->bind_param('i', $product_id);
+$stmt_count->execute();
+$result_count = $stmt_count->get_result();
+$review_count = $result_count->fetch_assoc()['review_count'];
 ?>
 
 <!DOCTYPE html>
@@ -159,7 +194,7 @@ $reviews = $stmt->get_result();
     <!-- Tab Deskripsi dan Ulasan -->
     <div class="tabs">
         <button class="tab-button active" onclick="showTab('description')">Description</button>
-        <button class="tab-button" onclick="showTab('reviews')">Reviews (<?php echo $reviews->num_rows; ?>)</button>
+        <button class="tab-button" onclick="showTab('reviews')">Reviews</button>
     </div>
     <div class="tab-content" id="description">
         <h1 class="product-title">Baju Jirai Kei - Gaya Unik dan Futuristik dengan Sentuhan Jepang!</h1>
@@ -188,8 +223,9 @@ $reviews = $stmt->get_result();
     </div>
 
     <div class="tab-content" id="reviews" style="display: none;">
-        <?php if (isset($_SESSION['email'])): ?>
-            <form action="product.php" method="POST">
+        <h3>Reviews (<?= $review_count ?>)</h3>  <!-- Menampilkan jumlah review -->
+        <?php if (isset($_SESSION['email'])): ?>  <!-- Hanya tampilkan form jika pengguna sudah login -->
+            <form id="review-form" action="product.php?product_id=<?= $product_id ?>" method="POST">
                 <textarea name="review_text" rows="4" placeholder="Write your review..." required></textarea>
                 <input type="hidden" name="product_id" value="<?= $product_id ?>">
                 <button type="submit">Submit Review</button>
@@ -198,7 +234,7 @@ $reviews = $stmt->get_result();
             <p><a href="login.php">Login</a> to add a review.</p>
         <?php endif; ?>
 
-        <div class="reviews">
+        <div class="reviews" id="reviews-list">
             <?php while ($review = $reviews->fetch_assoc()): ?>
                 <div class="review">
                     <img src="<?= $review['profile_picture'] ?>" alt="Profile Picture" class="profile-pic">
@@ -215,7 +251,8 @@ $reviews = $stmt->get_result();
     <footer>
         <p>© 2024 SHOP.CO. All rights reserved.</p>
     </footer>
-
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function changeImage(imageSrc) {
             const mainImage = document.getElementById('main-image');
@@ -247,6 +284,41 @@ $reviews = $stmt->get_result();
                 reviewsButton.classList.add('active');
             }
         }
+
+        $(document).ready(function(){
+            $("#review-form").on("submit", function(event){
+                event.preventDefault();  // Mencegah form dari submit biasa
+
+                var reviewText = $("textarea[name='review_text']").val();
+                var productId = $("input[name='product_id']").val();
+
+                $.ajax({
+                    url: "product.php?product_id=" + productId,
+                    type: "POST",
+                    data: {
+                        review_text: reviewText,
+                        product_id: productId
+                    },
+                    success: function(response) {
+                        console.log('Success:', response);
+                        var data = JSON.parse(response);
+                        if (data.status === 'success') {
+                            // Update jumlah review
+                            $("h3").text("Reviews (" + data.review_count + ")");
+                            // Tambahkan review baru ke dalam daftar review
+                            $("#reviews-list").prepend(data.reviews_html);
+                            // Kosongkan textarea
+                            $("textarea[name='review_text']").val('');
+                        } else {
+                            alert(data.message);  // Tampilkan error jika ada masalah
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error:", error);
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html>
