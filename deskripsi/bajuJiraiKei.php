@@ -97,14 +97,14 @@ $review_count = $result_count->fetch_assoc()['review_count'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SHOP. CO | Product Details</title>
     <link rel="stylesheet" href="style_deskripsi.css?v=1.0">
-    <link rel="icon" type="image/x-icon" href="../../foto/icon.png">
+    <link rel="icon" type="image/x-icon" href="../foto/icon.png">
 </head>
 <body>  
     <!-- Header dan Navigasi -->
     <nav>
         <div class="header-left">
-            <a href="../../beranda/beranda.php">
-            <img src="../../foto/logo copy.jpg" alt="SHOP. CO logo">
+            <a href="../beranda/beranda.php">
+            <img src="../foto/logo copy.jpg" alt="SHOP. CO logo">
             </a>
         </div>
         <div class="header-center">
@@ -128,9 +128,9 @@ $review_count = $result_count->fetch_assoc()['review_count'];
                     </p>
                 </center>
             </div>
-                <a href="../../cart/cart.php">My Cart</a>
-                <a href="../../kelola/barang.php">Product Manager</a>
-                <a href="../../register/register.php">Logout</a>
+                <a href="../cart/cart.php">My Cart</a>
+                <a href="../kelola/barang.php">Product Manager</a>
+                <a href="../register/register.php">Logout</a>
             </div>
         </div>
     </nav>
@@ -138,16 +138,16 @@ $review_count = $result_count->fetch_assoc()['review_count'];
     <!-- Halaman Produk -->
     <div class="product-container">
         <div class="image-section">
-            <img id="main-image" src="../../foto/Baju Jirai Kei.jpeg" alt="Baju Jirai Kei">
+            <img id="main-image" src="../foto/Baju Jirai Kei.jpeg" alt="Baju Jirai Kei">
             <div class="thumbnail-section">
                 <div class="thumbnail-wrapper">
-                    <img class="thumbnail" src="../../foto/Baju Jirai Kei.jpeg" alt="Baju Jirai Kei" onclick="changeImage('../../foto/Baju Jirai Kei.jpeg')">
+                    <img class="thumbnail" src="../foto/Baju Jirai Kei.jpeg" alt="Baju Jirai Kei" onclick="changeImage('../foto/Baju Jirai Kei.jpeg')">
                 </div>
                 <div class="thumbnail-wrapper">
-                    <img class="thumbnail" src="../../foto/Baju Jirai Kei 2.png" alt="Baju Jirai Kei" onclick="changeImage('../../foto/Baju Jirai Kei 2.png')">
+                    <img class="thumbnail" src="../foto/Baju Jirai Kei 2.png" alt="Baju Jirai Kei" onclick="changeImage('../foto/Baju Jirai Kei 2.png')">
                 </div>
                 <div class="thumbnail-wrapper">
-                    <img class="thumbnail" src="../../foto/Baju Jirai Kei 3.png" alt="Baju Jirai Kei" onclick="changeImage('../../foto/Baju Jirai Kei 3.png')">
+                    <img class="thumbnail" src="../foto/Baju Jirai Kei 3.png" alt="Baju Jirai Kei" onclick="changeImage('../foto/Baju Jirai Kei 3.png')">
                 </div>
             </div>
         </div>
@@ -170,7 +170,7 @@ $review_count = $result_count->fetch_assoc()['review_count'];
             <form action="product.php" method="POST">
                 <input type="hidden" name="product_name" value="Baju Jirai Kei">
                 <input type="hidden" name="product_price" value="335000">
-                <input type="hidden" name="product_image" value="../../foto/Baju Jirai Kei.jpeg">
+                <input type="hidden" name="product_image" value="../foto/Baju Jirai Kei.jpeg">
                 <button type="submit" name="add_to_cart" class="add-to-cart">Add to Cart</button>
             </form>
 
@@ -215,7 +215,7 @@ $review_count = $result_count->fetch_assoc()['review_count'];
     <div class="tab-content" id="reviews" style="display: none;">
         <h3>Reviews (<?= $review_count ?>)</h3>  <!-- Menampilkan jumlah review -->
         <?php if (isset($_SESSION['email'])): ?>  <!-- Hanya tampilkan form jika pengguna sudah login -->
-            <form id="review-form" action="/ppw/deskripsi/bajuJiraiKei/produk.php?product_id=<?= $product_id ?>" method="POST">
+            <form id="review-form" action="/ppw/deskripsi/bajuJiraiKei.php?product_id=<?= $product_id ?>" method="POST">
                 <textarea name="review_text" rows="4" placeholder="Write your review..." required></textarea>
                 <input type="hidden" name="product_id" value="<?= $product_id ?>">
                 <button type="submit">Submit Review</button>
