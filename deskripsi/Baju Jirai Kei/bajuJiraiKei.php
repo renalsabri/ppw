@@ -34,6 +34,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['review_text']) && iss
         $result_count = $stmt_count->get_result();
         $review_count = $result_count->fetch_assoc()['review_count'];
 
+        // Ambil data review terbaru
+        $new_review_id = $conn->insert_id;
+        $query_latest_review = "SELECT r.review_text, r.created_at, u.nama AS username, u.foto AS profile_picture 
+                                FROM reviews r 
+                                JOIN user u ON r.user_email = u.email 
+                                WHERE r.id_reviews = ?";
+        $stmt_latest = $conn->prepare($query_latest_review);
+        $stmt_latest->bind_param('i', $new_review_id);
+        $stmt_latest->execute();
+        $latest_review = $stmt_latest->get_result()->fetch_assoc();
+
         // Buat HTML untuk review yang baru ditambahkan
         $reviews_html = "
             <div class='review'>
@@ -264,39 +275,35 @@ $review_count = $result_count->fetch_assoc()['review_count'];
             }
         }
 
-        $(document).ready(function(){
-            $("#review-form").on("submit", function(event){
-                event.preventDefault();  // Mencegah form dari submit biasa
-
-                var reviewText = $("textarea[name='review_text']").val();
-                var productId = $("input[name='product_id']").val();
+        $(document).ready(function () {
+            $("#review-form").on("submit", function (e) {
+                e.preventDefault(); // Mencegah refresh halaman
+                
+                const formData = $(this).serialize(); // Ambil data dari form
 
                 $.ajax({
-                    url: "/ppw/deskripsi/bajuJiraiKei/produk.php?product_id=" + productId,
+                    url: $(this).attr("action"), // URL endpoint dari form
                     type: "POST",
-                    data: {
-                        review_text: reviewText,
-                        product_id: productId
-                    },
-                    success: function(response) {
-                        try {
-                            var data = JSON.parse(response);  // Parse JSON response
-                            if (data.status === 'success') {
-                                // Update jumlah review
-                                $("h3").text("Reviews (" + data.review_count + ")");
-                                // Tambahkan review baru ke dalam daftar review
-                                $("#reviews-list").prepend(data.reviews_html);
-                                // Kosongkan textarea
-                                $("textarea[name='review_text']").val('');
-                            } else {
-                                alert(data.message);  // Tampilkan error jika ada masalah
-                            }
-                        } catch (e) {
-                            console.error("Failed to parse JSON response", e);
+                    data: formData,
+                    success: function (response) {
+                        // Parsing JSON dari response
+                        const data = JSON.parse(response);
+
+                        if (data.status === "success") {
+                            // Update jumlah review
+                            $("h3").text(`Reviews (${data.review_count})`);
+
+                            // Tambahkan review baru ke atas daftar review
+                            $("#reviews-list").prepend(data.reviews_html);
+
+                            // Kosongkan textarea setelah sukses
+                            $("textarea[name='review_text']").val("");
+                        } else {
+                            alert(data.message);
                         }
                     },
-                    error: function(xhr, status, error) {
-                        console.error("AJAX Error:", error);
+                    error: function () {
+                        alert("An error occurred while submitting the review.");
                     }
                 });
             });

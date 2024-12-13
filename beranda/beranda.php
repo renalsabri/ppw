@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
             <section class="product-list">
                 <?php
                 $products = [
-                    ['name' => 'Baju Jirai Kei', 'price' => 335000, 'image' => '../foto/Baju Jirai Kei.jpeg', 'link' => '../deskripsi/bajuJiraiKei/produk.php'],
+                    ['name' => 'Baju Jirai Kei', 'price' => 335000, 'image' => '../foto/Baju Jirai Kei.jpeg', 'link' => '../deskripsi/Baju Jirai Kei/bajuJiraiKei.php'],
                     ['name' => 'Kaos Emyu', 'price' => 340000, 'image' => '../foto/Kaos Emyu.jpg', 'link' => 'emyu.html'],
                     ['name' => 'Kaos Barca', 'price' => 240000, 'image' => '../foto/Kaos Barca.jpg', 'link' => 'barca.html'],
                     ['name' => 'Baju Pramuka', 'price' => 128000, 'image' => '../foto/Baju Pramuka.jpg', 'link' => 'pramuka.html'],
