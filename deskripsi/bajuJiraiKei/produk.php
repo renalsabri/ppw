@@ -216,7 +216,7 @@ $review_count = $result_count->fetch_assoc()['review_count'];
         <div class="reviews" id="reviews-list">
             <?php while ($review = $reviews->fetch_assoc()): ?>
                 <div class="review">
-                    <img src="<?= $review['profile_picture'] ?>" alt="Profile Picture" class="profile-pic">
+                <img src="<?= $review['profile_picture'] ?>" alt="Profile Picture" class="profile-pic">
                     <div class="review-content">
                         <strong><?= htmlspecialchars($review['username']) ?></strong>
                         <p><?= htmlspecialchars($review['review_text']) ?></p>

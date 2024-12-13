@@ -37,7 +37,7 @@ if (isset($_GET['code'])) {
         $google_account_info = $google_oauth->userinfo->get();
         $email = $google_account_info->email;
         $name = $google_account_info->name;
-        $foto = $google_account_info->picture;
+        $_SESSION['foto'] = $google_account_info->picture;
 
         // Periksa apakah email sudah ada di database
         $stmt = $conn->prepare("SELECT * FROM user WHERE email = ?");
@@ -46,16 +46,16 @@ if (isset($_GET['code'])) {
         $result = $stmt->get_result();
 
         if ($result->num_rows == 0) {
-            $foto = '../foto/profile.png';  // Set foto default jika tidak ada
+            $foto = $google_account_info->picture ?: '/ppw/foto/profile.png';  // Gunakan URL foto dari Google atau default
             $stmt = $conn->prepare("INSERT INTO user (email, name, foto) VALUES (?, ?, ?)");
             $stmt->bind_param("sss", $email, $name, $foto);
             $stmt->execute();
-        }
+        }   
 
         // Simpan data user di sesi
         $_SESSION['email'] = $email;
         $_SESSION['name'] = $name;
-        $_SESSION['foto'] = $foto ? $foto : '../foto/profile.png';
+        $_SESSION['foto'] = $foto;
 
         header("Location: ../beranda/beranda.php");
         exit();
@@ -91,7 +91,7 @@ if (!empty($email) && !empty($password)) {
                     // Simpan email dan data user lainnya di sesi
                     $_SESSION['email'] = $email;
                     $_SESSION['name'] = $row['name'];
-                    $_SESSION['foto'] = $row['foto'] ? $row['foto'] : '../foto/profile.png';
+                    $_SESSION['foto'] = $row['foto'] ?: '/ppw/foto/profile.png';
 
                     header("Location: ../beranda/beranda.php");
                     exit();

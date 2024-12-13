@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 $nama = isset($_POST['nama']) ? $_POST['nama'] : '';
 $email = isset($_POST['email']) ? $_POST['email'] : '';
 $password = isset($_POST['password']) ? $_POST['password'] : '';
-$foto = '../foto/profile.png';
+$foto = '/ppw/foto/profile.png';
 
 $_SESSION['nama'] = $nama;
 
