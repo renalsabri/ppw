@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="user.css">
+</head>
+<body>
+    <div class="edit-profile-container">
+        <header>
+            <a href="../beranda/beranda.php"><button class="back-button">&larr;</button></a>
+            <h1>Edit Profile</h1>
+            <button class="save-button">Save</button>
+        </header>
+
+        <div class="profile-photo-section">
+            <div class="profile-photo-placeholder">
+                <img src="profile-placeholder.png" alt="Profile Photo">
+            </div>
+            <button class="upload-button">Upload</button>
+        </div>
+
+        <form class="profile-form">
+            <label for="full-name">Full name</label>
+            <input type="text" id="full-name" placeholder="Type here">
+
+            <label for="email">Email (used for login)</label>
+            <div class="email-section">
+                <input type="email" id="email" value="reynaldi@example.com" readonly>
+                <button class="change-button">Change</button>
+            </div>
+
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" placeholder="Type here">
+
+            <label for="birthday">Birthday</label>
+            <input type="date" id="birthday" placeholder="Type here">
+
+            <label for="about-me">About me</label>
+            <input type="text" id="about-me" placeholder="Type here">
+        </form>
+    </div>
+</body>
+</html>

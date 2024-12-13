@@ -52,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
                 </center>
             </div>
                 <a href="../cart/cart.php">My Cart</a>
+                <a href="../user/user.html">user</a>
                 <a href="../kelola/barang.php">Product Manager</a>
                 <a href="../register/register.php">Logout</a>
             </div>
