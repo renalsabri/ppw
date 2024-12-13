@@ -15,6 +15,7 @@ if ($conn->connect_error) {
 // Jika request dari AJAX untuk menambahkan review
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['review_text']) && isset($_POST['product_id']) && isset($_SESSION['email'])) {
     header('Content-Type: application/json');
+    ob_start();
 
     // Menambahkan review ke database
     $user_email = $_SESSION['email'];
@@ -60,13 +61,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['review_text']) && iss
         // Respons sukses dengan data terbaru
         $response = [
             'status' => 'success',
+            'message' => 'Review submitted successfully!',
             'review_count' => $review_count,
-            'reviews_html' => $reviews_html
+            'reviews_html' => "
+            <div class='review'>
+                <img src='/ppw/foto/profile.png' alt='Profile Picture' class='profile-pic'>
+                <div class='review-content'>
+                    <strong>{$username}</strong>
+                    <p>{$review_text}</p>
+                    <small>Just now</small>
+                </div>
+            </div>"
         ];
         echo json_encode($response);  // Pastikan response dikirim dalam format JSON
     } else {
         echo json_encode(['status' => 'error', 'message' => 'Failed to add review.']);
     }
+    ob_end_clean();
     exit();
 }
 
@@ -158,12 +169,12 @@ $review_count = $result_count->fetch_assoc()['review_count'];
             <p class="description">
                 Dibuat dengan bahan berkualitas, nyaman dipakai sepanjang hari, dan cocok untuk berbagai acara. Tersedia dalam berbagai ukuran dan pilihan warna menarik.
             </p>
-            <label for="size-select">Select Size</label>
+            <label for="size-select">Pilih Ukuran</label>
             <select id="size-select">
-                <option value="">Select Size</option>
-                <option value="s">Small</option>
-                <option value="m">Medium</option>
-                <option value="l">Large</option>
+                <option value="">Pilih Ukuran</option>
+                <option value="s">S</option>
+                <option value="m">M</option>
+                <option value="l">L</option>
             </select>
 
             <!-- Form untuk Menambahkan ke Keranjang -->
@@ -171,20 +182,21 @@ $review_count = $result_count->fetch_assoc()['review_count'];
                 <input type="hidden" name="product_name" value="Baju Jirai Kei">
                 <input type="hidden" name="product_price" value="335000">
                 <input type="hidden" name="product_image" value="../foto/Baju Jirai Kei.jpeg">
-                <button type="submit" name="add_to_cart" class="add-to-cart">Add to Cart</button>
+                <button type="submit" name="buy_now" class="buy-now">Beli Sekarang</button>
+                <button type="submit" name="add_to_cart" class="add-to-cart">Tambah ke Keranjang</button>
             </form>
 
             <p class="meta">
-                <strong>Category:</strong> Wanita, Pakaian Atasan, Gaya Jepang, Kasual<br>
-                <strong>Tags:</strong> Jirai Kei, Baju Gaya Jepang, Tren Fashion Jepang, Baju Kasual Modern
+                <strong>Kategori:</strong> Wanita, Pakaian Atasan, Gaya Jepang, Kasual<br>
+                <strong>Tagar:</strong> Jirai Kei, Baju Gaya Jepang, Tren Fashion Jepang, Baju Kasual Modern
             </p>
         </div>
     </div>
 
     <!-- Tab Deskripsi dan Ulasan -->
     <div class="tabs">
-        <button class="tab-button active" onclick="showTab('description')">Description</button>
-        <button class="tab-button" onclick="showTab('reviews')">Reviews</button>
+        <button class="tab-button active" onclick="showTab('description')">Tentang Produk</button>
+        <button class="tab-button" onclick="showTab('reviews')">Ulasan</button>
     </div>
     <div class="tab-content" id="description">
         <h1 class="product-title">Baju Jirai Kei - Gaya Unik dan Futuristik dengan Sentuhan Jepang!</h1>
@@ -213,12 +225,12 @@ $review_count = $result_count->fetch_assoc()['review_count'];
     </div>
 
     <div class="tab-content" id="reviews" style="display: none;">
-        <h3>Reviews (<?= $review_count ?>)</h3>  <!-- Menampilkan jumlah review -->
+        <h3>Ulasan (<?= $review_count ?>)</h3>  <!-- Menampilkan jumlah review -->
         <?php if (isset($_SESSION['email'])): ?>  <!-- Hanya tampilkan form jika pengguna sudah login -->
             <form id="review-form" action="/ppw/deskripsi/bajuJiraiKei.php?product_id=<?= $product_id ?>" method="POST">
-                <textarea name="review_text" rows="4" placeholder="Write your review..." required></textarea>
+                <textarea name="review_text" rows="4" placeholder="Ketik Ulasanmu..." required></textarea>
                 <input type="hidden" name="product_id" value="<?= $product_id ?>">
-                <button type="submit">Submit Review</button>
+                <button type="submit">Kirim Ulasan</button>
             </form>
         <?php else: ?>
             <p><a href="login.php">Login</a> to add a review.</p>
@@ -286,20 +298,19 @@ $review_count = $result_count->fetch_assoc()['review_count'];
                     type: "POST",
                     data: formData,
                     success: function (response) {
-                        // Parsing JSON dari response
-                        const data = JSON.parse(response);
-
-                        if (data.status === "success") {
-                            // Update jumlah review
-                            $("h3").text(`Reviews (${data.review_count})`);
-
-                            // Tambahkan review baru ke atas daftar review
-                            $("#reviews-list").prepend(data.reviews_html);
-
-                            // Kosongkan textarea setelah sukses
-                            $("textarea[name='review_text']").val("");
-                        } else {
-                            alert(data.message);
+                        console.log("Raw response: ", response);  // Cek respons sebelum parsing
+                        try {
+                            const data = JSON.parse(response);
+                            if (data.status === "success") {
+                                $("h3").text(`Reviews (${data.review_count})`);
+                                $("#reviews-list").prepend(data.reviews_html);
+                                $("textarea[name='review_text']").val("");
+                            } else {
+                                alert(data.message);
+                            }
+                        } catch (error) {
+                            console.error("JSON parse error: ", error);
+                            alert("An error occurred while processing the review response.");
                         }
                     },
                     error: function () {
