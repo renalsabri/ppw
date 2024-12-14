@@ -15,9 +15,7 @@ if ($conn->connect_error) {
 // Jika request dari AJAX untuk menambahkan review
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['review_text']) && isset($_POST['product_id']) && isset($_SESSION['email'])) {
     header('Content-Type: application/json');
-    ob_start();
 
-    // Menambahkan review ke database
     $user_email = $_SESSION['email'];
     $product_id = $_POST['product_id'];
     $review_text = $_POST['review_text'];
@@ -27,6 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['review_text']) && iss
     $stmt->bind_param('sis', $user_email, $product_id, $review_text);
 
     if ($stmt->execute()) {
+        $new_review_id = $conn->insert_id;
+
         // Ambil jumlah review terbaru
         $query_count = "SELECT COUNT(*) AS review_count FROM reviews WHERE product_id = ?";
         $stmt_count = $conn->prepare($query_count);
@@ -36,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['review_text']) && iss
         $review_count = $result_count->fetch_assoc()['review_count'];
 
         // Ambil data review terbaru
-        $new_review_id = $conn->insert_id;
         $query_latest_review = "SELECT r.review_text, r.created_at, u.nama AS username, u.foto AS profile_picture 
                                 FROM reviews r 
                                 JOIN user u ON r.user_email = u.email 
@@ -46,18 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['review_text']) && iss
         $stmt_latest->execute();
         $latest_review = $stmt_latest->get_result()->fetch_assoc();
 
-        // Buat HTML untuk review yang baru ditambahkan
-        $reviews_html = "
-            <div class='review'>
-                <img src='{$_SESSION['foto']}' alt='Profile Picture' class='profile-pic'>
-                <div class='review-content'>
-                    <strong>{$_SESSION['name']}</strong>
-                    <p>" . htmlspecialchars($review_text) . "</p>
-                    <small>Just now</small>
-                </div>
-            </div>
-        ";
-
         // Respons sukses dengan data terbaru
         $response = [
             'status' => 'success',
@@ -65,19 +52,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['review_text']) && iss
             'review_count' => $review_count,
             'reviews_html' => "
             <div class='review'>
-                <img src='/ppw/foto/profile.png' alt='Profile Picture' class='profile-pic'>
+                <img src='{$latest_review['profile_picture']}' alt='Profile Picture' class='profile-pic'>
                 <div class='review-content'>
-                    <strong>{$username}</strong>
-                    <p>{$review_text}</p>
+                    <strong>{$latest_review['username']}</strong>
+                    <p>" . htmlspecialchars($latest_review['review_text']) . "</p>
                     <small>Just now</small>
                 </div>
             </div>"
         ];
-        echo json_encode($response);  // Pastikan response dikirim dalam format JSON
+        echo json_encode($response);
     } else {
         echo json_encode(['status' => 'error', 'message' => 'Failed to add review.']);
     }
-    ob_end_clean();
     exit();
 }
 
@@ -298,23 +284,22 @@ $review_count = $result_count->fetch_assoc()['review_count'];
                     type: "POST",
                     data: formData,
                     success: function (response) {
-                        console.log("Raw response: ", response);  // Cek respons sebelum parsing
+                        console.log("Raw response: ", response); // Debugging
                         try {
-                            const data = JSON.parse(response);
-                            if (data.status === "success") {
-                                $("h3").text(`Reviews (${data.review_count})`);
-                                $("#reviews-list").prepend(data.reviews_html);
-                                $("textarea[name='review_text']").val("");
+                            if (response.status === "success") {
+                                $("h3").text(`Ulasan (${response.review_count})`); // Update jumlah ulasan
+                                $("#reviews-list").prepend(response.reviews_html); // Tambahkan review baru
+                                $("textarea[name='review_text']").val(""); // Bersihkan textarea
                             } else {
-                                alert(data.message);
+                                alert(response.message);
                             }
                         } catch (error) {
-                            console.error("JSON parse error: ", error);
-                            alert("An error occurred while processing the review response.");
+                            console.error("Error parsing response: ", error);
+                            alert("Terjadi kesalahan dalam memproses ulasan.");
                         }
                     },
                     error: function () {
-                        alert("An error occurred while submitting the review.");
+                        alert("Terjadi kesalahan saat mengirim ulasan.");
                     }
                 });
             });
