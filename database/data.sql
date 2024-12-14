@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 14 Des 2024 pada 00.43
+-- Waktu pembuatan: 14 Des 2024 pada 00.59
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -35,6 +35,13 @@ CREATE TABLE `reviews` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data untuk tabel `reviews`
+--
+
+INSERT INTO `reviews` (`id_reviews`, `user_email`, `product_id`, `review_text`, `created_at`) VALUES
+(1, 'fnfatih31@gmail.com', 1, 'mantap', '2024-12-13 23:50:30');
+
 -- --------------------------------------------------------
 
 --
@@ -53,8 +60,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`email`, `nama`, `foto`, `password`) VALUES
-('abc@def.com', 'bapakmu', '/ppw/foto/profile.png', '$2y$10$ex6ygy9xccObjju01xipP.KzGY.MDKnDLf2GjKfOoFFqOOOYDNJhW'),
-('fnfatih31@gmail.com', 'ngab', '/ppw/foto/profile.png', '$2y$10$9wr8PwWdyFSaDDfNGi5S6OPSSq.XE1Um9ABEwzcrOPtO5jO34ZhPq');
+('fnfatih31@gmail.com', 'patih', '/ppw/foto/profile.png', '$2y$10$NUx7V2dIhO7KueJUUnG0Y.j9lCwQf3Kq.Gx.XOrCG3gL4Suq1G7mW');
 
 --
 -- Indexes for dumped tables
@@ -82,7 +88,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id_reviews` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_reviews` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
