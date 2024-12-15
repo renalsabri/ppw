@@ -151,22 +151,22 @@ $review_count = $result_count->fetch_assoc()['review_count'];
         <div class="details-section">
             <h1>Baju Jirai Kei</h1>
             <div class="rating">★★★★★</div>
-            <p class="price">Rp335.000</p>
+            <p class="price" id="product-price">Rp335.000</p>
             <p class="description">
                 Dibuat dengan bahan berkualitas, nyaman dipakai sepanjang hari, dan cocok untuk berbagai acara. Tersedia dalam berbagai ukuran dan pilihan warna menarik.
             </p>
             <label for="size-select">Pilih Ukuran</label>
             <select id="size-select">
-                <option value="">Pilih Ukuran</option>
-                <option value="s">S</option>
-                <option value="m">M</option>
-                <option value="l">L</option>
+                <option value="" data-price="335000">Pilih Ukuran</option>
+                <option value="s" data-price="320000">S - Rp320.000</option>
+                <option value="m" data-price="335000">M - Rp335.000</option>
+                <option value="l" data-price="350000">L - Rp350.000</option>
             </select>
 
             <!-- Form untuk Menambahkan ke Keranjang -->
             <form action="product.php" method="POST">
                 <input type="hidden" name="product_name" value="Baju Jirai Kei">
-                <input type="hidden" name="product_price" value="335000">
+                <input type="hidden" name="product_price" id="hidden-product-price" value="335000">
                 <input type="hidden" name="product_image" value="../foto/Baju Jirai Kei.jpeg">
                 <button type="submit" name="buy_now" class="buy-now">Beli Sekarang</button>
                 <button type="submit" name="add_to_cart" class="add-to-cart">Tambah ke Keranjang</button>
@@ -302,6 +302,22 @@ $review_count = $result_count->fetch_assoc()['review_count'];
                         alert("Terjadi kesalahan saat mengirim ulasan.");
                     }
                 });
+            });
+
+            $("#size-select").on("change", function () {
+                const selectedOption = $(this).find(":selected");
+                const selectedPrice = selectedOption.data("price"); // Ambil data dari atribut `data-price`
+                
+                // Update elemen harga di halaman
+                const priceElement = $("#product-price");
+                if (selectedPrice) {
+                    priceElement.text(`Rp${selectedPrice.toLocaleString("id-ID")}`);
+                } else {
+                    priceElement.text("Rp0");
+                }
+
+                // Update input hidden untuk harga di form
+                $("#product-price-input").val(selectedPrice || 0);
             });
         });
     </script>
