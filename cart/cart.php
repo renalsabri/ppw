@@ -1,9 +1,38 @@
 <?php
 session_start();
 
+// Hapus item dari cart
+if (isset($_POST['remove_item'])) {
+    $product_name = $_POST['product_name'];
+    foreach ($_SESSION['cart'] as $key => $item) {
+        if ($item['name'] === $product_name) {
+            unset($_SESSION['cart'][$key]);
+            $_SESSION['cart'] = array_values($_SESSION['cart']); // Re-index array
+            break;
+        }
+    }
+    header("Location: cart.php");
+    exit();
+}
+
+// Update kuantitas produk
+if (isset($_POST['update_quantity'])) {
+    $product_name = $_POST['product_name'];
+    $quantity = $_POST['quantity'];
+    foreach ($_SESSION['cart'] as &$item) {
+        if ($item['name'] === $product_name) {
+            $item['quantity'] = max(1, intval($quantity)); // Minimal kuantitas 1
+            break;
+        }
+    }
+    header("Location: cart.php");
+    exit();
+}
+
+// Clear semua item di cart
 if (isset($_POST['clear_cart'])) {
-    $_SESSION['cart'] = array();
-    header("Location: cart.php"); 
+    $_SESSION['cart'] = [];
+    header("Location: cart.php");
     exit();
 }
 ?>
@@ -39,25 +68,51 @@ if (isset($_POST['clear_cart'])) {
             <table>
                 <thead>
                     <tr>
-                        <th>Product Name</th>
+                        <th>Product</th>
                         <th>Price</th>
-                        <th>Image</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($_SESSION['cart'] as $item): ?>
+                    <?php
+                    $total_price = 0;
+                    foreach ($_SESSION['cart'] as $item):
+                        $item_total = $item['price'] * $item['quantity'];
+                        $total_price += $item_total;
+                    ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($item['name']); ?></td>
+                            <td>
+                                <img src="<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" width="50">
+                                <?php echo htmlspecialchars($item['name']); ?>
+                            </td>
                             <td>Rp <?php echo number_format($item['price'], 0, ',', '.'); ?></td>
-                            <td><img src="<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" width="50"></td>
+                            <td>
+                                <form method="POST" action="">
+                                    <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($item['name']); ?>">
+                                    <input type="number" name="quantity" value="<?php echo $item['quantity']; ?>" min="1">
+                                    <button type="submit" name="update_quantity">Update</button>
+                                </form>
+                            </td>
+                            <td>Rp <?php echo number_format($item_total, 0, ',', '.'); ?></td>
+                            <td>
+                                <form method="POST" action="">
+                                    <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($item['name']); ?>">
+                                    <button type="submit" name="remove_item">Remove</button>
+                                </form>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            
+
+            <h3>Total: Rp <?php echo number_format($total_price, 0, ',', '.'); ?></h3>
+
             <form method="POST" action="">
-                <button type="submit" name="clear_cart" class="btn-clear-cart">Clear Cart</button>
+                <button type="submit" name="clear_cart">Clear Cart</button>
             </form>
+            <a href="checkout.php" class="btn-checkout">Proceed to Checkout</a>
         <?php endif; ?>
     </section>
 

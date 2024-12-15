@@ -12,7 +12,42 @@ if ($conn->connect_error) {
     die("Connection Error: " . $conn->connect_error);
 }
 
-// Jika request dari AJAX untuk menambahkan review
+// **HANDLE ADD TO CART**
+if (isset($_POST['add_to_cart'])) {
+    $product_name = $_POST['product_name'];
+    $product_price = $_POST['product_price'];
+    $product_image = $_POST['product_image'];
+
+    // Buat array produk baru
+    $new_product = [
+        'name' => $product_name,
+        'price' => $product_price,
+        'image' => $product_image,
+        'quantity' => 1, // Default quantity
+    ];
+
+    // Tambahkan produk ke sesi cart
+    if (isset($_SESSION['cart'])) {
+        // Periksa apakah produk sudah ada di cart
+        $found = false;
+        foreach ($_SESSION['cart'] as &$item) {
+            if ($item['name'] === $product_name) {
+                $item['quantity'] += 1; // Tambah kuantitas
+                $found = true;
+                break;
+            }
+        }
+        if (!$found) {
+            $_SESSION['cart'][] = $new_product;
+        }
+    } else {
+        $_SESSION['cart'] = [$new_product];
+    }
+    
+    exit();
+}
+
+// **HANDLE ADD REVIEW (AJAX REQUEST)**
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['review_text']) && isset($_POST['product_id']) && isset($_SESSION['email'])) {
     header('Content-Type: application/json');
 
@@ -67,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['review_text']) && iss
     exit();
 }
 
-// Ambil semua review produk
+// **FETCH PRODUCT REVIEWS**
 $product_id = $_GET['product_id'] ?? 1;
 $query = "SELECT r.review_text, r.created_at, u.nama AS username, u.foto AS profile_picture 
           FROM reviews r 
@@ -164,7 +199,7 @@ $review_count = $result_count->fetch_assoc()['review_count'];
             </select>
 
             <!-- Form untuk Menambahkan ke Keranjang -->
-            <form action="product.php" method="POST">
+            <form action="bajuJiraiKei.php" method="POST">
                 <input type="hidden" name="product_name" value="Baju Jirai Kei">
                 <input type="hidden" name="product_price" id="hidden-product-price" value="335000">
                 <input type="hidden" name="product_image" value="../foto/Baju Jirai Kei.jpeg">
