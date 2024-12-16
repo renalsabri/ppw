@@ -199,7 +199,7 @@ $review_count = $result_count->fetch_assoc()['review_count'];
             </select>
 
             <!-- Form untuk Menambahkan ke Keranjang -->
-            <form action="bajuJiraiKei.php" method="POST">
+            <form action="" method="POST">
                 <input type="hidden" name="product_name" value="Baju Jirai Kei">
                 <input type="hidden" name="product_price" id="hidden-product-price" value="335000">
                 <input type="hidden" name="product_image" value="../foto/Baju Jirai Kei.jpeg">

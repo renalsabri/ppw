@@ -83,13 +83,13 @@ if (isset($_POST['clear_cart'])) {
                         $total_price += $item_total;
                     ?>
                         <tr>
-                            <td>
+                            <td style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
                                 <img src="<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" width="50">
                                 <?php echo htmlspecialchars($item['name']); ?>
                             </td>
                             <td>Rp <?php echo number_format($item['price'], 0, ',', '.'); ?></td>
                             <td>
-                                <form method="POST" action="">
+                                <form method="POST" action="" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
                                     <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($item['name']); ?>">
                                     <input type="number" name="quantity" value="<?php echo $item['quantity']; ?>" min="1">
                                     <button type="submit" name="update_quantity">Update</button>
@@ -110,7 +110,7 @@ if (isset($_POST['clear_cart'])) {
             <h3>Total: Rp <?php echo number_format($total_price, 0, ',', '.'); ?></h3>
 
             <form method="POST" action="">
-                <button type="submit" name="clear_cart">Clear Cart</button>
+                <button type="submit" name="clear_cart" style="margin-bottom: 20px;">Clear Cart</button>
             </form>
             <a href="checkout.php" class="btn-checkout">Proceed to Checkout</a>
         <?php endif; ?>
