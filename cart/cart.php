@@ -54,25 +54,25 @@ if (isset($_POST['clear_cart'])) {
             </a>
         </div>
         <div class="header-center">
-            <h1>Your Cart</h1>
+            <h1>Keranjang</h1>
         </div>
         <div class="header-right">
-            <a href="../beranda/beranda.php" class="btn-back">Back to Shop</a>
+            <a href="../beranda/beranda.php" class="btn-back">Kembali ke Beranda</a>
         </div>
     </nav>
 
     <section class="cart-list">
         <?php if (empty($_SESSION['cart'])): ?>
-            <p>Your cart is empty.</p>
+            <p>Keranjangmu Kosong</p>
         <?php else: ?>
             <table>
                 <thead>
                     <tr>
-                        <th>Product</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
+                        <th>Produk</th>
+                        <th>Harga</th>
+                        <th>Kuantitas</th>
                         <th>Total</th>
-                        <th>Actions</th>
+                        <th>Hapus produk</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -92,14 +92,14 @@ if (isset($_POST['clear_cart'])) {
                                 <form method="POST" action="" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
                                     <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($item['name']); ?>">
                                     <input type="number" name="quantity" value="<?php echo $item['quantity']; ?>" min="1">
-                                    <button type="submit" name="update_quantity">Update</button>
+                                    <button type="submit" name="update_quantity">Perbarui</button>
                                 </form>
                             </td>
                             <td>Rp <?php echo number_format($item_total, 0, ',', '.'); ?></td>
                             <td>
                                 <form method="POST" action="">
                                     <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($item['name']); ?>">
-                                    <button type="submit" name="remove_item">Remove</button>
+                                    <button type="submit" name="remove_item">Hapus</button>
                                 </form>
                             </td>
                         </tr>
@@ -110,9 +110,9 @@ if (isset($_POST['clear_cart'])) {
             <h3>Total: Rp <?php echo number_format($total_price, 0, ',', '.'); ?></h3>
 
             <form method="POST" action="">
-                <button type="submit" name="clear_cart" style="margin-bottom: 20px;">Clear Cart</button>
+                <button type="submit" name="clear_cart" style="margin-bottom: 20px;">Kosongkan Keranjang</button>
             </form>
-            <a href="checkout.php" class="btn-checkout">Proceed to Checkout</a>
+            <a href="checkout.php" class="btn-checkout">Beli</a>
         <?php endif; ?>
     </section>
 
