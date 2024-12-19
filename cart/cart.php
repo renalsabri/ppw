@@ -85,7 +85,7 @@ if (isset($_POST['clear_cart'])) {
                         <tr>
                             <td style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
                                 <img src="<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" width="50">
-                                <?php echo htmlspecialchars($item['name']); ?>
+                                <?php echo htmlspecialchars($item['name']); ?> <!-- Nama produk termasuk ukuran -->
                             </td>
                             <td>Rp <?php echo number_format($item['price'], 0, ',', '.'); ?></td>
                             <td>

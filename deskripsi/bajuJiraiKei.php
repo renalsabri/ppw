@@ -17,33 +17,46 @@ if (isset($_POST['add_to_cart'])) {
     $product_name = $_POST['product_name'];
     $product_price = $_POST['product_price'];
     $product_image = $_POST['product_image'];
+    $size = $_POST['size'];  // Ambil data ukuran
+
+    // Gabungkan nama produk dengan ukuran untuk identifikasi unik
+    $new_product_name = $product_name . " - " . $size;
 
     // Buat array produk baru
     $new_product = [
-        'name' => $product_name,
+        'name' => $new_product_name,
         'price' => $product_price,
         'image' => $product_image,
         'quantity' => 1, // Default quantity
+        'size' => $size   // Simpan ukuran produk
     ];
 
-    // Tambahkan produk ke sesi cart
+    // Periksa apakah produk sudah ada di cart
     if (isset($_SESSION['cart'])) {
-        // Periksa apakah produk sudah ada di cart
         $found = false;
         foreach ($_SESSION['cart'] as &$item) {
-            if ($item['name'] === $product_name) {
-                $item['quantity'] += 1; // Tambah kuantitas
+            if ($item['name'] === $new_product_name) {
+                // Jika produk dengan ukuran yang sama sudah ada
                 $found = true;
                 break;
             }
         }
-        if (!$found) {
+
+        if ($found) {
+            // Jika produk sudah ada, kirim pesan kesalahan
+            echo json_encode(['status' => 'error', 'message' => 'Produk dengan ukuran ini sudah ada di keranjang.']);
+            exit();
+        } else {
+            // Jika produk belum ada, tambahkan produk ke keranjang
             $_SESSION['cart'][] = $new_product;
         }
     } else {
+        // Jika cart kosong, buat keranjang baru dengan produk pertama
         $_SESSION['cart'] = [$new_product];
     }
-    
+
+    // Jika produk berhasil ditambahkan
+    echo json_encode(['status' => 'success', 'message' => 'Produk berhasil ditambahkan ke keranjang.']);
     exit();
 }
 
@@ -193,9 +206,9 @@ $review_count = $result_count->fetch_assoc()['review_count'];
             <label for="size-select">Pilih Ukuran</label>
             <select id="size-select">
                 <option value="" data-price="335000">Pilih Ukuran</option>
-                <option value="s" data-price="320000">S - Rp320.000</option>
-                <option value="m" data-price="335000">M - Rp335.000</option>
-                <option value="l" data-price="350000">L - Rp350.000</option>
+                <option value="S" data-price="320000">S - Rp320.000</option>
+                <option value="M" data-price="335000">M - Rp335.000</option>
+                <option value="L" data-price="350000">L - Rp350.000</option>
             </select>
 
             <!-- Form untuk Menambahkan ke Keranjang -->
@@ -339,11 +352,59 @@ $review_count = $result_count->fetch_assoc()['review_count'];
                 });
             });
 
+            $(document).ready(function () {
+                // Menangani event klik untuk tombol "Tambah ke Keranjang"
+                $(".add-to-cart").on("click", function (e) {
+                    e.preventDefault();  // Mencegah form submit default
+                    
+                    // Ambil data produk dari elemen terkait
+                    const product_name = $("input[name='product_name']").val();
+                    const product_price = $("#hidden-product-price").val();
+                    const product_image = $("input[name='product_image']").val();
+                    const selected_size = $("#size-select").val();
+
+                    // Pastikan ukuran dipilih sebelum menambah ke keranjang
+                    if (!selected_size) {
+                        alert("Pilih ukuran terlebih dahulu!");
+                        return;
+                    }
+
+                    // Kirim data menggunakan AJAX
+                    $.ajax({
+                        url: "bajuJiraiKei.php",  // URL yang sama (self-submission)
+                        type: "POST",
+                        data: {
+                            add_to_cart: true,
+                            product_name: product_name,
+                            product_price: product_price,
+                            product_image: product_image,
+                            size: selected_size  // Kirim data ukuran
+                        },
+                        success: function(response) {
+                            const data = JSON.parse(response);
+                            
+                            // Jika ada pesan sukses
+                            if (data.status === 'success') {
+                                alert(data.message);  // Menampilkan pesan sukses
+                            }
+                            
+                            // Jika ada pesan error (produk sudah ada di keranjang)
+                            if (data.status === 'error') {
+                                alert(data.message);  // Menampilkan pesan error
+                            }
+                        },
+                        error: function() {
+                            alert("Terjadi kesalahan saat menambahkan produk ke keranjang.");
+                        }
+                    });
+                });
+            });
+
             $("#size-select").on("change", function () {
                 const selectedOption = $(this).find(":selected");
-                const selectedPrice = selectedOption.data("price"); // Ambil data dari atribut `data-price`
-                
-                // Update elemen harga di halaman
+                const selectedPrice = selectedOption.data("price"); // Ambil data harga berdasarkan ukuran
+
+                // Update harga produk di halaman
                 const priceElement = $("#product-price");
                 if (selectedPrice) {
                     priceElement.text(`Rp${selectedPrice.toLocaleString("id-ID")}`);
@@ -351,8 +412,8 @@ $review_count = $result_count->fetch_assoc()['review_count'];
                     priceElement.text("Rp0");
                 }
 
-                // Update input hidden untuk harga di form
-                $("#product-price-input").val(selectedPrice || 0);
+                // Update input hidden untuk harga
+                $("#hidden-product-price").val(selectedPrice || 0);
             });
         });
     </script>
