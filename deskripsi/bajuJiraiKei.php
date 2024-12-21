@@ -60,31 +60,6 @@ if (isset($_POST['add_to_cart'])) {
     exit();
 }
 
-// Menangani tombol "Beli Sekarang"
-if (isset($_POST['buy_now'])) {
-    $product_name = $_POST['product_name'];
-    $product_price = $_POST['product_price'];
-    $product_image = $_POST['product_image'];
-    $size = $_POST['size'];
-
-    // Validasi data
-    if (empty($size)) {
-        echo json_encode(['status' => 'error', 'message' => 'Pilih ukuran sebelum membeli.']);
-        exit();
-    }
-
-    // Simpan data produk ke sesi untuk checkout
-    $_SESSION['checkout'] = [
-        'name' => $product_name . " - " . $size,
-        'price' => $product_price,
-        'image' => $product_image,
-        'size' => $size,
-    ];
-
-    echo json_encode(['status' => 'success', 'message' => 'Produk berhasil ditambahkan untuk checkout.']);
-    exit();
-}
-
 // **HANDLE ADD REVIEW (AJAX REQUEST)**
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['review_text']) && isset($_POST['product_id']) && isset($_SESSION['email'])) {
     header('Content-Type: application/json');
@@ -241,7 +216,12 @@ $review_count = $result_count->fetch_assoc()['review_count'];
                 <input type="hidden" name="product_name" value="Baju Jirai Kei">
                 <input type="hidden" name="product_price" id="hidden-product-price" value="335000">
                 <input type="hidden" name="product_image" value="../foto/Baju Jirai Kei.jpeg">
-                <button type="button" class="buy-now" onclick="openPopup('Nama Produk', 'Harga', 'Gambar')">Beli Sekarang</button>
+                <button type="button" class="buy-now">Beli Sekarang</button>
+                <div id="paymentModal" class="modal">
+                    <div class="modal-content">
+                        <iframe src="../checkout/checkout.php" frameborder="0" id="checkoutFrame"></iframe>
+                    </div>
+                </div>
                 <button type="submit" name="add_to_cart" class="add-to-cart">Tambah ke Keranjang</button>
             </form>
 
@@ -352,6 +332,20 @@ $review_count = $result_count->fetch_assoc()['review_count'];
                 reviewsButton.classList.add('active');
             }
         }
+
+        // Menampilkan modal ketika tombol ditekan
+        document.querySelector('.buy-now').addEventListener('click', function () {
+            const modal = document.getElementById('paymentModal');
+            modal.style.display = 'block';
+        });
+
+        // Menutup modal ketika pesan "closeCheckout" diterima
+        window.addEventListener('message', function (event) {
+            if (event.data === 'closeCheckout') {
+            const modal = document.getElementById('paymentModal');
+            modal.style.display = 'none';
+            }
+        });
 
         function openPopup(productName, productPrice, productImage) {
             // Simpan data produk di elemen popup
@@ -465,46 +459,6 @@ $review_count = $result_count->fetch_assoc()['review_count'];
 
                 // Update input hidden untuk harga
                 $("#hidden-product-price").val(selectedPrice || 0);
-            });
-            
-            // Menangani tombol "Beli Sekarang"
-            $(".buy-now").on("click", function (e) {
-                e.preventDefault(); // Mencegah submit default
-
-                const productName = $("input[name='product_name']").val();
-                const productPrice = $("#hidden-product-price").val();
-                const productImage = $("input[name='product_image']").val();
-                const selectedSize = $("#size-select").val();
-
-                if (!selectedSize) {
-                    alert("Pilih ukuran terlebih dahulu!");
-                    return;
-                }
-
-                // Kirim data menggunakan AJAX
-                $.ajax({
-                    url: "bajuJiraiKei.php", // Kirim ke URL yang sama
-                    type: "POST",
-                    data: {
-                        buy_now: true, // Tanda bahwa ini adalah aksi "Beli Sekarang"
-                        product_name: productName,
-                        product_price: productPrice,
-                        product_image: productImage,
-                        size: selectedSize,
-                    },
-                    success: function (response) {
-                        const data = JSON.parse(response);
-                        if (data.status === "success") {
-                            alert("Produk berhasil dibeli. Menuju halaman checkout...");
-                            window.location.href = "../checkout/checkout.php"; // Redirect ke halaman checkout
-                        } else {
-                            alert(data.message || "Terjadi kesalahan saat membeli produk.");
-                        }
-                    },
-                    error: function () {
-                        alert("Terjadi kesalahan saat memproses pembelian.");
-                    },
-                });
             });
         });
     </script>
