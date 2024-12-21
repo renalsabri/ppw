@@ -3,7 +3,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SHOP. CO | Checkout</title>
-  <link rel="stylesheet" href="style_checkout.css"> <!-- File CSS terpisah -->
+  <link rel="stylesheet" href="style_checkout.css">
 </head>
 <body>
   <div class="checkout-container">
@@ -16,12 +16,8 @@
     <h2 class="total-price">Total Harga: Rp<span id="totalPrice">900.000</span></h2>
     <form>
       <div class="form-group">
-        <input type="text" placeholder="Nama Awal" required>
-        <input type="text" placeholder="Last Name" required>
-      </div>
-      <div class="form-group">
-        <input type="email" placeholder="Email Address" required>
-        <input type="text" placeholder="Address for Delivery" required>
+        <input type="text" placeholder="Nomor Handphone Pengirim" required>
+        <input type="text" placeholder="Alamat untuk Pengiriman" required>
       </div>
       <div class="payment-method">
         <div class="payment-header">
