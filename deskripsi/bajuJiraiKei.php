@@ -60,6 +60,31 @@ if (isset($_POST['add_to_cart'])) {
     exit();
 }
 
+// Menangani tombol "Beli Sekarang"
+if (isset($_POST['buy_now'])) {
+    $product_name = $_POST['product_name'];
+    $product_price = $_POST['product_price'];
+    $product_image = $_POST['product_image'];
+    $size = $_POST['size'];
+
+    // Validasi data
+    if (empty($size)) {
+        echo json_encode(['status' => 'error', 'message' => 'Pilih ukuran sebelum membeli.']);
+        exit();
+    }
+
+    // Simpan data produk ke sesi untuk checkout
+    $_SESSION['checkout'] = [
+        'name' => $product_name . " - " . $size,
+        'price' => $product_price,
+        'image' => $product_image,
+        'size' => $size,
+    ];
+
+    echo json_encode(['status' => 'success', 'message' => 'Produk berhasil ditambahkan untuk checkout.']);
+    exit();
+}
+
 // **HANDLE ADD REVIEW (AJAX REQUEST)**
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['review_text']) && isset($_POST['product_id']) && isset($_SESSION['email'])) {
     header('Content-Type: application/json');
@@ -140,7 +165,7 @@ $review_count = $result_count->fetch_assoc()['review_count'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHOP. CO | Product Details</title>
+    <title>SHOP. CO | Baju Jirai Kei</title>
     <link rel="stylesheet" href="style_deskripsi.css?v=1.0">
     <link rel="icon" type="image/x-icon" href="../foto/icon.png">
 </head>
@@ -216,7 +241,7 @@ $review_count = $result_count->fetch_assoc()['review_count'];
                 <input type="hidden" name="product_name" value="Baju Jirai Kei">
                 <input type="hidden" name="product_price" id="hidden-product-price" value="335000">
                 <input type="hidden" name="product_image" value="../foto/Baju Jirai Kei.jpeg">
-                <button type="submit" name="buy_now" class="buy-now">Beli Sekarang</button>
+                <button type="button" class="buy-now" onclick="openPopup('Nama Produk', 'Harga', 'Gambar')">Beli Sekarang</button>
                 <button type="submit" name="add_to_cart" class="add-to-cart">Tambah ke Keranjang</button>
             </form>
 
@@ -284,6 +309,13 @@ $review_count = $result_count->fetch_assoc()['review_count'];
         </div>
     </div>
 
+    <div class="popup-overlay" id="checkoutModal" style="display: none;">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closeModal()">×</button>
+            <div id="checkoutContent">Memuat...</div>
+        </div>
+    </div>
+
     <footer>
         <p>© 2024 SHOP.CO. All rights reserved.</p>
     </footer>
@@ -319,6 +351,25 @@ $review_count = $result_count->fetch_assoc()['review_count'];
                 reviewsTab.style.display = 'block';
                 reviewsButton.classList.add('active');
             }
+        }
+
+        function openPopup(productName, productPrice, productImage) {
+            // Simpan data produk di elemen popup
+            document.getElementById('popupProductName').innerText = productName;
+            document.getElementById('popupProductPrice').innerText = productPrice;
+            document.getElementById('popupProductImage').src = productImage;
+
+            // Tampilkan popup
+            document.getElementById("checkoutPopup").style.display = "flex";
+        }
+
+        function openModal() {
+            document.getElementById("checkoutModal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("checkoutModal").style.display = "none";
+            document.getElementById("checkoutContent").innerHTML = "Memuat..."; // Reset konten modal
         }
 
         $(document).ready(function () {
@@ -414,6 +465,46 @@ $review_count = $result_count->fetch_assoc()['review_count'];
 
                 // Update input hidden untuk harga
                 $("#hidden-product-price").val(selectedPrice || 0);
+            });
+            
+            // Menangani tombol "Beli Sekarang"
+            $(".buy-now").on("click", function (e) {
+                e.preventDefault(); // Mencegah submit default
+
+                const productName = $("input[name='product_name']").val();
+                const productPrice = $("#hidden-product-price").val();
+                const productImage = $("input[name='product_image']").val();
+                const selectedSize = $("#size-select").val();
+
+                if (!selectedSize) {
+                    alert("Pilih ukuran terlebih dahulu!");
+                    return;
+                }
+
+                // Kirim data menggunakan AJAX
+                $.ajax({
+                    url: "bajuJiraiKei.php", // Kirim ke URL yang sama
+                    type: "POST",
+                    data: {
+                        buy_now: true, // Tanda bahwa ini adalah aksi "Beli Sekarang"
+                        product_name: productName,
+                        product_price: productPrice,
+                        product_image: productImage,
+                        size: selectedSize,
+                    },
+                    success: function (response) {
+                        const data = JSON.parse(response);
+                        if (data.status === "success") {
+                            alert("Produk berhasil dibeli. Menuju halaman checkout...");
+                            window.location.href = "../checkout/checkout.php"; // Redirect ke halaman checkout
+                        } else {
+                            alert(data.message || "Terjadi kesalahan saat membeli produk.");
+                        }
+                    },
+                    error: function () {
+                        alert("Terjadi kesalahan saat memproses pembelian.");
+                    },
+                });
             });
         });
     </script>
