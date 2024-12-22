@@ -95,33 +95,41 @@ $price = isset($_GET['price']) ? intval($_GET['price']) : 0;
 
     <!-- Langkah 3 -->
     <div id="step3" style="display: none; text-align: center;">
-      <h2>Make Payment</h2>
-      <div class="progress-bar">
-        <div class="step">1</div>
-        <div class="step">2</div>
-        <div class="step active">3</div>
-      </div>
+      <h2>Pembayaran Berhasil</h2>
       <div style="margin: 20px auto; width: 100px; height: 100px; background-color: black; border-radius: 50%; display: flex; justify-content: center; align-items: center;">
         <span style="color: white; font-size: 48px;">&#10003;</span>
       </div>
-      <button class="submit-btn" onclick="completeCheckout()">Complete</button>
+      <button class="submit-btn" onclick="completeCheckout()">Selesai</button>
     </div>
   </div>
 
   <script>
     // Fungsi untuk memvalidasi form
+    // Fungsi untuk memvalidasi form berdasarkan metode pembayaran yang dipilih
     function validateForm(form) {
-      const visibleInputs = form.querySelectorAll('input[required]:not([style*="display: none"]), select[required]:not([style*="display: none"])');
+      // Cek metode pembayaran yang dipilih
+      const selectedMethod = Array.from(paymentMethodInputs).find(input => input.checked);
+      let visibleInputs = [];
+
+      if (selectedMethod) {
+        // Validasi kolom-kolom yang relevan berdasarkan metode pembayaran
+        if (selectedMethod.value === 'Credit Card') {
+          visibleInputs = form.querySelectorAll('#creditCardForm input[required]');
+        } else if (selectedMethod.value === 'E-Wallet') {
+          visibleInputs = form.querySelectorAll('#eWalletForm input[required], #eWalletForm select[required]');
+        } else if (selectedMethod.value === 'Bank Transfer') {
+          visibleInputs = form.querySelectorAll('#bankTransferForm input[required], #bankTransferForm select[required]');
+        }
+      }
+
+      // Validasi kolom yang terlihat (terkait dengan metode pembayaran yang dipilih)
       for (let input of visibleInputs) {
-        console.log(`Validating input: ${input.name}, value: "${input.value.trim()}"`);
         if (!input.value.trim()) {
-          console.log(`Validation failed on input: ${input.name}`); // Debugging
           return false;
         }
       }
       return true;
     }
-
     // Navigasi antar langkah
     const step1Form = document.getElementById('step1Form');
     const step2Form = document.getElementById('step2Form');
@@ -169,13 +177,19 @@ $price = isset($_GET['price']) ? intval($_GET['price']) : 0;
     step2Next.addEventListener('click', (e) => {
       e.preventDefault();
 
-      const selectedPaymentMethod = Array.from(paymentMethodInputs).find(input => input.checked);
-      if (!selectedPaymentMethod) {
-        alert('Pilih metode pembayaran terlebih dahulu.');
+      // Validasi form langkah 2
+      if (!validateForm(step2Form)) {
+        alert('Semua kolom di Langkah 2 harus diisi.');
         return;
       }
 
-      console.log(`Selected payment method: ${selectedPaymentMethod.value}`); // Debugging
+      // Pindah ke langkah 3
+      step2Form.style.display = 'none';
+      step3.style.display = 'block';
+
+      // Perbarui indikator langkah
+      document.getElementById('step2Indicator').classList.add('active');
+      document.getElementById('step3Indicator').classList.add('active');
     });
 
     function completeCheckout() {
