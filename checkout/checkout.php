@@ -90,24 +90,44 @@ $price = isset($_GET['price']) ? intval($_GET['price']) : 0;
           </div>
         </div>
       </div>
-      <button type="submit" class="submit-btn">Konfirmasi Pembayaran</button>
+      <button type="submit" class="submit-btn" id="step2Next">Konfirmasi Pembayaran</button>
     </form>
+
+    <!-- Langkah 3 -->
+    <div id="step3" style="display: none; text-align: center;">
+      <h2>Make Payment</h2>
+      <div class="progress-bar">
+        <div class="step">1</div>
+        <div class="step">2</div>
+        <div class="step active">3</div>
+      </div>
+      <div style="margin: 20px auto; width: 100px; height: 100px; background-color: black; border-radius: 50%; display: flex; justify-content: center; align-items: center;">
+        <span style="color: white; font-size: 48px;">&#10003;</span>
+      </div>
+      <button class="submit-btn" onclick="completeCheckout()">Complete</button>
+    </div>
   </div>
 
   <script>
+    // Fungsi untuk memvalidasi form
     function validateForm(form) {
-      const inputs = form.querySelectorAll('input[required], select[required]');
-      for (let input of inputs) {
+      const visibleInputs = form.querySelectorAll('input[required]:not([style*="display: none"]), select[required]:not([style*="display: none"])');
+      for (let input of visibleInputs) {
+        console.log(`Validating input: ${input.name}, value: "${input.value.trim()}"`);
         if (!input.value.trim()) {
+          console.log(`Validation failed on input: ${input.name}`); // Debugging
           return false;
         }
       }
       return true;
     }
-    
+
+    // Navigasi antar langkah
     const step1Form = document.getElementById('step1Form');
     const step2Form = document.getElementById('step2Form');
+    const step3 = document.getElementById('step3');
     const step1Next = document.getElementById('step1Next');
+    const step2Next = document.getElementById('step2Next');
     const paymentMethodInputs = document.getElementsByName('paymentMethod');
 
     const creditCardForm = document.getElementById('creditCardForm');
@@ -115,20 +135,28 @@ $price = isset($_GET['price']) ? intval($_GET['price']) : 0;
     const bankTransferForm = document.getElementById('bankTransferForm');
 
     step1Next.addEventListener('click', (e) => {
-      e.preventDefault();
+      e.preventDefault(); // Mencegah form untuk submit
+
       const selectedMethod = Array.from(paymentMethodInputs).find(input => input.checked);
       if (!selectedMethod) {
         alert('Pilih metode pembayaran terlebih dahulu.');
         return;
       }
+
+      // Validasi form langkah 1
       if (!validateForm(step1Form)) {
-        alert('Semua kolom harus diisi.');
+        alert('Semua kolom di Langkah 1 harus diisi.');
         return;
       }
+
+      // Pindah ke langkah 2
       step1Form.style.display = 'none';
       step2Form.style.display = 'block';
+
       document.getElementById('step1Indicator').classList.add('active');
       document.getElementById('step2Indicator').classList.add('active');
+
+      // Tampilkan formulir spesifik berdasarkan metode pembayaran
       if (selectedMethod.value === 'Credit Card') {
         creditCardForm.style.display = 'block';
       } else if (selectedMethod.value === 'E-Wallet') {
@@ -138,14 +166,24 @@ $price = isset($_GET['price']) ? intval($_GET['price']) : 0;
       }
     });
 
-    document.querySelector('#step2Form .submit-btn').addEventListener('click', (e) => {
+    step2Next.addEventListener('click', (e) => {
       e.preventDefault();
-      if (!validateForm(step2Form)) {
-        alert('Semua kolom harus diisi.');
+
+      const selectedPaymentMethod = Array.from(paymentMethodInputs).find(input => input.checked);
+      if (!selectedPaymentMethod) {
+        alert('Pilih metode pembayaran terlebih dahulu.');
         return;
       }
+
+      console.log(`Selected payment method: ${selectedPaymentMethod.value}`); // Debugging
     });
 
+    function completeCheckout() {
+      alert('Checkout selesai!');
+      // Tambahkan logika akhir di sini jika diperlukan
+    }
+
+    // Tutup modal
     document.querySelector('.close').addEventListener('click', function () {
       window.parent.postMessage('closeCheckout', '*');
     });
