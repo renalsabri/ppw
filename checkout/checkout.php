@@ -190,10 +190,11 @@ $price = isset($_GET['price']) ? intval($_GET['price']) : 0;
       // Perbarui indikator langkah
       document.getElementById('step2Indicator').classList.add('active');
       document.getElementById('step3Indicator').classList.add('active');
+      document.querySelector('.total-price').style.display = 'none';
     });
 
     function completeCheckout() {
-      alert('Checkout selesai!');
+      document.getElementById('checkoutContainer').style.display = 'none';
       // Tambahkan logika akhir di sini jika diperlukan
     }
 
