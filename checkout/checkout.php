@@ -95,30 +95,40 @@ $price = isset($_GET['price']) ? intval($_GET['price']) : 0;
   </div>
 
   <script>
-    // Navigasi antar langkah
+    function validateForm(form) {
+      const inputs = form.querySelectorAll('input[required], select[required]');
+      for (let input of inputs) {
+        if (!input.value.trim()) {
+          return false;
+        }
+      }
+      return true;
+    }
+    
     const step1Form = document.getElementById('step1Form');
     const step2Form = document.getElementById('step2Form');
     const step1Next = document.getElementById('step1Next');
     const paymentMethodInputs = document.getElementsByName('paymentMethod');
-    
+
     const creditCardForm = document.getElementById('creditCardForm');
     const eWalletForm = document.getElementById('eWalletForm');
     const bankTransferForm = document.getElementById('bankTransferForm');
 
-    step1Next.addEventListener('click', () => {
+    step1Next.addEventListener('click', (e) => {
+      e.preventDefault();
       const selectedMethod = Array.from(paymentMethodInputs).find(input => input.checked);
       if (!selectedMethod) {
         alert('Pilih metode pembayaran terlebih dahulu.');
         return;
       }
-
+      if (!validateForm(step1Form)) {
+        alert('Semua kolom harus diisi.');
+        return;
+      }
       step1Form.style.display = 'none';
       step2Form.style.display = 'block';
-
       document.getElementById('step1Indicator').classList.add('active');
       document.getElementById('step2Indicator').classList.add('active');
-
-      // Tampilkan formulir spesifik berdasarkan metode pembayaran
       if (selectedMethod.value === 'Credit Card') {
         creditCardForm.style.display = 'block';
       } else if (selectedMethod.value === 'E-Wallet') {
@@ -128,7 +138,14 @@ $price = isset($_GET['price']) ? intval($_GET['price']) : 0;
       }
     });
 
-    // Tutup modal
+    document.querySelector('#step2Form .submit-btn').addEventListener('click', (e) => {
+      e.preventDefault();
+      if (!validateForm(step2Form)) {
+        alert('Semua kolom harus diisi.');
+        return;
+      }
+    });
+
     document.querySelector('.close').addEventListener('click', function () {
       window.parent.postMessage('closeCheckout', '*');
     });
