@@ -6,19 +6,21 @@ $price = isset($_GET['price']) ? intval($_GET['price']) : 0;
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SHOP. CO | Checkout</title>
+  <title>SHOP.CO | Checkout</title>
   <link rel="stylesheet" href="style_checkout.css">
 </head>
 <body>
   <div class="checkout-container">
     <span class="close">&times;</span>
     <div class="progress-bar">
-      <div class="step active">1</div>
-      <div class="step">2</div>
-      <div class="step">3</div>
+      <div class="step active" id="step1Indicator">1</div>
+      <div class="step" id="step2Indicator">2</div>
+      <div class="step" id="step3Indicator">3</div>
     </div>
     <h2 class="total-price">Total Harga: Rp<span id="totalPrice"><?= number_format($price, 0, ',', '.') ?></span></h2>
-    <form>
+
+    <!-- Form Langkah 1 -->
+    <form id="step1Form">
       <div class="form-group">
         <input type="text" placeholder="Nomor Handphone" required>
         <input type="text" placeholder="Alamat" required>
@@ -31,7 +33,7 @@ $price = isset($_GET['price']) ? intval($_GET['price']) : 0;
           <label class="payment-option">
             <input type="radio" name="paymentMethod" id="creditCard" value="Credit Card" required>
             <span class="payment-icon">&#128179;</span>
-            <span>Kartu kredit atau Debit</span>
+            <span>Kartu Kredit atau Debit</span>
           </label>
           <label class="payment-option">
             <input type="radio" name="paymentMethod" id="eWallet" value="E-Wallet">
@@ -45,11 +47,88 @@ $price = isset($_GET['price']) ? intval($_GET['price']) : 0;
           </label>
         </div>
       </div>
-      <button type="submit" class="submit-btn">Lanjutkan Pembayaran</button>
+      <button type="button" class="submit-btn" id="step1Next">Lanjutkan</button>
+    </form>
+
+    <!-- Form Langkah 2 -->
+    <form id="step2Form" style="display: none;">
+      <div class="payment-details">
+        <div id="creditCardForm" class="form-group" style="display: none;">
+          <label>Nama Pemegang Kartu:</label>
+          <input type="text" name="cardName" required>
+          <label>Nomor Kartu Kredit:</label>
+          <input type="text" name="cardNumber" maxlength="16" required>
+          <label>Tanggal Kedaluwarsa:</label>
+          <input type="month" name="expiryDate" required>
+          <label>CVV:</label>
+          <input type="text" name="cvv" maxlength="3" required>
+        </div>
+
+        <div id="eWalletForm" class="form-group" style="display: none;">
+          <label>Pilih Provider:</label>
+          <select name="eWalletProvider" required>
+            <option value="OVO">OVO</option>
+            <option value="GoPay">GoPay</option>
+            <option value="Dana">Dana</option>
+            <option value="ShopeePay">ShopeePay</option>
+          </select>
+          <label>Nomor E-Wallet:</label>
+          <input type="text" name="eWalletNumber" required>
+        </div>
+
+        <div id="bankTransferForm" class="form-group" style="display: none;">
+          <label>Pilih Bank Tujuan:</label>
+          <select name="bank" required>
+            <option value="BCA">BCA</option>
+            <option value="Mandiri">Mandiri</option>
+            <option value="BNI">BNI</option>
+            <option value="BRI">BRI</option>
+          </select>
+          <div class="form-group">
+            <label for="bankAccount">Nomor Rekening/VA:</label>
+            <input type="text" id="bankAccount" name="bankAccount" placeholder="Masukkan nomor rekening" required>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="submit-btn">Lanjutkan ke Konfirmasi</button>
     </form>
   </div>
+
   <script>
-    // Kirim pesan untuk menutup modal ketika tombol close ditekan
+    // Navigasi antar langkah
+    const step1Form = document.getElementById('step1Form');
+    const step2Form = document.getElementById('step2Form');
+    const step1Next = document.getElementById('step1Next');
+    const paymentMethodInputs = document.getElementsByName('paymentMethod');
+    
+    const creditCardForm = document.getElementById('creditCardForm');
+    const eWalletForm = document.getElementById('eWalletForm');
+    const bankTransferForm = document.getElementById('bankTransferForm');
+
+    step1Next.addEventListener('click', () => {
+      const selectedMethod = Array.from(paymentMethodInputs).find(input => input.checked);
+      if (!selectedMethod) {
+        alert('Pilih metode pembayaran terlebih dahulu.');
+        return;
+      }
+
+      step1Form.style.display = 'none';
+      step2Form.style.display = 'block';
+
+      document.getElementById('step1Indicator').classList.add('active');
+      document.getElementById('step2Indicator').classList.add('active');
+
+      // Tampilkan formulir spesifik berdasarkan metode pembayaran
+      if (selectedMethod.value === 'Credit Card') {
+        creditCardForm.style.display = 'block';
+      } else if (selectedMethod.value === 'E-Wallet') {
+        eWalletForm.style.display = 'block';
+      } else if (selectedMethod.value === 'Bank Transfer') {
+        bankTransferForm.style.display = 'block';
+      }
+    });
+
+    // Tutup modal
     document.querySelector('.close').addEventListener('click', function () {
       window.parent.postMessage('closeCheckout', '*');
     });

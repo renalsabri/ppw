@@ -258,13 +258,6 @@ $review_count = $result_count->fetch_assoc()['review_count'];
         </div>
     </div>
 
-    <div class="popup-overlay" id="checkoutModal" style="display: none;">
-        <div class="popup-content">
-            <button class="close-btn" onclick="closeModal()">×</button>
-            <div id="checkoutContent">Memuat...</div>
-        </div>
-    </div>
-
     <footer>
         <p>© 2024 SHOP.CO. All rights reserved.</p>
     </footer>

@@ -1,10 +1,9 @@
-/* Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-  
+
 body {
     font-family: Arial, sans-serif;
     background-color: rgba(0, 0, 0, 0.5);
@@ -13,8 +12,7 @@ body {
     align-items: center;
     height: 100vh;
 }
-  
-/* Kontainer Popup */
+
 .checkout-container {
     background-color: #fff;
     border-radius: 10px;
@@ -24,8 +22,7 @@ body {
     position: relative;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
-  
-/* Tombol Close */
+
 .close {
     position: absolute;
     top: 15px;
@@ -35,12 +32,11 @@ body {
     font-weight: bold;
     cursor: pointer;
 }
-  
+
 .close:hover {
     color: black;
 }
-  
-/* Progress Bar */
+
 .progress-bar {
     display: flex;
     justify-content: space-evenly; /* Mengatur jarak antar langkah */
@@ -64,16 +60,14 @@ body {
     background-color: black; /* Warna untuk step yang aktif */
     color: white;
 }
-  
-/* Total Harga */
+
 .total-price {
     text-align: center;
     margin-bottom: 20px;
     font-size: 18px;
     font-weight: bold;
 }
-  
-/* Form Styling */
+
 .form-group {
     display: flex;
     flex-direction: column; /* Ubah menjadi kolom untuk jarak lebih jelas */
@@ -89,7 +83,6 @@ body {
     overflow-wrap: break-word;
 }
 
-/* Section: Payment Method */
 .payment-method {
     margin-bottom: 20px;
     padding: 10px;
@@ -97,7 +90,7 @@ body {
     border-radius: 10px;
     background-color: #f9f9f9;
 }
-  
+
 .payment-header label {
     font-size: 14px;
     font-weight: bold;
@@ -105,13 +98,13 @@ body {
     display: block;
     color: #333;
 }
-  
+
 .payment-options {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
-  
+
 .payment-option {
     display: flex;
     align-items: center;
@@ -122,15 +115,15 @@ body {
     cursor: pointer;
     transition: 0.3s;
 }
-  
+
 .payment-option:hover {
     border-color: black;
 }
-  
+
 .payment-option input {
     display: none; /* Hide default radio button */
 }
-  
+
 .payment-icon {
     display: inline-flex;
     justify-content: center;
@@ -144,18 +137,18 @@ body {
     font-size: 20px;
     transition: 0.3s;
 }
-  
+
 .payment-option span:last-child {
     font-size: 14px;
     font-weight: bold;
     color: #333;
 }
-  
+
 .payment-option input:checked + .payment-icon {
     background-color: gray;
     color: white;
-}      
-  
+}
+
 .submit-btn {
     background-color: black;
     color: white;
@@ -165,8 +158,74 @@ body {
     border-radius: 5px;
     width: 100%;
     font-size: 16px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
-  
+
 .submit-btn:hover {
     background-color: #333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.payment-details {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+.payment-details .form-group {
+    margin-bottom: 15px;
+}
+
+.payment-details .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #333;
+}
+
+.payment-details .form-group input,
+.payment-details .form-group select {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.payment-details .form-group input:focus,
+.payment-details .form-group select:focus {
+    border-color: black;
+    outline: none;
+}
+
+.payment-details .form-group p {
+    background-color: #e0e0e0;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .checkout-container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .progress-bar {
+        flex-direction: column;
+    }
+
+    .payment-details .form-group input,
+    .payment-details .form-group select {
+        font-size: 12px;
+    }
 }
