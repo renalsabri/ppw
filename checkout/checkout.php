@@ -1,3 +1,7 @@
+<?php
+$price = isset($_GET['price']) ? intval($_GET['price']) : 0;
+?>
+
 <!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
@@ -13,11 +17,11 @@
       <div class="step">2</div>
       <div class="step">3</div>
     </div>
-    <h2 class="total-price">Total Harga: Rp<span id="totalPrice">900.000</span></h2>
+    <h2 class="total-price">Total Harga: Rp<span id="totalPrice"><?= number_format($price, 0, ',', '.') ?></span></h2>
     <form>
       <div class="form-group">
-        <input type="text" placeholder="Nomor Handphone Pengirim" required>
-        <input type="text" placeholder="Alamat untuk Pengiriman" required>
+        <input type="text" placeholder="Nomor Handphone" required>
+        <input type="text" placeholder="Alamat" required>
       </div>
       <div class="payment-method">
         <div class="payment-header">

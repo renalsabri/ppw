@@ -1,89 +1,66 @@
 <?php
 session_start();
-
-// Database connection
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "data";
-
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection Error: " . $conn->connect_error);
 }
 
-// **HANDLE ADD TO CART**
+// Menangani tambah ke keranjang
 if (isset($_POST['add_to_cart'])) {
     $product_name = $_POST['product_name'];
     $product_price = $_POST['product_price'];
     $product_image = $_POST['product_image'];
-    $size = $_POST['size'];  // Ambil data ukuran
-
-    // Gabungkan nama produk dengan ukuran untuk identifikasi unik
+    $size = $_POST['size'];
     $new_product_name = $product_name . " - " . $size;
-
-    // Buat array produk baru
     $new_product = [
         'name' => $new_product_name,
         'price' => $product_price,
         'image' => $product_image,
-        'quantity' => 1, // Default quantity
-        'size' => $size   // Simpan ukuran produk
+        'quantity' => 1,
+        'size' => $size
     ];
-
-    // Periksa apakah produk sudah ada di cart
     if (isset($_SESSION['cart'])) {
         $found = false;
         foreach ($_SESSION['cart'] as &$item) {
             if ($item['name'] === $new_product_name) {
-                // Jika produk dengan ukuran yang sama sudah ada
                 $found = true;
                 break;
             }
         }
-
         if ($found) {
-            // Jika produk sudah ada, kirim pesan kesalahan
             echo json_encode(['status' => 'error', 'message' => 'Produk dengan ukuran ini sudah ada di keranjang.']);
             exit();
         } else {
-            // Jika produk belum ada, tambahkan produk ke keranjang
             $_SESSION['cart'][] = $new_product;
         }
     } else {
-        // Jika cart kosong, buat keranjang baru dengan produk pertama
         $_SESSION['cart'] = [$new_product];
     }
-
-    // Jika produk berhasil ditambahkan
     echo json_encode(['status' => 'success', 'message' => 'Produk berhasil ditambahkan ke keranjang.']);
     exit();
 }
 
-// **HANDLE ADD REVIEW (AJAX REQUEST)**
+// Menangani tambah review
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['review_text']) && isset($_POST['product_id']) && isset($_SESSION['email'])) {
     header('Content-Type: application/json');
-
     $user_email = $_SESSION['email'];
     $product_id = $_POST['product_id'];
     $review_text = $_POST['review_text'];
-
     $query = "INSERT INTO reviews (user_email, product_id, review_text) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($query);
     $stmt->bind_param('sis', $user_email, $product_id, $review_text);
-
     if ($stmt->execute()) {
         $new_review_id = $conn->insert_id;
-
-        // Ambil jumlah review terbaru
         $query_count = "SELECT COUNT(*) AS review_count FROM reviews WHERE product_id = ?";
         $stmt_count = $conn->prepare($query_count);
         $stmt_count->bind_param('i', $product_id);
         $stmt_count->execute();
         $result_count = $stmt_count->get_result();
         $review_count = $result_count->fetch_assoc()['review_count'];
-
-        // Ambil data review terbaru
         $query_latest_review = "SELECT r.review_text, r.created_at, u.nama AS username, u.foto AS profile_picture 
                                 FROM reviews r 
                                 JOIN user u ON r.user_email = u.email 
@@ -92,8 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['review_text']) && iss
         $stmt_latest->bind_param('i', $new_review_id);
         $stmt_latest->execute();
         $latest_review = $stmt_latest->get_result()->fetch_assoc();
-
-        // Respons sukses dengan data terbaru
         $response = [
             'status' => 'success',
             'message' => 'Review submitted successfully!',
@@ -115,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['review_text']) && iss
     exit();
 }
 
-// **FETCH PRODUCT REVIEWS**
+// Ambil jumlah review produk
 $product_id = $_GET['product_id'] ?? 1;
 $query = "SELECT r.review_text, r.created_at, u.nama AS username, u.foto AS profile_picture 
           FROM reviews r 
@@ -126,8 +101,6 @@ $stmt = $conn->prepare($query);
 $stmt->bind_param('i', $product_id);
 $stmt->execute();
 $reviews = $stmt->get_result();
-
-// Ambil jumlah review produk
 $query_count = "SELECT COUNT(*) AS review_count FROM reviews WHERE product_id = ?";
 $stmt_count = $conn->prepare($query_count);
 $stmt_count->bind_param('i', $product_id);
@@ -145,7 +118,6 @@ $review_count = $result_count->fetch_assoc()['review_count'];
     <link rel="icon" type="image/x-icon" href="../foto/icon.png">
 </head>
 <body>  
-    <!-- Header dan Navigasi -->
     <nav>
         <div class="header-left">
             <a href="../beranda/beranda.php">
@@ -163,7 +135,6 @@ $review_count = $result_count->fetch_assoc()['review_count'];
                 <center>
                     <p class="name">Hi, 
                     <?php
-                    // Cek apakah nama sudah diset dalam sesi
                     if (isset($_SESSION['nama'])) {
                         echo htmlspecialchars($_SESSION['nama']);
                     } else {
@@ -173,14 +144,13 @@ $review_count = $result_count->fetch_assoc()['review_count'];
                     </p>
                 </center>
             </div>
-                <a href="../cart/cart.php">My Cart</a>
-                <a href="../kelola/barang.php">Product Manager</a>
+                <a href="../cart/cart.php">Keranjang</a>
+                <a href="../kelola/barang.php">Kelola Barang</a>
                 <a href="../register/register.php">Logout</a>
             </div>
         </div>
     </nav>
 
-    <!-- Halaman Produk -->
     <div class="product-container">
         <div class="image-section">
             <img id="main-image" src="../foto/Baju Jirai Kei.jpeg" alt="Baju Jirai Kei">
@@ -211,8 +181,7 @@ $review_count = $result_count->fetch_assoc()['review_count'];
                 <option value="L" data-price="350000">L - Rp350.000</option>
             </select>
 
-            <!-- Form untuk Menambahkan ke Keranjang -->
-            <form action="" method="POST">
+            <form action="" id="product-form" method="POST">
                 <input type="hidden" name="product_name" value="Baju Jirai Kei">
                 <input type="hidden" name="product_price" id="hidden-product-price" value="335000">
                 <input type="hidden" name="product_image" value="../foto/Baju Jirai Kei.jpeg">
@@ -302,6 +271,12 @@ $review_count = $result_count->fetch_assoc()['review_count'];
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        const sizeSelect = document.getElementById('size-select');
+        const productPrice = document.getElementById('product-price');
+        const hiddenPrice = document.getElementById('hidden-product-price');
+        const buyNowButton = document.querySelector('.buy-now');
+        const checkoutFrame = document.getElementById('checkoutFrame');
+
         function changeImage(imageSrc) {
             const mainImage = document.getElementById('main-image');
             mainImage.classList.add('fade-out');
@@ -339,6 +314,28 @@ $review_count = $result_count->fetch_assoc()['review_count'];
             modal.style.display = 'block';
         });
 
+        sizeSelect.addEventListener('change', function () {
+            const selectedOption = sizeSelect.options[sizeSelect.selectedIndex];
+            const price = selectedOption.getAttribute('data-price');
+            productPrice.textContent = 'Rp' + parseInt(price).toLocaleString('id-ID');
+            hiddenPrice.value = price;
+        });
+
+        buyNowButton.addEventListener('click', function () {
+            const sizeValue = sizeSelect.value;
+            const modal = document.getElementById('paymentModal');
+            if (!sizeValue) {
+                alert('Silakan pilih ukuran terlebih dahulu!');
+                modal.style.display = 'none';
+                return;
+            } else {
+                const price = hiddenPrice.value;
+                const checkoutUrl = `../checkout/checkout.php?price=${price}`;
+                checkoutFrame.src = checkoutUrl;
+                modal.style.display = 'block';
+            }
+        });
+
         // Menutup modal ketika pesan "closeCheckout" diterima
         window.addEventListener('message', function (event) {
             if (event.data === 'closeCheckout') {
@@ -346,25 +343,6 @@ $review_count = $result_count->fetch_assoc()['review_count'];
             modal.style.display = 'none';
             }
         });
-
-        function openPopup(productName, productPrice, productImage) {
-            // Simpan data produk di elemen popup
-            document.getElementById('popupProductName').innerText = productName;
-            document.getElementById('popupProductPrice').innerText = productPrice;
-            document.getElementById('popupProductImage').src = productImage;
-
-            // Tampilkan popup
-            document.getElementById("checkoutPopup").style.display = "flex";
-        }
-
-        function openModal() {
-            document.getElementById("checkoutModal").style.display = "flex";
-        }
-
-        function closeModal() {
-            document.getElementById("checkoutModal").style.display = "none";
-            document.getElementById("checkoutContent").innerHTML = "Memuat..."; // Reset konten modal
-        }
 
         $(document).ready(function () {
             $("#review-form").on("submit", function (e) {
