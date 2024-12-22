@@ -47,7 +47,7 @@ $price = isset($_GET['price']) ? intval($_GET['price']) : 0;
           </label>
         </div>
       </div>
-      <button type="button" class="submit-btn" id="step1Next">Lanjutkan</button>
+      <button type="submit" class="submit-btn" id="step1Next">Lanjutkan Pembayaran</button>
     </form>
 
     <!-- Form Langkah 2 -->
@@ -90,7 +90,7 @@ $price = isset($_GET['price']) ? intval($_GET['price']) : 0;
           </div>
         </div>
       </div>
-      <button type="submit" class="submit-btn">Lanjutkan ke Konfirmasi</button>
+      <button type="submit" class="submit-btn">Konfirmasi Pembayaran</button>
     </form>
   </div>
 
