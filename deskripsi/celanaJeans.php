@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['review_text']) && iss
     exit();
 }
 // Ambil jumlah review produk
-$product_id = $_GET['product_id'] ?? 2;
+$product_id = $_GET['product_id'] ?? 3;
 $query = "SELECT r.review_text, r.created_at, u.nama AS username, u.foto AS profile_picture 
           FROM reviews r 
           JOIN user u ON r.user_email = u.email 
@@ -110,7 +110,7 @@ $review_count = $result_count->fetch_assoc()['review_count'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHOP. CO | Jersey Bola</title>
+    <title>SHOP. CO | Celana Jeans</title>
     <link rel="stylesheet" href="style_deskripsi.css?v=1.0">
     <link rel="icon" type="image/x-icon" href="../foto/icon.png">
 </head>
@@ -150,34 +150,37 @@ $review_count = $result_count->fetch_assoc()['review_count'];
     </nav>
     <div class="product-container">
         <div class="image-section">
-            <img id="main-image" src="../foto/Kaos Emyu.jpg" alt="Jersey Bola">
+            <img id="main-image" src="../foto/Celana Jeans.jpg" alt="Celana Jeans">
             <div class="thumbnail-section">
                 <div class="thumbnail-wrapper">
-                    <img class="thumbnail" src="../foto/Kaos Emyu.jpg" alt="Jersey Bola" onclick="changeImage('../foto/Kaos Emyu.jpg')">
+                    <img class="thumbnail" src="../foto/Celana Jeans.jpg" alt="Celana Jeans" onclick="changeImage('../foto/Celana Jeans.jpg')">
                 </div>
                 <div class="thumbnail-wrapper">
-                    <img class="thumbnail" src="../foto/Kaos Barca.jpg" alt="Jersey Bola" onclick="changeImage('../foto/Kaos Barca.jpg')">
+                    <img class="thumbnail" src="../foto/Celana Jeans 2.jpg" alt="Celana Jeans" onclick="changeImage('../foto/Celana Jeans 2.jpg')">
+                </div>
+                <div class="thumbnail-wrapper">
+                    <img class="thumbnail" src="../foto/Celana Jeans 3.jpg" alt="Celana Jeans" onclick="changeImage('../foto/Celana Jeans 3.jpg')">
                 </div>
             </div>
         </div>
         <div class="details-section">
-            <h1>Jersey Bola</h1>
+            <h1>Celana Jeans</h1>
             <div class="rating">★★★★★</div>
-            <p class="price" id="product-price">Rp115.000</p>
+            <p class="price" id="product-price">Rp300.000</p>
             <p class="description">
-                Jersey Bola dengan desain modern, nyaman untuk berolahraga, dan cocok digunakan dalam pertandingan atau latihan.
+                Terbuat dari bahan berkualitas tinggi, celana jeans ini nyaman dipakai sepanjang hari dan cocok untuk berbagai acara. Tersedia dalam berbagai ukuran dan pilihan warna menarik, memberikan tampilan stylish yang mudah dipadu-padankan.
             </p>
             <label for="size-select">Pilih Ukuran</label>
             <select id="size-select">
-                <option value="" data-price="115000">Pilih Ukuran</option>
-                <option value="S" data-price="110000">S - Rp110.000</option>
-                <option value="M" data-price="115000">M - Rp115.000</option>
-                <option value="L" data-price="120000">L - Rp120.000</option>
+                <option value="" data-price="300000">Pilih Ukuran</option>
+                <option value="S" data-price="250000">S - Rp250.000</option>
+                <option value="M" data-price="300000">M - Rp300.000</option>
+                <option value="L" data-price="350000">L - Rp350.000</option>
             </select>
             <form action="" id="product-form" method="POST">
-                <input type="hidden" name="product_name" value="Jersey Bola">
-                <input type="hidden" name="product_price" id="hidden-product-price" value="115000">
-                <input type="hidden" name="product_image" value="../foto/Kaos Emyu.jpg">
+                <input type="hidden" name="product_name" value="Celana Jeans">
+                <input type="hidden" name="product_price" id="hidden-product-price" value="300000">
+                <input type="hidden" name="product_image" value="../foto/Celana Jeans.jpg">
                 <button type="button" class="buy-now">Beli Sekarang</button>
                 <div id="paymentModal" class="modal">
                     <div class="modal-content">
@@ -187,8 +190,8 @@ $review_count = $result_count->fetch_assoc()['review_count'];
                 <button type="submit" name="add_to_cart" class="add-to-cart">Tambah ke Keranjang</button>
             </form>
             <p class="meta">
-                <strong>Kategori:</strong> Olahraga, Sepak Bola, Pakaian Olahraga<br>
-                <strong>Tagar:</strong> Jersey Bola, Sepak Bola, Olahraga, Jersey Premium, Pakaian Olahraga
+                <strong>Kategori:</strong> Pria/Wanita, Celana Jeans, Kasual<br>
+                <strong>Tagar:</strong> Celana Jeans, Fashion Pria/Wanita, Celana Jeans Premium, Jeans Berkualitas
             </p>
         </div>
     </div>
@@ -198,34 +201,34 @@ $review_count = $result_count->fetch_assoc()['review_count'];
         <button class="tab-button" onclick="showTab('reviews')">Ulasan</button>
     </div>
     <div class="tab-content" id="description">
-        <h1 class="product-title">Jersey Bola Kualitas Premium - Tampil Keren di Lapangan!</h1>
+        <h1 class="product-title">Celana Jeans Premium - Kenyamanan dan Gaya untuk Setiap Kesempatan!</h1>
         <p class="product-description">
-            Tampil percaya diri dan nyaman dengan <strong>Jersey Bola Kualitas Premium</strong>, pilihan terbaik untuk para penggemar sepak bola. Didesain dengan bahan ringan dan adem, jersey ini memberikan kenyamanan maksimal saat beraktivitas di lapangan. Tersedia dalam ukuran S, M, dan L, jersey ini cocok untuk Anda yang ingin tampil gaya sekaligus tetap optimal dalam bermain. Dengan desain modern dan kualitas terbaik, jersey ini adalah pilihan yang tepat untuk meningkatkan performa dan penampilan Anda.
+            Tampil stylish dan nyaman dengan <strong>Celana Jeans Premium</strong>, pilihan tepat untuk Anda yang menginginkan tampilan kasual namun tetap elegan. Celana jeans ini dirancang dengan bahan berkualitas tinggi, memberikan kenyamanan sepanjang hari, dan cocok untuk berbagai acara, dari aktivitas santai hingga semi-formal.
         </p>
         <h3>Fitur Utama:</h3>
         <ul class="features-list">
-            <li><strong>Bahan Berkualitas</strong>: Terbuat dari material yang ringan, adem, dan tahan lama, ideal untuk digunakan dalam berbagai aktivitas olahraga.</li>
-            <li><strong>Desain Stylish</strong>: Desain modern dengan detail yang menarik, memberikan tampilan keren baik di lapangan maupun di luar lapangan.</li>
-            <li><strong>Tersedia dalam Berbagai Ukuran</strong>: Pilihan ukuran S, M, dan L yang dapat disesuaikan dengan kenyamanan dan kebutuhan Anda.</li>
-            <li><strong>Nyaman Digunakan</strong>: Bahan yang lembut dan elastis memberikan kenyamanan maksimal, bahkan saat Anda bergerak aktif di lapangan.</li>
-            <li><strong>Mudah Dipadupadankan</strong>: Mudah dipadukan dengan berbagai celana olahraga atau aksesori lain untuk menciptakan gaya yang lebih personal.</li>
+            <li><strong>Bahan Berkualitas</strong>: Terbuat dari material denim pilihan yang nyaman, awet, dan tidak mudah pudar.</li>
+            <li><strong>Desain Stylish</strong>: Memiliki potongan modern yang cocok untuk berbagai bentuk tubuh, memberikan kesan ramping dan dinamis.</li>
+            <li><strong>Tersedia dalam Berbagai Ukuran</strong>: Pilihan ukuran mulai dari S hingga XL, memastikan kenyamanan dan pas di tubuh Anda.</li>
+            <li><strong>Warna Menarik</strong>: Tersedia dalam berbagai pilihan warna klasik dan trendi yang mudah dipadupadankan dengan pakaian lain.</li>
+            <li><strong>Serbaguna</strong>: Bisa dipadukan dengan berbagai jenis atasan dan aksesori, cocok untuk tampilan kasual maupun semi-formal.</li>
         </ul>
         <h3>Kenapa Harus Membeli?</h3>
         <ul class="features-list">
-            <li><strong>Performa Tinggi</strong>: Didesain untuk kenyamanan dan mendukung aktivitas olahraga Anda, jersey ini memberikan pengalaman bermain yang lebih baik.</li>
-            <li><strong>Desain Modern</strong>: Tampil gaya dengan desain yang trendi dan penuh semangat, cocok untuk para pecinta sepak bola.</li>
-            <li><strong>Kualitas Terjamin</strong>: Jersey yang tahan lama dan mudah dirawat, memberikan Anda nilai lebih dalam setiap pemakaian.</li>
+            <li><strong>Gaya yang Tak Pernah Ketinggalan Zaman</strong>: Celana jeans ini selalu tampil trendi dan cocok untuk berbagai acara.</li>
+            <li><strong>Kenyamanan Sepanjang Hari</strong>: Dengan bahan yang lembut dan pas di tubuh, Anda bisa mengenakan celana jeans ini dari pagi hingga malam dengan nyaman.</li>
+            <li><strong>Tahan Lama</strong>: Bahan yang awet dan mudah perawatannya, memastikan Anda bisa menikmati celana jeans ini untuk waktu lama.</li>
         </ul>
         <h3>Tips Perawatan:</h3>
         <ul class="features-list">
-            <li>Cuci dengan air dingin dan gunakan deterjen lembut untuk menjaga kualitas bahan jersey tetap terjaga.</li>
-            <li>Jangan gunakan pemutih atau mesin pengering, cukup jemur di tempat yang teduh dan hindari sinar matahari langsung.</li>
+            <li>Cuci dengan air dingin untuk menjaga kualitas warna dan bentuk celana tetap terjaga.</li>
+            <li>Jangan gunakan pemutih dan sebaiknya dijemur di tempat teduh untuk menjaga kualitas bahan.</li>
         </ul>
     </div>
     <div class="tab-content" id="reviews" style="display: none;">
         <h3>Ulasan (<?= $review_count ?>)</h3>
         <?php if (isset($_SESSION['email'])): ?>
-            <form id="review-form" action="/ppw/deskripsi/jerseyBola.php?product_id=<?= $product_id ?>" method="POST">
+            <form id="review-form" action="/ppw/deskripsi/celanaJeans.php?product_id=<?= $product_id ?>" method="POST">
                 <textarea name="review_text" rows="4" placeholder="Ketik Ulasanmu..." required></textarea>
                 <input type="hidden" name="product_id" value="<?= $product_id ?>">
                 <button type="submit">Kirim Ulasan</button>
@@ -316,7 +319,7 @@ $review_count = $result_count->fetch_assoc()['review_count'];
                 const modal = document.getElementById('paymentModal');
                 modal.style.display = 'none';
 
-                window.location.href = 'jerseyBola.php';
+                window.location.href = 'celanaJeans.php';
             }
         });
         $(document).ready(function () {
@@ -359,7 +362,7 @@ $review_count = $result_count->fetch_assoc()['review_count'];
                         return;
                     }
                     $.ajax({
-                        url: "jerseyBola.php",
+                        url: "celanaJeans.php",
                         type: "POST",
                         data: {
                             add_to_cart: true,
