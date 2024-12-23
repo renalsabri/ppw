@@ -213,7 +213,7 @@ $review_count = $result_count->fetch_assoc()['review_count'];
         <ul class="features-list">
             <li><strong>Desain Futuristik</strong>: Mengusung konsep Jirai Kei, baju ini memiliki potongan dan detail yang menggabungkan teknologi dan budaya Jepang.</li>
             <li><strong>Material Berkualitas</strong>: Terbuat dari bahan pilihan yang lembut, nyaman, dan tahan lama, cocok dipakai sehari-hari ataupun untuk acara khusus.</li>
-            <li><strong>Tersedia dalam Berbagai Ukuran</strong>: Dapatkan baju ini dalam berbagai pilihan ukuran, dari S hingga XL, yang bisa disesuaikan dengan kebutuhan Anda.</li>
+            <li><strong>Tersedia dalam Berbagai Ukuran</strong>: Dapatkan baju ini dalam berbagai pilihan ukuran, dari XXS hingga XXL, yang bisa disesuaikan dengan kebutuhan Anda.</li>
         </ul>
         <h3>Kenapa Harus Membeli?</h3>
         <ul class="features-list">

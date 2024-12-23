@@ -110,7 +110,7 @@ $review_count = $result_count->fetch_assoc()['review_count'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHOP. CO | Jersey Bola</title>
+    <title>SHOP. CO | Jersey Bola Real Madrid</title>
     <link rel="stylesheet" href="style_deskripsi.css?v=1.0">
     <link rel="icon" type="image/x-icon" href="../foto/icon.png">
 </head>
@@ -150,34 +150,47 @@ $review_count = $result_count->fetch_assoc()['review_count'];
     </nav>
     <div class="product-container">
         <div class="image-section">
-            <img id="main-image" src="../foto/Kaos Emyu.jpg" alt="Jersey Bola">
+            <img id="main-image" src="../foto/Kaos madrid.jpg" alt="Jersey Bola">
             <div class="thumbnail-section">
                 <div class="thumbnail-wrapper">
-                    <img class="thumbnail" src="../foto/Kaos Emyu.jpg" alt="Jersey Bola" onclick="changeImage('../foto/Kaos Emyu.jpg')">
+                    <img class="thumbnail" src="../foto/Kaos madrid.jpg" alt="Jersey Bola" onclick="changeImage('../foto/Kaos madrid.jpg')">
                 </div>
                 <div class="thumbnail-wrapper">
-                    <img class="thumbnail" src="../foto/Kaos Barca.jpg" alt="Jersey Bola" onclick="changeImage('../foto/Kaos Barca.jpg')">
+                    <img class="thumbnail" src="../foto/Kaos madrid 2.jpg" alt="Jersey Bola" onclick="changeImage('../foto/Kaos madrid 2.jpg')">
+                </div>
+                <div class="thumbnail-wrapper">
+                    <img class="thumbnail" src="../foto/Kaos madrid 3.jpg" alt="Jersey Bola" onclick="changeImage('../foto/Kaos madrid 3.jpg')">
+                </div>
+                <div class="thumbnail-wrapper">
+                    <img class="thumbnail" src="../foto/Kaos madrid 4.jpg" alt="Jersey Bola" onclick="changeImage('../foto/Kaos madrid 4.jpg')">
+                </div>
+                <div class="thumbnail-wrapper">
+                    <img class="thumbnail" src="../foto/Kaos madrid 5.jpg" alt="Jersey Bola" onclick="changeImage('../foto/Kaos madrid 5.jpg')">
                 </div>
             </div>
         </div>
         <div class="details-section">
-            <h1>Jersey Bola</h1>
+            <h1>Jersey Bola Real Madrid</h1>
             <div class="rating">★★★★★</div>
-            <p class="price" id="product-price">Rp115.000</p>
+            <p class="price" id="product-price">Rp120.000</p>
             <p class="description">
-                Jersey Bola dengan desain modern, nyaman untuk berolahraga, dan cocok digunakan dalam pertandingan atau latihan.
+                Jersey Bola Real Madrid - Bahan berkualitas tinggi, nyaman dipakai, dan mendukung performa olahraga Anda. Desain elegan dengan logo klub ikonik. Cocok untuk fans sejati dan koleksi sepak bola! Tersedia berbagai ukuran.
             </p>
             <label for="size-select">Pilih Ukuran</label>
             <select id="size-select">
-                <option value="" data-price="115000">Pilih Ukuran</option>
-                <option value="S" data-price="110000">S - Rp110.000</option>
-                <option value="M" data-price="115000">M - Rp115.000</option>
+                <option value="" data-price="120000">Pilih Ukuran</option>
+                <option value="S" data-price="120000">S - Rp120.000</option>
+                <option value="M" data-price="120000">M - Rp120.000</option>
                 <option value="L" data-price="120000">L - Rp120.000</option>
+                <option value="XL" data-price="120000">XL - Rp120.000</option>
+                <option value="XXL" data-price="140000">XXL - Rp140.000</option>
+                <option value="XXXL" data-price="160000">XXXL - Rp160.000</option>
+                <option value="XXXXL" data-price="180000">XXXXL - Rp180.000</option>
             </select>
             <form action="" id="product-form" method="POST">
-                <input type="hidden" name="product_name" value="Jersey Bola">
-                <input type="hidden" name="product_price" id="hidden-product-price" value="115000">
-                <input type="hidden" name="product_image" value="../foto/Kaos Emyu.jpg">
+                <input type="hidden" name="product_name" value="Jersey Bola Real Madrid">
+                <input type="hidden" name="product_price" id="hidden-product-price" value="120000">
+                <input type="hidden" name="product_image" value="../foto/Kaos madrid.jpg">
                 <button type="button" class="buy-now">Beli Sekarang</button>
                 <div id="paymentModal" class="modal">
                     <div class="modal-content">
@@ -187,8 +200,8 @@ $review_count = $result_count->fetch_assoc()['review_count'];
                 <button type="submit" name="add_to_cart" class="add-to-cart">Tambah ke Keranjang</button>
             </form>
             <p class="meta">
-                <strong>Kategori:</strong> Olahraga, Sepak Bola, Pakaian Olahraga<br>
-                <strong>Tagar:</strong> Jersey Bola, Sepak Bola, Olahraga, Jersey Premium, Pakaian Olahraga
+                <strong>Kategori:</strong> Jersey Sepak Bola, T-Shirt Olahraga, Sepak Bola, Pakaian Olahraga, Atasan Pria<br>
+                <strong>Tagar:</strong> Jersey Real Madrid, Jersey Bola, Real Madrid, Pakaian Olahraga, Jersey Premium
             </p>
         </div>
     </div>
@@ -198,28 +211,28 @@ $review_count = $result_count->fetch_assoc()['review_count'];
         <button class="tab-button" onclick="showTab('reviews')">Ulasan</button>
     </div>
     <div class="tab-content" id="description">
-        <h1 class="product-title">Jersey Bola Kualitas Premium - Tampil Keren di Lapangan!</h1>
+        <h1 class="product-title">Jersey Bola Real Madrid - Tampil Gaya dan Nyaman!</h1>
         <p class="product-description">
-            Tampil percaya diri dan nyaman dengan <strong>Jersey Bola Kualitas Premium</strong>, pilihan terbaik untuk para penggemar sepak bola. Didesain dengan bahan ringan dan adem, jersey ini memberikan kenyamanan maksimal saat beraktivitas di lapangan. Tersedia dalam ukuran S, M, dan L, jersey ini cocok untuk Anda yang ingin tampil gaya sekaligus tetap optimal dalam bermain. Dengan desain modern dan kualitas terbaik, jersey ini adalah pilihan yang tepat untuk meningkatkan performa dan penampilan Anda.
+            Dukung tim kesayangan Anda dengan <strong>Jersey Bola Real Madrid</strong> berkualitas premium. Dibuat dari bahan ringan dan nyaman, jersey ini dirancang untuk penggemar sejati yang ingin tampil keren di dalam maupun luar lapangan. Cocok untuk koleksi maupun digunakan saat bermain sepak bola.
         </p>
         <h3>Fitur Utama:</h3>
         <ul class="features-list">
-            <li><strong>Bahan Berkualitas</strong>: Terbuat dari material yang ringan, adem, dan tahan lama, ideal untuk digunakan dalam berbagai aktivitas olahraga.</li>
-            <li><strong>Desain Stylish</strong>: Desain modern dengan detail yang menarik, memberikan tampilan keren baik di lapangan maupun di luar lapangan.</li>
-            <li><strong>Tersedia dalam Berbagai Ukuran</strong>: Pilihan ukuran S, M, dan L yang dapat disesuaikan dengan kenyamanan dan kebutuhan Anda.</li>
-            <li><strong>Nyaman Digunakan</strong>: Bahan yang lembut dan elastis memberikan kenyamanan maksimal, bahkan saat Anda bergerak aktif di lapangan.</li>
-            <li><strong>Mudah Dipadupadankan</strong>: Mudah dipadukan dengan berbagai celana olahraga atau aksesori lain untuk menciptakan gaya yang lebih personal.</li>
+            <li><strong>Bahan Premium</strong>: Material adem, ringan, dan tahan lama untuk kenyamanan sepanjang hari.</li>
+            <li><strong>Desain Eksklusif</strong>: Detail logo dan warna yang elegan khas Real Madrid.</li>
+            <li><strong>Ukuran Variatif</strong>: Pilihan ukuran S hingga XXXXL untuk semua penggemar.</li>
+            <li><strong>Kenyamanan Optimal</strong>: Cocok untuk olahraga maupun penggunaan kasual.</li>
         </ul>
-        <h3>Kenapa Harus Membeli?</h3>
+        <h3>Keunggulan:</h3>
         <ul class="features-list">
-            <li><strong>Performa Tinggi</strong>: Didesain untuk kenyamanan dan mendukung aktivitas olahraga Anda, jersey ini memberikan pengalaman bermain yang lebih baik.</li>
-            <li><strong>Desain Modern</strong>: Tampil gaya dengan desain yang trendi dan penuh semangat, cocok untuk para pecinta sepak bola.</li>
-            <li><strong>Kualitas Terjamin</strong>: Jersey yang tahan lama dan mudah dirawat, memberikan Anda nilai lebih dalam setiap pemakaian.</li>
+            <li><strong>Original Look</strong>: Desain jersey yang terinspirasi langsung dari tim utama Real Madrid.</li>
+            <li><strong>Multifungsi</strong>: Cocok untuk bermain bola, olahraga lain, atau sekadar menunjukkan dukungan pada klub favorit.</li>
+            <li><strong>Mudah Dirawat</strong>: Bahan yang mudah dicuci dan awet dipakai dalam jangka panjang.</li>
         </ul>
         <h3>Tips Perawatan:</h3>
         <ul class="features-list">
-            <li>Cuci dengan air dingin dan gunakan deterjen lembut untuk menjaga kualitas bahan jersey tetap terjaga.</li>
-            <li>Jangan gunakan pemutih atau mesin pengering, cukup jemur di tempat yang teduh dan hindari sinar matahari langsung.</li>
+            <li>Cuci dengan air dingin untuk menjaga warna tetap cerah.</li>
+            <li>Gunakan deterjen lembut dan hindari pemutih.</li>
+            <li>Jemur di tempat teduh untuk menjaga bahan tetap awet.</li>
         </ul>
     </div>
     <div class="tab-content" id="reviews" style="display: none;">
