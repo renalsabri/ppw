@@ -126,11 +126,13 @@ if (isset($_POST['clear_cart'])) {
     </footer>
 
     <script>
-        const checkoutFrame = document.getElementById('checkoutFrame');
-
         document.querySelector('.btn-checkout').addEventListener('click', function () {
             const modal = document.getElementById('paymentModal');
+            const totalPrice = <?php echo $total_price; ?>;
+            const checkoutUrl = '../checkout/checkout.php?price=' + totalPrice;
             modal.style.display = 'block';
+            const checkoutFrame = document.getElementById('checkoutFrame');
+            checkoutFrame.src = checkoutUrl;
         });
 
         // Menutup modal ketika pesan "closeCheckout" diterima
