@@ -111,13 +111,41 @@ if (isset($_POST['clear_cart'])) {
 
             <form method="POST" action="">
                 <button type="submit" name="clear_cart" style="margin-bottom: 20px;">Kosongkan Keranjang</button>
+                <button type="button" class="btn-checkout">Lanjutkan ke Pembayaran</button>
+                <div id="paymentModal" class="modal">
+                    <div class="modal-content">
+                        <iframe src="../checkout/checkout.php" frameborder="0" id="checkoutFrame"></iframe>
+                    </div>
+                </div>
             </form>
-            <a href="checkout.php" class="btn-checkout">Beli</a>
         <?php endif; ?>
     </section>
 
     <footer>
         <p>© 2024 E-Commerce. All rights reserved.</p>
     </footer>
+
+    <script>
+        const checkoutFrame = document.getElementById('checkoutFrame');
+
+        document.querySelector('.btn-checkout').addEventListener('click', function () {
+            const modal = document.getElementById('paymentModal');
+            modal.style.display = 'block';
+        });
+
+        // Menutup modal ketika pesan "closeCheckout" diterima
+        window.addEventListener('message', function (event) {
+            if (event.data === 'closeCheckout') {
+                const modal = document.getElementById('paymentModal');
+                modal.style.display = 'none';
+            }
+            if (event.data === 'checkoutComplete') {
+                const modal = document.getElementById('paymentModal');
+                modal.style.display = 'none';
+
+                window.location.href = 'cart.php';
+            }
+        });
+    </script>
 </body>
 </html>
