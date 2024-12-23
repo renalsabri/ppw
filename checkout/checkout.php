@@ -194,8 +194,8 @@ $price = isset($_GET['price']) ? intval($_GET['price']) : 0;
     });
 
     function completeCheckout() {
-        // Kirim pesan ke parent window untuk menutup modal dan mengarahkan ke halaman target
-        window.parent.postMessage('checkoutComplete', '*');
+      // Kirim pesan ke parent window untuk menutup modal dan mengarahkan ke halaman target
+      window.parent.postMessage('checkoutComplete', '*');
     }
 
     // Tutup modal

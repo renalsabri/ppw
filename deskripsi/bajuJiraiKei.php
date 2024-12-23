@@ -331,6 +331,10 @@ $review_count = $result_count->fetch_assoc()['review_count'];
 
         // Menutup modal ketika pesan "closeCheckout" diterima
         window.addEventListener('message', function (event) {
+            if (event.data === 'closeCheckout') {
+                const modal = document.getElementById('paymentModal');
+                modal.style.display = 'none';
+            }
             if (event.data === 'checkoutComplete') {
                 const modal = document.getElementById('paymentModal');
                 modal.style.display = 'none';
