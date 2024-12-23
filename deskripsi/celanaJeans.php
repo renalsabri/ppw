@@ -150,37 +150,44 @@ $review_count = $result_count->fetch_assoc()['review_count'];
     </nav>
     <div class="product-container">
         <div class="image-section">
-            <img id="main-image" src="../foto/Celana Jeans.jpg" alt="Celana Jeans">
+            <img id="main-image" src="../foto/Celana Jeans-1.jpg" alt="Celana Jeans">
             <div class="thumbnail-section">
                 <div class="thumbnail-wrapper">
-                    <img class="thumbnail" src="../foto/Celana Jeans.jpg" alt="Celana Jeans" onclick="changeImage('../foto/Celana Jeans.jpg')">
+                    <img class="thumbnail" src="../foto/Celana Jeans-1.jpg" alt="Celana Jeans" onclick="changeImage('../foto/Celana Jeans-1.jpg')">
                 </div>
                 <div class="thumbnail-wrapper">
-                    <img class="thumbnail" src="../foto/Celana Jeans 2.jpg" alt="Celana Jeans" onclick="changeImage('../foto/Celana Jeans 2.jpg')">
+                    <img class="thumbnail" src="../foto/Celana Jeans-2.jpg" alt="Celana Jeans" onclick="changeImage('../foto/Celana Jeans-2.jpg')">
                 </div>
                 <div class="thumbnail-wrapper">
-                    <img class="thumbnail" src="../foto/Celana Jeans 3.jpg" alt="Celana Jeans" onclick="changeImage('../foto/Celana Jeans 3.jpg')">
+                    <img class="thumbnail" src="../foto/Celana Jeans-3.jpg" alt="Celana Jeans" onclick="changeImage('../foto/Celana Jeans-3.jpg')">
+                </div>
+                <div class="thumbnail-wrapper">
+                    <img class="thumbnail" src="../foto/Celana Jeans-4.jpg" alt="Celana Jeans" onclick="changeImage('../foto/Celana Jeans-4.jpg')">
+                </div>
+                <div class="thumbnail-wrapper">
+                    <img class="thumbnail" src="../foto/Celana Jeans-5.jpg" alt="Celana Jeans" onclick="changeImage('../foto/Celana Jeans-5.jpg')">
                 </div>
             </div>
         </div>
         <div class="details-section">
             <h1>Celana Jeans</h1>
             <div class="rating">★★★★★</div>
-            <p class="price" id="product-price">Rp300.000</p>
+            <p class="price" id="product-price">Rp500.000</p>
             <p class="description">
-                Terbuat dari bahan berkualitas tinggi, celana jeans ini nyaman dipakai sepanjang hari dan cocok untuk berbagai acara. Tersedia dalam berbagai ukuran dan pilihan warna menarik, memberikan tampilan stylish yang mudah dipadu-padankan.
+                Terbuat dari bahan berkualitas tinggi, celana jeans ini nyaman dipakai sepanjang hari dan cocok untuk berbagai acara. Tersedia dalam berbagai ukuran, memberikan tampilan stylish yang mudah dipadu-padankan.
             </p>
             <label for="size-select">Pilih Ukuran</label>
             <select id="size-select">
-                <option value="" data-price="300000">Pilih Ukuran</option>
-                <option value="S" data-price="250000">S - Rp250.000</option>
-                <option value="M" data-price="300000">M - Rp300.000</option>
-                <option value="L" data-price="350000">L - Rp350.000</option>
+                <option value="" data-price="500000">Pilih Ukuran</option>
+                <option value="S" data-price="500000">S - Rp500.000</option>
+                <option value="M" data-price="500000">M - Rp500.000</option>
+                <option value="L" data-price="500000">L - Rp500.000</option>
+                <option value="XL" data-price="500000">XL - Rp500.000</option>
             </select>
             <form action="" id="product-form" method="POST">
                 <input type="hidden" name="product_name" value="Celana Jeans">
-                <input type="hidden" name="product_price" id="hidden-product-price" value="300000">
-                <input type="hidden" name="product_image" value="../foto/Celana Jeans.jpg">
+                <input type="hidden" name="product_price" id="hidden-product-price" value="500000">
+                <input type="hidden" name="product_image" value="../foto/Celana Jeans-1.jpg">
                 <button type="button" class="buy-now">Beli Sekarang</button>
                 <div id="paymentModal" class="modal">
                     <div class="modal-content">
@@ -190,8 +197,8 @@ $review_count = $result_count->fetch_assoc()['review_count'];
                 <button type="submit" name="add_to_cart" class="add-to-cart">Tambah ke Keranjang</button>
             </form>
             <p class="meta">
-                <strong>Kategori:</strong> Pria/Wanita, Celana Jeans, Kasual<br>
-                <strong>Tagar:</strong> Celana Jeans, Fashion Pria/Wanita, Celana Jeans Premium, Jeans Berkualitas
+                <strong>Kategori:</strong> Pria, Celana Jeans, Kasual<br>
+                <strong>Tagar:</strong> Celana Jeans, Fashion Pria, Celana Jeans Premium, Jeans Berkualitas
             </p>
         </div>
     </div>
@@ -201,28 +208,45 @@ $review_count = $result_count->fetch_assoc()['review_count'];
         <button class="tab-button" onclick="showTab('reviews')">Ulasan</button>
     </div>
     <div class="tab-content" id="description">
-        <h1 class="product-title">Celana Jeans Premium - Kenyamanan dan Gaya untuk Setiap Kesempatan!</h1>
+        <h1 class="product-title">Celana Jeans Denim Stretch - Nyaman untuk Aktivitas Harian!</h1>
         <p class="product-description">
-            Tampil stylish dan nyaman dengan <strong>Celana Jeans Premium</strong>, pilihan tepat untuk Anda yang menginginkan tampilan kasual namun tetap elegan. Celana jeans ini dirancang dengan bahan berkualitas tinggi, memberikan kenyamanan sepanjang hari, dan cocok untuk berbagai acara, dari aktivitas santai hingga semi-formal.
+            Rasakan kenyamanan maksimal dengan <strong>Celana Jeans Denim Stretch</strong>. Dibuat dari bahan denim stretch berkualitas tinggi dan proses washing pabrik, celana ini lembut, nyaman, dan tahan lama. Cocok untuk menemani kegiatan sehari-hari Anda dengan gaya.
         </p>
-        <h3>Fitur Utama:</h3>
+        <h3>Material dan Desain:</h3>
         <ul class="features-list">
-            <li><strong>Bahan Berkualitas</strong>: Terbuat dari material denim pilihan yang nyaman, awet, dan tidak mudah pudar.</li>
-            <li><strong>Desain Stylish</strong>: Memiliki potongan modern yang cocok untuk berbagai bentuk tubuh, memberikan kesan ramping dan dinamis.</li>
-            <li><strong>Tersedia dalam Berbagai Ukuran</strong>: Pilihan ukuran mulai dari S hingga XL, memastikan kenyamanan dan pas di tubuh Anda.</li>
-            <li><strong>Warna Menarik</strong>: Tersedia dalam berbagai pilihan warna klasik dan trendi yang mudah dipadupadankan dengan pakaian lain.</li>
-            <li><strong>Serbaguna</strong>: Bisa dipadukan dengan berbagai jenis atasan dan aksesori, cocok untuk tampilan kasual maupun semi-formal.</li>
+            <li><strong>Material</strong>: Denim Stretch</li>
+            <li><strong>Cutting</strong>: Slim Fit</li>
+            <li><strong>Kancing</strong>: Metal</li>
+            <li><strong>Total 5 Saku</strong>:
+                <ul>
+                    <li>2 Saku Belakang (model tempel)</li>
+                    <li>2 Saku Depan</li>
+                    <li>1 Saku Mini Depan</li>
+                </ul>
+            </li>
         </ul>
-        <h3>Kenapa Harus Membeli?</h3>
+        <h3>Spesifikasi Jahitan:</h3>
         <ul class="features-list">
-            <li><strong>Gaya yang Tak Pernah Ketinggalan Zaman</strong>: Celana jeans ini selalu tampil trendi dan cocok untuk berbagai acara.</li>
-            <li><strong>Kenyamanan Sepanjang Hari</strong>: Dengan bahan yang lembut dan pas di tubuh, Anda bisa mengenakan celana jeans ini dari pagi hingga malam dengan nyaman.</li>
-            <li><strong>Tahan Lama</strong>: Bahan yang awet dan mudah perawatannya, memastikan Anda bisa menikmati celana jeans ini untuk waktu lama.</li>
+            <li><strong>Chain Stitching</strong> dengan dua jarum untuk kekuatan maksimal.</li>
+            <li><strong>Bartacking</strong> untuk memperkuat area stress point.</li>
+            <li><strong>Two Needle Stitching</strong> untuk hasil jahitan yang rapi dan kuat.</li>
+            <li><strong>Overlock/Safety Stitch</strong> dengan tiga jarum untuk merapikan tepian bagian dalam celana dan memberikan daya tahan ekstra.</li>
         </ul>
-        <h3>Tips Perawatan:</h3>
+        <h3>Ukuran:</h3>
+        <p>Size chart (99% akurat) diukur secara manual untuk memastikan sesuai dengan deskripsi:</p>
         <ul class="features-list">
-            <li>Cuci dengan air dingin untuk menjaga kualitas warna dan bentuk celana tetap terjaga.</li>
-            <li>Jangan gunakan pemutih dan sebaiknya dijemur di tempat teduh untuk menjaga kualitas bahan.</li>
+            <li>S /28: Pinggang 74CM / Panjang 100CM / Lingkar Paha 50CM / Lingkar Kaki 30CM</li>
+            <li>M /30: Pinggang 78CM / Panjang 100CM / Lingkar Paha 52CM / Lingkar Kaki 32CM</li>
+            <li>L /32: Pinggang 82CM / Panjang 102CM / Lingkar Paha 54CM / Lingkar Kaki 34CM</li>
+            <li>XL /34: Pinggang 86CM / Panjang 102CM / Lingkar Paha 56CM / Lingkar Kaki 36CM</li>
+        </ul>
+        <p><strong>Model</strong>: Ukuran XL, Tinggi Badan 182 cm, Berat Badan 78 kg</p>
+        <h3>Catatan:</h3>
+        <ul class="features-list">
+            <li>Pesanan diproses maksimal 1x24 jam pada hari kerja. Pesanan yang masuk di luar jam operasional akan diproses keesokan harinya.</li>
+            <li>Jam operasional: Senin - Sabtu, 09:00 - 16:00 WIB (libur pada hari nasional).</li>
+            <li>Pastikan untuk memeriksa size chart sebelum melakukan pemesanan.</li>
+            <li>Jika ada masalah pada pesanan, kami akan menghubungi pelanggan dalam waktu 1x24 jam.</li>
         </ul>
     </div>
     <div class="tab-content" id="reviews" style="display: none;">

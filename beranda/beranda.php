@@ -55,7 +55,7 @@ session_start();
                 $products = [
                     ['name' => 'Baju Jirai Kei', 'price' => 140000, 'image' => '../foto/Baju Jirai Kei-1.jpg', 'link' => '../deskripsi/bajuJiraiKei.php'],
                     ['name' => 'Jersey Bola Real Madrid', 'price' => 120000, 'image' => '../foto/Kaos madrid.jpg', 'link' => '../deskripsi/jerseyBola.php'],
-                    ['name' => 'Celana Jeans', 'price' => 300000, 'image' => '../foto/Celana Jeans.jpg', 'link' => '../deskripsi/celanaJeans.php'],
+                    ['name' => 'Celana Jeans', 'price' => 500000, 'image' => '../foto/Celana Jeans-1.jpg', 'link' => '../deskripsi/celanaJeans.php'],
                     ['name' => 'Baju Pramuka', 'price' => 50000, 'image' => '../foto/Baju Pramuka.jpg', 'link' => '../deskripsi/bajuPramuka.php'],
                     ['name' => 'Rok Jeans', 'price' => 150000, 'image' => '../foto/Rok Jeans.jpg', 'link' => '../deskripsi/rokJeans.php']
                 ];
