@@ -53,7 +53,7 @@ session_start();
             <section class="product-list">
                 <?php
                 $products = [
-                    ['name' => 'Baju Jirai Kei', 'price' => 335000, 'image' => '../foto/Baju Jirai Kei.jpeg', 'link' => '../deskripsi/bajuJiraiKei.php'],
+                    ['name' => 'Baju Jirai Kei', 'price' => 140000, 'image' => '../foto/Baju Jirai Kei-1.jpg', 'link' => '../deskripsi/bajuJiraiKei.php'],
                     ['name' => 'Jersey Bola', 'price' => 115000, 'image' => '../foto/Kaos Emyu.jpg', 'link' => '../deskripsi/jerseyBola.php'],
                     ['name' => 'Celana Jeans', 'price' => 300000, 'image' => '../foto/Celana Jeans.jpg', 'link' => '../deskripsi/celanaJeans.php'],
                     ['name' => 'Baju Pramuka', 'price' => 50000, 'image' => '../foto/Baju Pramuka.jpg', 'link' => '../deskripsi/bajuPramuka.php'],

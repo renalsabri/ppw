@@ -150,37 +150,41 @@ $review_count = $result_count->fetch_assoc()['review_count'];
     </nav>
     <div class="product-container">
         <div class="image-section">
-            <img id="main-image" src="../foto/Baju Jirai Kei.jpeg" alt="Baju Jirai Kei">
+            <img id="main-image" src="../foto/Baju Jirai Kei-1.jpg" alt="Baju Jirai Kei">
             <div class="thumbnail-section">
                 <div class="thumbnail-wrapper">
-                    <img class="thumbnail" src="../foto/Baju Jirai Kei.jpeg" alt="Baju Jirai Kei" onclick="changeImage('../foto/Baju Jirai Kei.jpeg')">
+                    <img class="thumbnail" src="../foto/Baju Jirai Kei-1.jpg" alt="Baju Jirai Kei" onclick="changeImage('../foto/Baju Jirai Kei-1.jpg')">
                 </div>
                 <div class="thumbnail-wrapper">
-                    <img class="thumbnail" src="../foto/Baju Jirai Kei 2.png" alt="Baju Jirai Kei" onclick="changeImage('../foto/Baju Jirai Kei 2.png')">
+                    <img class="thumbnail" src="../foto/Baju Jirai Kei-2.jpg" alt="Baju Jirai Kei" onclick="changeImage('../foto/Baju Jirai Kei-2.jpg')">
                 </div>
                 <div class="thumbnail-wrapper">
-                    <img class="thumbnail" src="../foto/Baju Jirai Kei 3.png" alt="Baju Jirai Kei" onclick="changeImage('../foto/Baju Jirai Kei 3.png')">
+                    <img class="thumbnail" src="../foto/Baju Jirai Kei-3.jpg" alt="Baju Jirai Kei" onclick="changeImage('../foto/Baju Jirai Kei-3.jpg')">
                 </div>
             </div>
         </div>
         <div class="details-section">
             <h1>Baju Jirai Kei</h1>
             <div class="rating">★★★★★</div>
-            <p class="price" id="product-price">Rp335.000</p>
+            <p class="price" id="product-price">Rp140.000</p>
             <p class="description">
-                Dibuat dengan bahan berkualitas, nyaman dipakai sepanjang hari, dan cocok untuk berbagai acara. Tersedia dalam berbagai ukuran dan pilihan warna menarik.
+                Baju Jirai Kei dengan desain minimalis khas Jepang, nyaman dipakai sehari-hari. Material premium dan adem. Cocok untuk tampilan santai ala streetwear Jepang!
             </p>
             <label for="size-select">Pilih Ukuran</label>
             <select id="size-select">
-                <option value="" data-price="335000">Pilih Ukuran</option>
-                <option value="S" data-price="320000">S - Rp320.000</option>
-                <option value="M" data-price="335000">M - Rp335.000</option>
-                <option value="L" data-price="350000">L - Rp350.000</option>
+                <option value="" data-price="140000">Pilih Ukuran</option>
+                <option value="XXS" data-price="120000">XXS - Rp120.000</option>
+                <option value="XS" data-price="130000">XS - Rp130.000</option>
+                <option value="S" data-price="135000">S - Rp135.000</option>
+                <option value="M" data-price="140000">M - Rp140.000</option>
+                <option value="L" data-price="145000">L - Rp145.000</option>
+                <option value="XL" data-price="150000">XL - Rp150.000</option>
+                <option value="XXL" data-price="165000">XXL - Rp165.000</option>
             </select>
             <form action="" id="product-form" method="POST">
                 <input type="hidden" name="product_name" value="Baju Jirai Kei">
-                <input type="hidden" name="product_price" id="hidden-product-price" value="335000">
-                <input type="hidden" name="product_image" value="../foto/Baju Jirai Kei.jpeg">
+                <input type="hidden" name="product_price" id="hidden-product-price" value="140000">
+                <input type="hidden" name="product_image" value="../foto/Baju Jirai Kei-1.jpg">
                 <button type="button" class="buy-now">Beli Sekarang</button>
                 <div id="paymentModal" class="modal">
                     <div class="modal-content">
