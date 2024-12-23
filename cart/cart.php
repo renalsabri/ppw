@@ -111,13 +111,13 @@ if (isset($_POST['clear_cart'])) {
 
             <form method="POST" action="">
                 <button type="submit" name="clear_cart" style="margin-bottom: 20px;">Kosongkan Keranjang</button>
-                <button type="button" class="btn-checkout">Lanjutkan ke Pembayaran</button>
+            </form>
+            <button type="button" class="btn-checkout">Lanjutkan ke Pembayaran</button>
                 <div id="paymentModal" class="modal">
                     <div class="modal-content">
                         <iframe src="../checkout/checkout.php" frameborder="0" id="checkoutFrame"></iframe>
                     </div>
                 </div>
-            </form>
         <?php endif; ?>
     </section>
 
