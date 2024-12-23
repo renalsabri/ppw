@@ -1,17 +1,5 @@
 <?php
 session_start();
-if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = [];
-}
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
-    $product = [
-        'name' => $_POST['product_name'],
-        'price' => $_POST['product_price'],
-        'image' => $_POST['product_image']
-    ];
-    $_SESSION['cart'][] = $product;
-}
 ?>
 
 <!DOCTYPE html>
@@ -31,11 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
             </a>
         </div>
         <div class="header-center">
-            <h1>Welcome to SHOP. CO</h1>
-            <p>Find the best products here!</p>
+            <h1>Selamat Datang di SHOP. CO</h1>
+            <p>Temukan Produk Terbaik Disini!</p>
         </div>
         <div class="header-right profile-menu">
-            <button class="profile-button">My Profile</button>
+            <button class="profile-button">Profile</button>
             <div class="profile-dropdown">
             <div class="profile-welcome">
                 <center>
@@ -51,9 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
                     </p>
                 </center>
             </div>
-                <a href="../cart/cart.php">My Cart</a>
-                <a href="../user/user.html">user</a>
-                <a href="../kelola/barang.php">Product Manager</a>
+                <a href="../user/user.html">Pengguna</a>
+                <a href="../cart/cart.php">Keranjang</a>
+                <a href="../kelola/barang.php">Kelola Barang</a>
                 <a href="../register/register.php">Logout</a>
             </div>
         </div>
@@ -61,12 +49,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
 
     <div class="container-product">
         <div class="product-category">
-            <h2>Fashion</h2>
+            <h2>Pakaian</h2>
             <section class="product-list">
                 <?php
                 $products = [
                     ['name' => 'Baju Jirai Kei', 'price' => 335000, 'image' => '../foto/Baju Jirai Kei.jpeg', 'link' => '../deskripsi/bajuJiraiKei.php'],
-                    ['name' => 'Kaos Emyu', 'price' => 340000, 'image' => '../foto/Kaos Emyu.jpg', 'link' => 'emyu.html'],
+                    ['name' => 'Jersey Bola', 'price' => 115000, 'image' => '../foto/Kaos Emyu.jpg', 'link' => '../deskripsi/jerseyBola.php'],
                     ['name' => 'Kaos Barca', 'price' => 240000, 'image' => '../foto/Kaos Barca.jpg', 'link' => 'barca.html'],
                     ['name' => 'Baju Pramuka', 'price' => 128000, 'image' => '../foto/Baju Pramuka.jpg', 'link' => 'pramuka.html'],
                     ['name' => 'Celana Merah', 'price' => 72000, 'image' => '../foto/Celana Merah.jpg', 'link' => 'celana_merah.html']
@@ -83,7 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
                     echo "<input type='hidden' name='product_name' value='{$product['name']}'>";
                     echo "<input type='hidden' name='product_price' value='{$product['price']}'>";
                     echo "<input type='hidden' name='product_image' value='{$product['image']}'>";
-                    echo "<button type='submit' name='add_to_cart' class='myButton'>Add to Cart</button>";
                     echo "</form>";
                     echo "</div>";
                 }
@@ -94,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
 
     <div class="container-product">
         <div class="product-category">
-            <h2>Cosmetic</h2>
+            <h2>Kosmetik</h2>
             <section class="product-list">
                 <?php
                 $products = [
@@ -114,7 +101,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
                     echo "<input type='hidden' name='product_name' value='{$product['name']}'>"; 
                     echo "<input type='hidden' name='product_price' value='{$product['price']}'>"; 
                     echo "<input type='hidden' name='product_image' value='{$product['image']}'>"; 
-                    echo "<button type='submit' name='add_to_cart' class='myButton'>Add to Cart</button>"; 
                     echo "</form>"; 
                     echo "</div>"; 
                 }
@@ -145,7 +131,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
                     echo "<input type='hidden' name='product_name' value='{$product['name']}'>"; 
                     echo "<input type='hidden' name='product_price' value='{$product['price']}'>"; 
                     echo "<input type='hidden' name='product_image' value='{$product['image']}'>"; 
-                    echo "<button type='submit' name='add_to_cart' class='myButton'>Add to Cart</button>"; 
                     echo "</form>"; 
                     echo "</div>"; 
                 }
