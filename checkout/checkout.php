@@ -144,16 +144,26 @@ $price = isset($_GET['price']) ? intval($_GET['price']) : 0;
 
     step1Next.addEventListener('click', (e) => {
       e.preventDefault(); // Mencegah form untuk submit
-
-      const selectedMethod = Array.from(paymentMethodInputs).find(input => input.checked);
-      if (!selectedMethod) {
-        alert('Pilih metode pembayaran terlebih dahulu.');
+      
+      // Ambil input untuk Nomor Handphone dan Alamat
+      const phoneInput = step1Form.querySelector('input[placeholder="Nomor Handphone"]');
+      const addressInput = step1Form.querySelector('input[placeholder="Alamat"]');
+      
+      // Validasi kedua input sekaligus
+      if (!phoneInput.value.trim() || !addressInput.value.trim()) {
+        alert('Kolom Nomor Handphone dan Alamat harus diisi.');
+        if (!phoneInput.value.trim()) {
+          phoneInput.focus(); // Fokus ke Nomor Handphone jika kosong
+        } else {
+          addressInput.focus(); // Fokus ke Alamat jika kosong
+        }
         return;
       }
 
-      // Validasi form langkah 1
-      if (!validateForm(step1Form)) {
-        alert('Semua kolom di Langkah 1 harus diisi.');
+      // Validasi metode pembayaran
+      const selectedMethod = Array.from(paymentMethodInputs).find(input => input.checked);
+      if (!selectedMethod) {
+        alert('Pilih metode pembayaran terlebih dahulu.');
         return;
       }
 
@@ -179,7 +189,7 @@ $price = isset($_GET['price']) ? intval($_GET['price']) : 0;
 
       // Validasi form langkah 2
       if (!validateForm(step2Form)) {
-        alert('Semua kolom di Langkah 2 harus diisi.');
+        alert('Semua kolom harus diisi.');
         return;
       }
 
