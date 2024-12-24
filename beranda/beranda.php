@@ -88,8 +88,8 @@ session_start();
                     ['name' => 'Masker Wajah', 'price' => 23000, 'image' => '../foto/Masker Wajah.jpg', 'link' => '../deskripsi/maskerWajah.php'],
                     ['name' => 'Skincare', 'price' => 350000, 'image' => '../foto/Skincare 1.jpg', 'link' => '../deskripsi/skincare.php'],
                     ['name' => 'Lipstick', 'price' => 100000, 'image' => '../foto/Lipstick 1.jpg', 'link' => '../deskripsi/lipstick.php'],
-                    ['name' => 'Cusion', 'price' => 90000, 'image' => '../foto/Cusion.jpg', 'link' => '../deskripsi/bajuJiraiKei.php'],
-                    ['name' => 'Lipbalm', 'price' => 38000, 'image' => '../foto/Lipbalm.jpg', 'link' => '../deskripsi/bajuJiraiKei.php']
+                    ['name' => 'Cusion', 'price' => 75000, 'image' => '../foto/Cusion 1.jpg', 'link' => '../deskripsi/cusion.php'],
+                    ['name' => 'Lip Balm', 'price' => 50000, 'image' => '../foto/Lipbalm 1.jpg', 'link' => '../deskripsi/lipBalm.php']
                 ];
 
                 foreach ($products as $product) {
