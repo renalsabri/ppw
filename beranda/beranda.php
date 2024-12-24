@@ -117,24 +117,26 @@ session_start();
             <section class="product-list">
                 <?php
                 $products = [
-                    ['name' => 'Figure Naruto', 'price' => 300000, 'image' => '../foto/Figure Naruto.jpg'],
-                    ['name' => 'Jaket Kiana', 'price' => 255000, 'image' => '../foto/Jaket Kiana.jpg'],
-                    ['name' => 'Pedang Anime', 'price' => 260000, 'image' => '../foto/Pedang Anime.jpg'],
-                    ['name' => 'Hoodie Anime', 'price' => 332000, 'image' => '../foto/Hoodie Anime.jpg'],
-                    ['name' => 'Gelang Elysia', 'price' => 109000, 'image' => '../foto/Gelang Elysia.jpg']
+                    ['name' => 'Action Figure Tobi', 'price' => 550000, 'image' => '../foto/Action Figure Tobi.jpg', 'link' => '../deskripsi/actionFigureTobi.php'],
+                    ['name' => 'Jaket Kiana', 'price' => 255000, 'image' => '../foto/Jaket Kiana.jpg', 'link' => '../deskripsi/maskerWajah.php'],
+                    ['name' => 'Pedang Anime', 'price' => 260000, 'image' => '../foto/Pedang Anime.jpg', 'link' => '../deskripsi/maskerWajah.php'],
+                    ['name' => 'Hoodie Anime', 'price' => 332000, 'image' => '../foto/Hoodie Anime.jpg', 'link' => '../deskripsi/maskerWajah.php'],
+                    ['name' => 'Gelang Elysia', 'price' => 109000, 'image' => '../foto/Gelang Elysia.jpg', 'link' => '../deskripsi/maskerWajah.php']
                 ];
 
-                foreach ($products as $product) { 
-                    echo "<div class='product-item'>"; 
-                    echo "<img src='{$product['image']}' alt='{$product['name']}'>"; 
-                    echo "<h3>{$product['name']}</h3>"; 
-                    echo "<p>Rp " . number_format($product['price'], 0, ',', '.') . "</p>"; 
-                    echo "<form method='POST'>"; 
-                    echo "<input type='hidden' name='product_name' value='{$product['name']}'>"; 
-                    echo "<input type='hidden' name='product_price' value='{$product['price']}'>"; 
-                    echo "<input type='hidden' name='product_image' value='{$product['image']}'>"; 
-                    echo "</form>"; 
-                    echo "</div>"; 
+                foreach ($products as $product) {
+                    echo "<div class='product-item'>";
+                    echo "<a href='{$product['link']}'>";
+                    echo "<img src='{$product['image']}' alt='{$product['name']}'>";
+                    echo "</a>";
+                    echo "<h3>{$product['name']}</h3>";
+                    echo "<p>Rp " . number_format($product['price'], 0, ',', '.') . "</p>";
+                    echo "<form method='POST'>";
+                    echo "<input type='hidden' name='product_name' value='{$product['name']}'>";
+                    echo "<input type='hidden' name='product_price' value='{$product['price']}'>";
+                    echo "<input type='hidden' name='product_image' value='{$product['image']}'>";
+                    echo "</form>";
+                    echo "</div>";
                 }
                 ?>
             </section>
