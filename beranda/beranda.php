@@ -87,7 +87,7 @@ session_start();
                 $products = [
                     ['name' => 'Masker Wajah', 'price' => 23000, 'image' => '../foto/Masker Wajah.jpg', 'link' => '../deskripsi/maskerWajah.php'],
                     ['name' => 'Skincare', 'price' => 350000, 'image' => '../foto/Skincare 1.jpg', 'link' => '../deskripsi/skincare.php'],
-                    ['name' => 'Lipstick', 'price' => 83000, 'image' => '../foto/Lipstick.jpg', 'link' => '../deskripsi/bajuJiraiKei.php'],
+                    ['name' => 'Lipstick', 'price' => 100000, 'image' => '../foto/Lipstick 1.jpg', 'link' => '../deskripsi/lipstick.php'],
                     ['name' => 'Cusion', 'price' => 90000, 'image' => '../foto/Cusion.jpg', 'link' => '../deskripsi/bajuJiraiKei.php'],
                     ['name' => 'Lipbalm', 'price' => 38000, 'image' => '../foto/Lipbalm.jpg', 'link' => '../deskripsi/bajuJiraiKei.php']
                 ];

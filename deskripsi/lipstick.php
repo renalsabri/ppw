@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['review_text']) && iss
     exit();
 }
 // Ambil jumlah review produk
-$product_id = $_GET['product_id'] ?? 5;
+$product_id = $_GET['product_id'] ?? 8;
 $query = "SELECT r.review_text, r.created_at, u.nama AS username, u.foto AS profile_picture 
           FROM reviews r 
           JOIN user u ON r.user_email = u.email 
@@ -110,7 +110,7 @@ $review_count = $result_count->fetch_assoc()['review_count'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHOP. CO | Rok Jeans</title>
+    <title>SHOP. CO | Lipstick</title>
     <link rel="stylesheet" href="style_deskripsi.css?v=1.0">
     <link rel="icon" type="image/x-icon" href="../foto/icon.png">
 </head>
@@ -150,33 +150,42 @@ $review_count = $result_count->fetch_assoc()['review_count'];
     </nav>
     <div class="product-container">
         <div class="image-section">
-            <img id="main-image" src="../foto/Rok Jeans-1.jpg" alt="Rok Jeans">
+            <img id="main-image" src="../foto/Lipstick 1.jpg" alt="Lipstick">
             <div class="thumbnail-section">
                 <div class="thumbnail-wrapper">
-                    <img class="thumbnail" src="../foto/Rok Jeans-1.jpg" alt="Rok Jeans" onclick="changeImage('../foto/Rok Jeans-1.jpg')">
+                    <img class="thumbnail" src="../foto/Lipstick 1.jpg" alt="Lipstick" onclick="changeImage('../foto/Lipstick 1.jpg')">
                 </div>
                 <div class="thumbnail-wrapper">
-                    <img class="thumbnail" src="../foto/Rok Jeans-2.jpg" alt="Rok Jeans" onclick="changeImage('../foto/Rok Jeans-2.jpg')">
+                    <img class="thumbnail" src="../foto/Lipstick 2.jpg" alt="Lipstick" onclick="changeImage('../foto/Lipstick 2.jpg')">
+                </div>
+                <div class="thumbnail-wrapper">
+                    <img class="thumbnail" src="../foto/Lipstick 3.jpg" alt="Lipstick" onclick="changeImage('../foto/Lipstick 3.jpg')">
                 </div>
             </div>
         </div>
         <div class="details-section">
-            <h1>Rok Jeans</h1>
+            <h1>Lipstick</h1>
             <div class="rating">★★★★★</div>
-            <p class="price" id="product-price">Rp70.000</p>
+            <p class="price" id="product-price">Rp100.000</p>
             <p class="description">
-                Rok jeans wanita ukuran XL, desain stylish dan nyaman untuk aktivitas sehari-hari. Terbuat dari bahan denim berkualitas tinggi, tahan lama, dan mudah dipadukan dengan berbagai gaya. Cocok untuk tampil kasual maupun semi-formal!
+                O.TWO.O Matte Ink Liquid Lipstick adalah lipcream tahan lama yang memberikan hasil matte sempurna. Dengan formula waterproof, nyaman dipakai seharian tanpa membuat bibir kering. Tersedia dalam pilihan warna yang intens dan memukau. Cocok untuk segala aktivitas!
             </p>
             <label for="size-select">Pilih Warna</label>
             <select id="size-select">
-                <option value="" data-price="70000">Pilih Warna</option>
-                <option value="Nevy" data-price="70000">Nevy</option>
-                <option value="Light Blue" data-price="70000">Light Blue</option>
+                <option value="" data-price="100000">Pilih Warna</option>
+                <option value="Mist Pink" data-price="100000">MIST PINK</option>
+                <option value="Milk Tea" data-price="100000">MILK TEA</option>
+                <option value="Cocoa Brown" data-price="100000">COCOA BROWN</option>
+                <option value="Pumpink Bro" data-price="100000">PUMPINK BRO</option>
+                <option value="Apple Red" data-price="100000">APPLE RED</option>
+                <option value="Wild Berry" data-price="100000">WILD BERRY</option>
+                <option value="Pink Rose" data-price="100000">PINK ROSE</option>
+                <option value="Purple Gra" data-price="100000">PURPLE GRA</option>
             </select>
             <form action="" id="product-form" method="POST">
-                <input type="hidden" name="product_name" value="Rok Jeans">
-                <input type="hidden" name="product_price" id="hidden-product-price" value="70000">
-                <input type="hidden" name="product_image" value="../foto/Rok Jeans-1.jpg">
+                <input type="hidden" name="product_name" value="Lipstick">
+                <input type="hidden" name="product_price" id="hidden-product-price" value="100000">
+                <input type="hidden" name="product_image" value="../foto/Lipstick 1.jpg">
                 <button type="button" class="buy-now">Beli Sekarang</button>
                 <div id="paymentModal" class="modal">
                     <div class="modal-content">
@@ -186,8 +195,8 @@ $review_count = $result_count->fetch_assoc()['review_count'];
                 <button type="submit" name="add_to_cart" class="add-to-cart">Tambah ke Keranjang</button>
             </form>
             <p class="meta">
-                <strong>Kategori:</strong> Fashion Wanita, Rok Wanita, Pakaian Wanita, Rok Jeans<br>
-                <strong>Tagar:</strong> Rok Jeans, Rok Wanita, Fashion Wanita, Denim Style, Rok Kasual
+                <strong>Kategori:</strong> Kecantikan, Makeup, Lipstick<br>
+                <strong>Tagar:</strong> OTWOO, Lipcream Matte, Lipstick Tahan Lama, Waterproof Lipstick, Makeup Sehari-hari
             </p>
         </div>
     </div>
@@ -197,34 +206,42 @@ $review_count = $result_count->fetch_assoc()['review_count'];
         <button class="tab-button" onclick="showTab('reviews')">Ulasan</button>
     </div>
     <div class="tab-content" id="description">
-        <h1 class="product-title">Rok Jeans Premium - Tampil Stylish dan Nyaman Setiap Saat!</h1>
-        <p class="product-description">
-            Tampil modis dan nyaman dengan <strong>Rok Jeans Premium</strong>, pilihan sempurna untuk Anda yang menginginkan tampilan kasual namun tetap elegan. Rok ini terbuat dari bahan denim berkualitas tinggi, memberikan kenyamanan sepanjang hari, dan cocok untuk berbagai kesempatan, dari aktivitas santai hingga semi-formal.
-        </p>
-        <h3>Fitur Utama:</h3>
+        <h1 class="product-title">O.TWO.O Matte Ink Liquid Lipstick - Lipstik Tahan Lama untuk Tampilan Sempurna!</h1>
+        <p>Baca deskripsi lengkap dan lihat seluruh gambar produk ini untuk menemukan warna yang tepat untukmu. ✨</p>
+        <h3>O.TWO.O Matte Ink Liquid Lipstick</h3>
+        <p><strong>Fitur utama:</strong></p>
         <ul class="features-list">
-            <li><strong>Karekteristik Kain</strong>: Lembut, Halus, nyaman saat pemakaian, jahitan rapih, warna tidak mudah Luntur.</li>
-            <li><strong>Detail produk</strong>: Ada saku depan kanan kiri aktif, Resleting bagian depan , ada 1 kancing aktif</li>
-            <li><strong>Desain Stylish</strong>: Memiliki potongan modern yang cocok untuk berbagai bentuk tubuh, memberikan kesan ramping dan dinamis.</li>
-            <li><strong>Warna Menarik</strong>: Tersedia dua pilihan warna nevy dan light blue yang mudah dipadupadankan dengan atasan favorit Anda.</li>
-            <li><strong>Serbaguna</strong>: Bisa dipadukan dengan berbagai jenis atasan dan aksesori, cocok untuk tampilan kasual maupun semi-formal.</li>
+            <li>Formula tahan lama hingga 12 jam</li>
+            <li>Waterproof, tidak mudah luntur</li>
+            <li>Hasil akhir matte yang halus</li>
+            <li>Melembapkan tanpa membuat bibir kering</li>
         </ul>
-        <h3>Kenapa Harus Membeli?</h3>
+        <p><strong>Kelebihan:</strong></p>
         <ul class="features-list">
-            <li><strong>Gaya yang Tak Pernah Ketinggalan Zaman</strong>: Rok jeans ini selalu tampil trendi dan cocok untuk berbagai acara.</li>
-            <li><strong>Kenyamanan Sepanjang Hari</strong>: Dengan bahan yang lembut dan pas di tubuh, Anda bisa mengenakan rok ini dari pagi hingga malam dengan nyaman.</li>
-            <li><strong>Tahan Lama</strong>: Bahan yang awet dan mudah perawatannya, memastikan Anda bisa menikmati rok jeans ini untuk waktu lama.</li>
+            <li>Warna intens yang menonjolkan penampilan</li>
+            <li>Mudah diaplikasikan dengan aplikator presisi</li>
+            <li>Tersedia dalam berbagai pilihan warna</li>
+            <li>Cocok untuk segala acara, dari santai hingga formal</li>
         </ul>
-        <h3>Tips Perawatan:</h3>
+        <h3>Cara Penggunaan</h3>
         <ul class="features-list">
-            <li>Cuci dengan air dingin untuk menjaga kualitas warna dan bentuk rok tetap terjaga.</li>
-            <li>Jangan gunakan pemutih dan sebaiknya dijemur di tempat teduh untuk menjaga kualitas bahan.</li>
+            <li>Bersihkan bibir sebelum penggunaan.</li>
+            <li>Aplikasikan lipstik secara merata menggunakan aplikator.</li>
+            <li>Tunggu beberapa detik hingga kering untuk hasil optimal.</li>
         </ul>
+        <p>Dengan formula inovatif yang memberikan hasil matte tahan lama dan warna yang menawan, O.TWO.O Matte Ink Liquid Lipstick adalah pilihan sempurna untuk kamu yang ingin tampil percaya diri sepanjang hari!</p>
+        <h3>Kenapa Harus Pilih O.TWO.O Matte Ink Liquid Lipstick?</h3>
+        <ul class="features-list">
+            <li><strong>Kualitas Premium:</strong> Diproduksi dengan bahan berkualitas tinggi untuk hasil terbaik.</li>
+            <li><strong>Praktis dan Serbaguna:</strong> Cocok untuk aktivitas sehari-hari maupun acara spesial.</li>
+            <li><strong>Warna Beragam:</strong> Temukan warna yang paling cocok dengan gaya dan kepribadianmu.</li>
+        </ul>
+        <p><b>Jangan ragu lagi!</b> Segera miliki O.TWO.O Matte Ink Liquid Lipstick dan buktikan keunggulannya. 💄</p>
     </div>
     <div class="tab-content" id="reviews" style="display: none;">
         <h3>Ulasan (<?= $review_count ?>)</h3>
         <?php if (isset($_SESSION['email'])): ?>
-            <form id="review-form" action="/ppw/deskripsi/rokJeans.php?product_id=<?= $product_id ?>" method="POST">
+            <form id="review-form" action="/ppw/deskripsi/lipstick.php?product_id=<?= $product_id ?>" method="POST">
                 <textarea name="review_text" rows="4" placeholder="Ketik Ulasanmu..." required></textarea>
                 <input type="hidden" name="product_id" value="<?= $product_id ?>">
                 <button type="submit">Kirim Ulasan</button>
@@ -315,7 +332,7 @@ $review_count = $result_count->fetch_assoc()['review_count'];
                 const modal = document.getElementById('paymentModal');
                 modal.style.display = 'none';
 
-                window.location.href = 'rokJeans.php';
+                window.location.href = 'lipstick.php';
             }
         });
         $(document).ready(function () {
@@ -358,7 +375,7 @@ $review_count = $result_count->fetch_assoc()['review_count'];
                         return;
                     }
                     $.ajax({
-                        url: "rokJeans.php",
+                        url: "lipstick.php",
                         type: "POST",
                         data: {
                             add_to_cart: true,
