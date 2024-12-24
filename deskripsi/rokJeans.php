@@ -150,37 +150,33 @@ $review_count = $result_count->fetch_assoc()['review_count'];
     </nav>
     <div class="product-container">
         <div class="image-section">
-            <img id="main-image" src="../foto/Rok Jeans.jpg" alt="Rok Jeans">
+            <img id="main-image" src="../foto/Rok Jeans-1.jpg" alt="Rok Jeans">
             <div class="thumbnail-section">
                 <div class="thumbnail-wrapper">
-                    <img class="thumbnail" src="../foto/Rok Jeans.jpg" alt="Rok Jeans" onclick="changeImage('../foto/Rok Jeans.jpg')">
+                    <img class="thumbnail" src="../foto/Rok Jeans-1.jpg" alt="Rok Jeans" onclick="changeImage('../foto/Rok Jeans-1.jpg')">
                 </div>
                 <div class="thumbnail-wrapper">
-                    <img class="thumbnail" src="../foto/Rok Jeans 2.jpg" alt="Rok Jeans" onclick="changeImage('../foto/Rok Jeans 2.jpg')">
-                </div>
-                <div class="thumbnail-wrapper">
-                    <img class="thumbnail" src="../foto/Rok Jeans 3.jpg" alt="Rok Jeans" onclick="changeImage('../foto/Rok Jeans 3.jpg')">
+                    <img class="thumbnail" src="../foto/Rok Jeans-2.jpg" alt="Rok Jeans" onclick="changeImage('../foto/Rok Jeans-2.jpg')">
                 </div>
             </div>
         </div>
         <div class="details-section">
             <h1>Rok Jeans</h1>
             <div class="rating">★★★★★</div>
-            <p class="price" id="product-price">Rp150.000</p>
+            <p class="price" id="product-price">Rp70.000</p>
             <p class="description">
-                Rok jeans wanita ini terbuat dari bahan denim berkualitas, memberikan kenyamanan dan tampilan kasual yang stylish. Dilengkapi dengan potongan modern dan detail jahitan rapi, cocok untuk berbagai acara santai maupun semi-formal. Tersedia dalam ukuran yang pas dan pilihan warna klasik, menjadikannya pilihan sempurna untuk melengkapi koleksi pakaian Anda.
+                Rok jeans wanita ukuran XL, desain stylish dan nyaman untuk aktivitas sehari-hari. Terbuat dari bahan denim berkualitas tinggi, tahan lama, dan mudah dipadukan dengan berbagai gaya. Cocok untuk tampil kasual maupun semi-formal!
             </p>
-            <label for="size-select">Pilih Ukuran</label>
+            <label for="size-select">Pilih Warna</label>
             <select id="size-select">
-                <option value="" data-price="150000">Pilih Ukuran</option>
-                <option value="S" data-price="130000">S - Rp130.000</option>
-                <option value="M" data-price="150000">M - Rp150.000</option>
-                <option value="L" data-price="180000">L - Rp180.000</option>
+                <option value="" data-price="70000">Pilih Warna</option>
+                <option value="Nevy" data-price="70000">Nevy</option>
+                <option value="Light Blue" data-price="70000">Light Blue</option>
             </select>
             <form action="" id="product-form" method="POST">
                 <input type="hidden" name="product_name" value="Rok Jeans">
-                <input type="hidden" name="product_price" id="hidden-product-price" value="150000">
-                <input type="hidden" name="product_image" value="../foto/Rok Jeans.jpg">
+                <input type="hidden" name="product_price" id="hidden-product-price" value="70000">
+                <input type="hidden" name="product_image" value="../foto/Rok Jeans-1.jpg">
                 <button type="button" class="buy-now">Beli Sekarang</button>
                 <div id="paymentModal" class="modal">
                     <div class="modal-content">
@@ -207,10 +203,10 @@ $review_count = $result_count->fetch_assoc()['review_count'];
         </p>
         <h3>Fitur Utama:</h3>
         <ul class="features-list">
-            <li><strong>Bahan Berkualitas</strong>: Terbuat dari material denim pilihan yang nyaman, awet, dan tidak mudah pudar.</li>
+            <li><strong>Karekteristik Kain</strong>: Lembut, Halus, nyaman saat pemakaian, jahitan rapih, warna tidak mudah Luntur.</li>
+            <li><strong>Detail produk</strong>: Ada saku depan kanan kiri aktif, Resleting bagian depan , ada 1 kancing aktif</li>
             <li><strong>Desain Stylish</strong>: Memiliki potongan modern yang cocok untuk berbagai bentuk tubuh, memberikan kesan ramping dan dinamis.</li>
-            <li><strong>Tersedia dalam Berbagai Ukuran</strong>: Pilihan ukuran mulai dari S hingga XL, memastikan kenyamanan dan pas di tubuh Anda.</li>
-            <li><strong>Warna Menarik</strong>: Tersedia dalam berbagai pilihan warna klasik dan trendi yang mudah dipadupadankan dengan atasan favorit Anda.</li>
+            <li><strong>Warna Menarik</strong>: Tersedia dua pilihan warna nevy dan light blue yang mudah dipadupadankan dengan atasan favorit Anda.</li>
             <li><strong>Serbaguna</strong>: Bisa dipadukan dengan berbagai jenis atasan dan aksesori, cocok untuk tampilan kasual maupun semi-formal.</li>
         </ul>
         <h3>Kenapa Harus Membeli?</h3>
