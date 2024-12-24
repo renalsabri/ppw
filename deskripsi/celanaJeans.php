@@ -241,13 +241,6 @@ $review_count = $result_count->fetch_assoc()['review_count'];
             <li>XL /34: Pinggang 86CM / Panjang 102CM / Lingkar Paha 56CM / Lingkar Kaki 36CM</li>
         </ul>
         <p><strong>Model</strong>: Ukuran XL, Tinggi Badan 182 cm, Berat Badan 78 kg</p>
-        <h3>Catatan:</h3>
-        <ul class="features-list">
-            <li>Pesanan diproses maksimal 1x24 jam pada hari kerja. Pesanan yang masuk di luar jam operasional akan diproses keesokan harinya.</li>
-            <li>Jam operasional: Senin - Sabtu, 09:00 - 16:00 WIB (libur pada hari nasional).</li>
-            <li>Pastikan untuk memeriksa size chart sebelum melakukan pemesanan.</li>
-            <li>Jika ada masalah pada pesanan, kami akan menghubungi pelanggan dalam waktu 1x24 jam.</li>
-        </ul>
     </div>
     <div class="tab-content" id="reviews" style="display: none;">
         <h3>Ulasan (<?= $review_count ?>)</h3>

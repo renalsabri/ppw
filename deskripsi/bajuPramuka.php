@@ -150,34 +150,45 @@ $review_count = $result_count->fetch_assoc()['review_count'];
     </nav>
     <div class="product-container">
         <div class="image-section">
-            <img id="main-image" src="../foto/Baju Pramuka.jpg" alt="Baju Pramuka">
+            <img id="main-image" src="../foto/Baju Pramuka-1.jpg" alt="Baju Pramuka">
             <div class="thumbnail-section">
                 <div class="thumbnail-wrapper">
-                    <img class="thumbnail" src="../foto/Baju Pramuka.jpg" alt="Baju Pramuka" onclick="changeImage('../foto/Baju Pramuka.jpg')">
+                    <img class="thumbnail" src="../foto/Baju Pramuka-1.jpg" alt="Baju Pramuka" onclick="changeImage('../foto/Baju Pramuka-1.jpg')">
                 </div>
                 <div class="thumbnail-wrapper">
-                    <img class="thumbnail" src="../foto/Baju Pramuka 2.jpg" alt="Baju Pramuka" onclick="changeImage('../foto/Baju Pramuka 2.jpg')">
+                    <img class="thumbnail" src="../foto/Baju Pramuka-2.jpg" alt="Baju Pramuka" onclick="changeImage('../foto/Baju Pramuka-2.jpg')">
+                </div>
+                <div class="thumbnail-wrapper">
+                    <img class="thumbnail" src="../foto/Baju Pramuka-3.jpg" alt="Baju Pramuka" onclick="changeImage('../foto/Baju Pramuka-3.jpg')">
+                </div>
+                <div class="thumbnail-wrapper">
+                    <img class="thumbnail" src="../foto/Baju Pramuka-4.jpg" alt="Baju Pramuka" onclick="changeImage('../foto/Baju Pramuka-4.jpg')">
                 </div>
             </div>
         </div>
         <div class="details-section">
             <h1>Baju Pramuka</h1>
             <div class="rating">★★★★★</div>
-            <p class="price" id="product-price">Rp50.000</p>
+            <p class="price" id="product-price">Rp85.000</p>
             <p class="description">
                 Baju Pramuka resmi, nyaman, dan tahan lama, cocok untuk kegiatan pramuka. Tersedia berbagai ukuran dengan desain lengkap dan rapi.
             </p>
             <label for="size-select">Pilih Ukuran</label>
             <select id="size-select">
-                <option value="" data-price="50000">Pilih Ukuran</option>
-                <option value="S" data-price="45000">S - Rp45.000</option>
-                <option value="M" data-price="50000">M - Rp50.000</option>
-                <option value="L" data-price="60000">L - Rp60.000</option>
+                <option value="" data-price="85000">Pilih Ukuran</option>
+                <option value="No 5" data-price="85000">No 5 - Rp85.000</option>
+                <option value="No 6" data-price="85000">No 6 - Rp85.000</option>
+                <option value="No 7" data-price="90000">No 7 - Rp90.000</option>
+                <option value="No 8" data-price="90000">No 8 - Rp90.000</option>
+                <option value="No 9" data-price="95000">No 9 - Rp95.000</option>
+                <option value="No 10" data-price="95000">No 10 - Rp95.000</option>
+                <option value="No 11" data-price="102000">No 11 - Rp102.000</option>
+                <option value="No 12" data-price="102000">No 12 - Rp102.000</option>
             </select>
             <form action="" id="product-form" method="POST">
                 <input type="hidden" name="product_name" value="Baju Pramuka">
-                <input type="hidden" name="product_price" id="hidden-product-price" value="50000">
-                <input type="hidden" name="product_image" value="../foto/Baju Pramuka.jpg">
+                <input type="hidden" name="product_price" id="hidden-product-price" value="85000">
+                <input type="hidden" name="product_image" value="../foto/Baju Pramuka-1.jpg">
                 <button type="button" class="buy-now">Beli Sekarang</button>
                 <div id="paymentModal" class="modal">
                     <div class="modal-content">
@@ -206,9 +217,14 @@ $review_count = $result_count->fetch_assoc()['review_count'];
         <ul class="features-list">
             <li><strong>Bahan Berkualitas</strong>: Terbuat dari material yang nyaman, kuat, dan tahan lama, cocok untuk kegiatan outdoor dan aktifitas sehari-hari.</li>
             <li><strong>Desain Rapi dan Resmi</strong>: Memiliki potongan yang pas, dengan detail logo dan kantong sesuai standar pramuka.</li>
-            <li><strong>Tersedia dalam Berbagai Ukuran</strong>: Ukuran mulai dari anak-anak hingga dewasa, memastikan kenyamanan untuk semua kalangan.</li>
             <li><strong>Warna Klasik</strong>: Tersedia dalam warna khas pramuka yang mudah dipadupadankan dengan atribut lainnya.</li>
             <li><strong>Serbaguna</strong>: Cocok digunakan dalam berbagai kegiatan pramuka, baik upacara, perkemahan, atau kegiatan lainnya.</li>
+        </ul>
+        <h3>Spesifikasi Tambahan:</h3>
+        <ul class="features-list">
+            <li><strong>Bahan:</strong> Plat (Tebal & Tidak Berbulu)</li>
+            <li><strong>Tabel Ukuran & Cara Ukur:</strong> Sudah tersedia pada foto produk ke-2 hingga ke-4.</li>
+            <li> <strong>Catatan:</strong> Jangan menggunakan patokan umur, berat, tinggi, kelas, atau merek lain untuk memilih ukuran (resiko salah ukuran).</li>
         </ul>
         <h3>Kenapa Harus Membeli?</h3>
         <ul class="features-list">
