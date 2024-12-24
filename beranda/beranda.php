@@ -121,7 +121,7 @@ session_start();
                     ['name' => 'Jaket Kiana', 'price' => 300000, 'image' => '../foto/Jaket Kiana 1.jpg', 'link' => '../deskripsi/jaketKiana.php'],
                     ['name' => 'Replika Pedang Kirito', 'price' => 235000, 'image' => '../foto/Replika Pedang Kirito.jpg', 'link' => '../deskripsi/replikaPedangKirito.php'],
                     ['name' => 'Hoodie One Piece', 'price' => 90000, 'image' => '../foto/Hoodie One Piece.jpg', 'link' => '../deskripsi/hoodieOnePiece.php'],
-                    ['name' => 'Gelang Elysia', 'price' => 109000, 'image' => '../foto/Gelang Elysia.jpg', 'link' => '../deskripsi/maskerWajah.php']
+                    ['name' => 'T-Shirt Gojo Satoru', 'price' => 200000, 'image' => '../foto/Kaos Gojo.jpg', 'link' => '../deskripsi/kaosGojo.php']
                 ];
 
                 foreach ($products as $product) {
